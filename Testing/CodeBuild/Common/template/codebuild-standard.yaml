@@ -1,0 +1,73 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: CloudFormation template with YAML - CodeBuild
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Description: "Name of the Use Case being developed"
+
+  ServiceName:
+    Type: String
+    Description: "Name of the Service being developed"
+
+  CodePath:
+    Type: String
+    Description: "Relative path to the CodeBuild buildspec file"
+
+  Github:
+    Type: String
+    Description: "Relative path to the CodeBuild buildspec file"
+
+  ConnectionARN:
+    Type: String
+    Description: "Connection ARN for CodeBuild"
+
+  TriggerHead:
+    Type: String
+    Default: ^refs/heads/main
+    Description: "Webhook Trigger HEAD_REF"
+
+  TriggerFile:
+    Type: String
+    Description: "Trigger Webhook FILE_PATH"
+
+  ServiceRoleARN:
+    Type: String
+    Description: "CodeBuild ServiceRole arn"
+
+Resources:
+  CodebuildResource:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: !Sub ${UseCaseName}-${ServiceName}-codebuild-agent
+      Source:
+        Type: GITHUB
+        Location: !Ref Github
+        GitCloneDepth: 1
+        BuildSpec: !Ref CodePath
+        Auth:
+          Type: CODECONNECTIONS
+          Resource: !Ref ConnectionARN
+        GitSubmodulesConfig:
+          FetchSubmodules: true                  
+#      Triggers:
+#        Webhook: true
+#        FilterGroups:
+#          - - Type: EVENT
+#              Pattern: PUSH
+#            - Type: HEAD_REF
+#              Pattern: !Ref TriggerHead
+#            - Type: FILE_PATH
+#              Pattern: !Ref TriggerFile
+      Environment:
+        Type: LINUX_CONTAINER
+        Image: aws/codebuild/standard:7.0
+        ComputeType: BUILD_GENERAL1_SMALL
+      ServiceRole: !Ref ServiceRoleARN
+      Artifacts:
+        Type: NO_ARTIFACTS
+      LogsConfig:
+        CloudWatchLogs:
+          Status: ENABLED
+          GroupName: !Sub ${UseCaseName}-${ServiceName}-logs

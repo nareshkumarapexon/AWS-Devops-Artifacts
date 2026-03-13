@@ -1,0 +1,113 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Minimal CodeBuild service role with exact requested policies
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Description: "Name of the Use Case being developed"
+
+
+Resources:
+  CodeBuildServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${UseCaseName}-codebuild-service-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codebuild.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        - arn:aws:iam::aws:policy/CloudFrontFullAccess
+        - arn:aws:iam::aws:policy/AWSCodeBuildAdminAccess
+        - arn:aws:iam::aws:policy/AmazonEC2FullAccess
+      Policies:
+        - PolicyName: SalesCopilotCloudwatchCodebuildPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: arn:aws:logs:*:*:*
+
+              - Effect: Allow
+                Action:
+                  - codebuild:CreateReportGroup
+                  - codebuild:CreateReport
+                  - codebuild:UpdateReport
+                  - codebuild:BatchPutTestCases
+                  - codebuild:BatchPutCodeCoverages
+                Resource: "*"
+
+              - Effect: Allow
+                Action:
+                  - codeconnections:CreateConnection
+                  - codeconnections:UseConnection
+                  - codeconnections:GetConnection
+                  - codeconnections:ListConnections
+                  - codeconnections:ListInstallationTargets
+                  - codeconnections:GetInstallationUrl
+                  - codeconnections:GetIndividualAccessToken
+                  - codeconnections:StartOAuthHandshake
+                  - codeconnections:UpdateConnectionInstallation
+                  - codeconnections:ListTagsForResource
+                  - codeconnections:GetConnectionToken
+                Resource: "*"
+
+
+              - Effect: Allow
+                Action:
+                  - ecr:CreateRepository
+                  - ecr:GetAuthorizationToken
+                  - ecr:BatchCheckLayerAvailability
+                  - ecr:GetDownloadUrlForLayer
+                  - ecr:BatchGetImage
+                  - ecr:InitiateLayerUpload
+                  - ecr:UploadLayerPart
+                  - ecr:CompleteLayerUpload
+                  - ecr:PutImage
+                Resource: "*"
+
+              - Effect: Allow
+                Action:
+                  - ssm:GetParameter
+                  - ssm:GetParameters
+                  - ssm:GetParametersByPath
+                  - ssm:PutParameter
+                Resource: "*"
+                
+              - Effect: Allow
+                Action:
+                  - ssm:SendCommand
+                Resource: 
+                  - "arn:aws:ec2:us-east-1:*:instance/*"
+                  - "arn:aws:ssm:us-east-1::document/*"
+
+              - Effect: Allow
+                Action:
+                  - iam:GetRole
+                  - iam:CreateRole
+                  - iam:PutRolePolicy
+                  - iam:PassRole
+                  - iam:AttachRolePolicy
+                Resource: "*"
+
+              - Effect: Allow
+                Action:
+                  - bedrock-agentcore:*
+                Resource: "*"
+
+
+Outputs:
+
+  CodeBuildServiceRoleOut:
+    Description: Name of codebuild service role
+    Value: !GetAtt CodeBuildServiceRole.Arn
+    Export:
+      Name: !Sub "${UseCaseName}-CodeBuildServiceRoleArn"

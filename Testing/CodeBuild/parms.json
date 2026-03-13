@@ -1,0 +1,13 @@
+{
+  "Parameters": {
+    "UseCaseName": "lab-process",
+    "ConnectionARN": "arn:aws:codeconnections:us-east-1:969385807621:connection/474c1d52-afe2-4ba1-a84c-b987a6ea416f",
+    "Github": "https://github.com/project-apex-2025/lab-process-conductor.git",
+    "ServiceRoleARN": "arn:aws:iam::969385807621:role/lab-process-codebuild-service-role",
+    "TriggerHead": "^refs/heads/dev",
+    "TriggerFile": "^agents/runtime_agent/.*",
+    "ServiceName": "runtime-agent",
+    "CodePath": "agents/runtime_agent/buildspec.yaml",
+    "ECRImage": "969385807621.dkr.ecr.us-east-1.amazonaws.com/codebuild-node-amd64:latest"
+  }
+}
