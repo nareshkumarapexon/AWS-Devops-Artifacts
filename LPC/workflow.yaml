@@ -1,0 +1,435 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "DynamoDB tables for chat messages and chat sessions"
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Default: lab-process
+    Description: "Name of the Use Case being developed"
+
+  DynamoDBTableName:
+    Type: String
+    Default: "lab-processor-ti_workflows"
+
+  DynamoDBTableName1:
+    Type: String
+    Default: "lab-process-runs"    
+
+  StageName:
+    Type: String
+    Default: v1
+    Description: Name of the API stage
+
+Resources: 
+  ###############################################################
+  # IAM Role for Lambda
+  ###############################################################
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${UseCaseName}-lambda-workflow-information-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: !Sub ${UseCaseName}LambdaWorkflowInformationPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Sid: Stepfunctions
+                Effect: Allow
+                Action:
+                    - states:StartExecution
+                    - states:DescribeExecution
+                    - states:ListExecutions
+                    - states:StopExecution
+                    - states:TestState
+                    - states:UpdateStateMachine                
+                Resource: "*"
+
+              - Sid: dynamodbs
+                Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:GetItem
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                  - dynamodb:DeleteItem
+                  - dynamodb:BatchWriteItem
+                Resource: 
+                  - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${DynamoDBTableName}"
+                  - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${DynamoDBTableName1}"
+                  - !Sub "arn:aws:dynamodb:us-east-1:969385807621:table/*/index/*"
+              - Sid: SSMParms
+                Effect: Allow
+                Action:
+                    - ssm:GetParameter
+                Resource: "arn:aws:ssm:*:*:parameter/*"
+
+  ###############################################################
+  # Lambda Function
+  ###############################################################
+  APILambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub ${UseCaseName}-Workflow-Information
+      Handler: index.lambda_handler
+      Runtime: python3.12
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Timeout: 30
+      Tags:
+        - Key: Name
+          Value: !Sub ${UseCaseName}         
+      Code:
+        ZipFile: |
+            import json
+            import boto3
+            import decimal
+            import logging
+            from datetime import datetime, timezone, timedelta
+            from boto3.dynamodb.conditions import Key, Attr
+            import base64
+            from typing import NamedTuple
+
+            # ---------------- Logging ----------------
+            LOGGER = logging.getLogger()
+            if not LOGGER.handlers:
+                logging.basicConfig(level=logging.INFO)
+            LOGGER.setLevel(logging.INFO)
+
+            AWS_REGION = "us-east-1"
+
+            # ---------------- Clients ----------------
+            ssm = boto3.client("ssm", region_name=AWS_REGION)
+            dynamodb = boto3.resource("dynamodb")
+            athena = boto3.client("athena", region_name=AWS_REGION)
+
+            # ---------------- Helpers ----------------
+
+            def get_param(name, decrypt=True):
+                try:
+                    return ssm.get_parameter(Name=name, WithDecryption=decrypt)["Parameter"]["Value"]
+                except Exception:
+                    return None
+
+            WORKFLOW_TABLE = get_param("/lpc/aws-ls/dynamo_db/tables/workflow_table")
+            RUN_TABLE = get_param("/lpc/aws-ls/dynamo_db/tables/workflow_runs_table")
+            ATHENA_OUTPUT = get_param("ATHENA_OUTPUT_S3")
+
+            ATHENA_CATALOG = "s3tablescatalog/lab-process-transformed-events"
+            ATHENA_DB = "lab_process_transformed_events"
+
+            workflows = dynamodb.Table(WORKFLOW_TABLE)
+            runs = dynamodb.Table(RUN_TABLE)
+
+            def json_default(o):
+                if isinstance(o, decimal.Decimal):
+                    return float(o)
+                return str(o)
+
+            def response(code, body):
+                return {
+                    "statusCode": code,
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Headers": "*",
+                        "Access-Control-Allow-Methods": "GET,OPTIONS"
+                    },
+                    "body": json.dumps(body, default=json_default)
+                }
+
+            # -------- HTTP API v1 Parsing ---------
+
+            class ParsedEvent(NamedTuple):
+                method: str
+                path: str
+                qs: dict
+
+            def parse_event(event):
+                method = event.get("httpMethod")
+                path = event.get("path", "/")
+                qs = event.get("queryStringParameters") or {}
+                return ParsedEvent(method, path.rstrip("/"), qs)
+
+            def parse_date_filters(qs):
+                return qs.get("date_from"), qs.get("date_to")
+
+            # ---------------- Athena ----------------
+
+            def run_athena(query):
+                exec_id = athena.start_query_execution(
+                    QueryString=query,
+                    QueryExecutionContext={"Database": ATHENA_DB, "Catalog": ATHENA_CATALOG},
+                    ResultConfiguration={"OutputLocation": ATHENA_OUTPUT}
+                )["QueryExecutionId"]
+
+                while True:
+                    status = athena.get_query_execution(QueryExecutionId=exec_id)
+                    state = status["QueryExecution"]["Status"]["State"]
+                    if state in ("SUCCEEDED", "FAILED"):
+                        break
+
+                if state != "SUCCEEDED":
+                    raise Exception("Athena query failed")
+
+                rows = athena.get_query_results(QueryExecutionId=exec_id)["ResultSet"]["Rows"]
+                if len(rows) < 2:
+                    return []
+
+                headers = [c["VarCharValue"] for c in rows[0]["Data"]]
+                return [
+                    dict(zip(headers, [d.get("VarCharValue") for d in r["Data"]]))
+                    for r in rows[1:]
+                ]
+
+            # ---------------- DynamoDB Filters ----------------
+
+            def filter_by_date(items, field, start, end):
+                if start:
+                    items = [i for i in items if i.get(field, "") >= start]
+                if end:
+                    items = [i for i in items if i.get(field, "") <= end]
+                return items
+
+            # ---------------- Handlers ----------------
+
+            def handle_workflows(qs):
+                start, end = parse_date_filters(qs)
+                data = workflows.scan()["Items"]
+                data = filter_by_date(data, "created_at", start, end)
+                return response(200, {"workflows": data, "count": len(data)})
+
+            def handle_runs(qs):
+                start, end = parse_date_filters(qs)
+                data = runs.scan()["Items"]
+                data = filter_by_date(data, "start_time", start, end)
+                return response(200, {"runs": data, "count": len(data)})
+
+            def handle_run(run_id):
+                item = runs.get_item(Key={"run_id": run_id}).get("Item")
+                return response(200, {"run": item}) if item else response(404, {"error": "Not found"})
+
+            def handle_workflow(wid):
+                item = workflows.get_item(Key={"workflow_id": wid}).get("Item")
+                return response(200, {"workflow": item}) if item else response(404, {"error": "Not found"})
+
+            def handle_dashboard(qs):
+                start, end = parse_date_filters(qs)
+
+                date_filter = ""
+                if start and end:
+                    date_filter = f"WHERE timestamp BETWEEN '{start}' AND '{end}'"
+                elif start:
+                    date_filter = f"WHERE timestamp >= '{start}'"
+                elif end:
+                    date_filter = f"WHERE timestamp <= '{end}'"
+
+                query = f"""
+                SELECT event_type, count(*) cnt
+                FROM "{ATHENA_CATALOG}"."{ATHENA_DB}"."workflow_events"
+                {date_filter}
+                GROUP BY event_type
+                """
+                return response(200, {"summary": run_athena(query)})
+
+            def handle_alerts(qs):
+                start, end = parse_date_filters(qs)
+
+                date_filter = ""
+                if start and end:
+                    date_filter = f"WHERE timestamp BETWEEN '{start}' AND '{end}'"
+                elif start:
+                    date_filter = f"WHERE timestamp >= '{start}'"
+                elif end:
+                    date_filter = f"WHERE timestamp <= '{end}'"
+
+                anomaly_q = f"""
+                SELECT id,event_type,run_id,step_id,timestamp,details
+                FROM "{ATHENA_CATALOG}"."{ATHENA_DB}"."anomaly_events"
+                {date_filter}
+                ORDER BY timestamp DESC
+                LIMIT 500
+                """
+
+                return response(200, {"anomalies": run_athena(anomaly_q)})
+
+            # ---------------- Lambda Entry ----------------
+
+            def lambda_handler(event, context):
+                parsed = parse_event(event)
+
+                if parsed.method == "OPTIONS":
+                    return response(200, {})
+
+                if parsed.method == "GET":
+                    if parsed.path == "/workflows":
+                        return handle_workflows(parsed.qs)
+                    if parsed.path.startswith("/workflows/"):
+                        return handle_workflow(parsed.path.split("/")[-1])
+                    if parsed.path == "/runs":
+                        return handle_runs(parsed.qs)
+                    if parsed.path.startswith("/runs/"):
+                        return handle_run(parsed.path.split("/")[-1])
+                    if parsed.path == "/dashboard":
+                        return handle_dashboard(parsed.qs)
+                    if parsed.path == "/alerts":
+                        return handle_alerts(parsed.qs)
+
+                return response(404, {"error": "Route not found"})
+ 
+
+
+  GatewayAPI:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Body:
+        openapi: '3.0.1'
+        info:
+          title: !Sub ${UseCaseName}-workflow-information-api
+        paths:
+          /workflow_information:
+            x-amazon-apigateway-any-method:
+              responses:
+                default:
+                  description: 'Default response for ANY /SC_chat_store_execution'
+              x-amazon-apigateway-integration:
+                payloadFormatVersion: '1.0'
+                type: 'aws_proxy'
+                httpMethod: 'POST'
+                uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${APILambdaFunction.Arn}/invocations'
+                connectionType: 'INTERNET'        
+          /workflows:
+            get:
+              responses:
+                default:
+                  description: 'get workflows'
+              x-amazon-apigateway-integration:
+                payloadFormatVersion: '1.0'
+                type: 'aws_proxy'
+                httpMethod: 'POST'
+                uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${APILambdaFunction.Arn}/invocations'
+                connectionType: 'INTERNET'
+          /runs:
+            get:
+              responses:
+                default:
+                  description: 'get runs'
+              x-amazon-apigateway-integration:
+                payloadFormatVersion: '1.0'
+                type: 'aws_proxy'
+                httpMethod: 'POST'
+                uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${APILambdaFunction.Arn}/invocations'
+                connectionType: 'INTERNET'
+          /runs/{id}:
+            get:
+              responses:
+                default:
+                  description: 'get runs with specific id'
+              x-amazon-apigateway-integration:
+                payloadFormatVersion: '1.0'
+                type: 'aws_proxy'
+                httpMethod: 'POST'
+                uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${APILambdaFunction.Arn}/invocations'
+                connectionType: 'INTERNET'
+          parameters:
+              - name: 'id'
+                in: 'path'
+                description: 'parameter id for specific workflows'
+                required: true
+                schema:
+                  type: 'string'                
+          /dashboard:
+            get:
+              responses:
+                default:
+                  description: 'get kpis'
+              x-amazon-apigateway-integration:
+                payloadFormatVersion: '1.0'
+                type: 'aws_proxy'
+                httpMethod: 'POST'
+                uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${APILambdaFunction.Arn}/invocations'
+                connectionType: 'INTERNET'
+          /workflows/{id}:
+            get:
+              responses:
+                default:
+                  description: 'get workflows for specific id'
+              x-amazon-apigateway-integration:
+                payloadFormatVersion: '1.0'
+                type: 'aws_proxy'
+                httpMethod: 'POST'
+                uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${APILambdaFunction.Arn}/invocations'
+                connectionType: 'INTERNET'
+            parameters:
+              - name: 'id'
+                in: 'path'
+                description: 'parameter id for specific workflows'
+                required: true
+                schema:
+                  type: 'string'
+          /alerts:
+            get:
+              responses:
+                default:
+                  description: 'get alerts'
+              x-amazon-apigateway-integration:
+                payloadFormatVersion: '1.0'
+                type: 'aws_proxy'
+                httpMethod: 'POST'
+                uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${APILambdaFunction.Arn}/invocations'
+                connectionType: 'INTERNET'
+
+        x-amazon-apigateway-cors:
+          allowMethods:
+            - 'GET'
+          allowHeaders:
+            - '*'
+          maxAge: 0
+          allowCredentials: false
+          allowOrigins:
+            - '*'
+          exposeHeaders: 
+            - Content-Type
+            - Authorization
+            - X-Amz-Date
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amzn-Trace-Id
+            - X-Requested-With            
+        x-amazon-apigateway-importexport-version: '1.0'
+
+
+  ApiStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref GatewayAPI
+      StageName: !Ref StageName
+      AutoDeploy: true
+
+  LambdaInvokePermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !GetAtt APILambdaFunction.Arn
+      Principal: 'apigateway.amazonaws.com'
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${GatewayAPI}/*/*'
+
+Outputs:
+  RestApiId:
+    Description: 'Rest API ID'
+    Value: !Ref GatewayAPI
+  ApiUrl:
+    Description: 'API Gateway URL'
+    Value: !Sub 'https://${GatewayAPI}.execute-api.${AWS::Region}.amazonaws.com/${StageName}'
+  ApiStageName:
+    Description: 'API Stage Name'
+    Value: !Ref ApiStage 
+  LambdaArn:
+    Description: "Lambda Function ARN"
+    Value: !GetAtt APILambdaFunction.Arn

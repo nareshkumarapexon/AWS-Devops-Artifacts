@@ -1,0 +1,841 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "DynamoDB tables for chat messages and chat sessions"
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Default: lab-process
+    Description: "Name of the Use Case being developed"
+
+  StageName:
+    Type: String
+    Default: v1
+
+  DocumentS3Bucket:
+    Type: String
+    Default: lab-processor-neptune-load
+
+  AgentRuntimeArn:
+    Type: String
+    Default: arn:aws:bedrock-agentcore:us-east-1:969385807621:runtime/lpc_runtime_agent-mL4fec7RSj
+
+  KGDynamodb:
+    Type: String
+    Default: lab-process-kg-upload
+
+  RuntimeQualifier:
+    Type: String
+    Default: ""
+
+Resources: 
+  ###############################################################
+  # IAM Role for Lambda
+  ###############################################################
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${UseCaseName}-lambda-kg-upload-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: !Sub ${UseCaseName}LambdaKGUploadPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+            Statement:
+              - Sid: EventBusPermission
+                Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:ListBucket
+                Resource: "*"
+
+              - Sid: SSMParms
+                Effect: Allow
+                Action:
+                    - ssm:GetParameter
+                Resource: "arn:aws:ssm:*:*:parameter/*"
+
+              - Sid: AgentRuntimePermission                
+                Effect: Allow
+                Action:
+                  - bedrock-agentcore:InvokeAgentRuntime
+                Resource: !Sub arn:aws:bedrock-agentcore:us-east-1:${AWS::AccountId}:runtime/lpc*
+
+              - Sid: BedrockFoundationPermission
+                Effect: Allow
+                Action:
+                  - bedrock:InvokeModel
+                  - bedrock:InvokeAgent
+                  - bedrock:GetFoundationModel
+                Resource: "*"
+
+              - Sid: LambdaInvokePermission
+                Effect: Allow
+                Action:
+                  - lambda:Get*
+                  - lambda:Invoke*
+                Resource: "*"
+
+
+              - Sid: dynamodbs
+                Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:GetItem
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                  - dynamodb:DeleteItem
+                  - dynamodb:BatchWriteItem
+                Resource: 
+                  - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${KGDynamodb}"
+                  - !Sub "arn:aws:dynamodb:us-east-1:969385807621:table/${KGDynamodb}/index/*"
+
+  ###############################################################
+  # Lambda Function
+  ###############################################################
+  APILambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub ${UseCaseName}-kg-upload
+      Handler: index.lambda_handler
+      Runtime: python3.12
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Timeout: 30
+      Tags:
+        - Key: Name
+          Value: !Sub ${UseCaseName}   
+      Environment:
+        Variables:
+          DOCUMENT_BUCKET:
+            Ref: DocumentS3Bucket
+          AGENT_RUNTIME_ARN:
+            Ref: AgentRuntimeArn     
+          RUNTIME_QUALIFIER:
+            Ref: RuntimeQualifier                   
+          DYNAMO_TABLE_NAME:
+            Ref: KGDynamodb                 
+      Code:
+        ZipFile: |
+          import boto3
+          import base64
+          import uuid
+          import os
+          import logging
+          import re
+          import json
+          from datetime import datetime
+
+          # -----------------------------------------------------
+          # LOGGING
+          # -----------------------------------------------------
+          logger = logging.getLogger()
+          logger.setLevel(logging.INFO)
+
+          # -----------------------------------------------------
+          # AWS CLIENTS
+          # -----------------------------------------------------
+          s3 = boto3.client("s3")
+          dynamodb = boto3.resource("dynamodb")
+          lambda_client = boto3.client("lambda")
+          agent_client = boto3.client("bedrock-agentcore", region_name="us-east-1")
+
+          # -----------------------------------------------------
+          # ENV VARIABLES
+          # -----------------------------------------------------
+          DOCUMENT_BUCKET = os.environ["DOCUMENT_BUCKET"]
+          DYNAMO_TABLE_NAME = os.environ["DYNAMO_TABLE_NAME"]
+          AGENT_RUNTIME_ARN = os.environ["AGENT_RUNTIME_ARN"]
+          RUNTIME_QUALIFIER = os.environ.get("RUNTIME_QUALIFIER")
+
+          table = dynamodb.Table(DYNAMO_TABLE_NAME)
+
+
+          # =====================================================
+          # RESPONSE HELPER
+          # =====================================================
+          def response(status, body):
+              return {
+                  "statusCode": status,
+                  "headers": {
+                      "Access-Control-Allow-Origin": "*",
+                      "Access-Control-Allow-Headers": "*",
+                      "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
+                      "Content-Type": "application/json",
+                      "X-From-Lambda": "lab-process-kg-upload"
+                  },
+                  "body": json.dumps(body, default=str)
+              }
+
+
+          # =====================================================
+          # AGENT INVOCATION
+          # =====================================================
+          from botocore.exceptions import ClientError
+
+          def invoke_agent(prompt_text, file_path, extra_payload=None):
+              payload = {
+                  "prompt": prompt_text,
+                  "file_path": file_path
+              }
+              if extra_payload:
+                  payload.update(extra_payload)
+
+              session_id = str(uuid.uuid4())
+
+              invoke_args = {
+                  "agentRuntimeArn": AGENT_RUNTIME_ARN,
+                  "runtimeSessionId": session_id,
+                  "payload": json.dumps(payload)
+              }
+              if RUNTIME_QUALIFIER:
+                  invoke_args["qualifier"] = RUNTIME_QUALIFIER
+
+              logger.info(f"[invoke_agent] session_id={session_id} file_path={file_path}")
+
+              try:
+                  response_obj = agent_client.invoke_agent_runtime(**invoke_args)
+                  raw = response_obj["response"].read().decode("utf-8", errors="replace")
+                  logger.info(f"[invoke_agent] response (first 800 chars): {raw[:800]}")
+                  return raw
+
+              except ClientError as e:
+                  # Bedrock/AgentCore errors usually show useful structured info here
+                  logger.error(f"[invoke_agent] ClientError: {e.response}", exc_info=True)
+                  raise
+
+              except Exception as e:
+                  logger.error(f"[invoke_agent] Unknown error: {str(e)}", exc_info=True)
+                  raise
+
+
+          # =====================================================
+          # MAIN HANDLER
+          # =====================================================
+          def lambda_handler(event, context):
+
+              logger.info(json.dumps({"event_keys": list(event.keys())}))
+
+              # -------- BACKGROUND PROCESS --------
+              if event.get("action") == "process_extraction":
+                  return process_extraction_background(event)
+
+              # -------- API GATEWAY ROUTING --------
+              method = event.get("requestContext", {}).get("http", {}).get("method")
+              raw_path = event.get("rawPath", "")
+
+              if method == "OPTIONS":
+                  return response(200, {"ok": True})
+
+              if method == "POST" and raw_path.endswith("/extract"):
+                  return handle_extract(event, context)
+
+              if method == "GET" and raw_path.rstrip("/").endswith("/documents"):
+                  return handle_get_all_documents(event)
+
+              # GET /documents/{id} or GET /v1/documents/{id}
+              if method == "GET" and "/documents/" in raw_path:
+                  # First try to get from pathParameters (API Gateway v2.0)
+                  path_params = event.get("pathParameters", {}) or {}
+                  doc_id = path_params.get("id")
+                  
+                  logger.info(f"PathParameters: {path_params}")
+                  logger.info(f"Document ID from pathParameters: {doc_id}")
+                  
+                  # Fallback to parsing raw path if pathParameters not available
+                  if not doc_id:
+                      logger.info("PathParameters not found, parsing raw path")
+                      path_parts = raw_path.rstrip("/").split("/")
+                      
+                      try:
+                          doc_index = path_parts.index("documents")
+                          if doc_index + 1 < len(path_parts):
+                              doc_id = path_parts[doc_index + 1]
+                              logger.info(f"Extracted document_id from raw path: {doc_id}")
+                      except (ValueError, IndexError) as e:
+                          logger.error(f"Failed to extract document_id: {str(e)}")
+                          return response(400, {"error": "Invalid document ID in path"})
+                  
+                  if doc_id:
+                      logger.info(f"Final document_id to process: {doc_id}")
+                      return handle_get_document_by_id(event, doc_id)
+                  else:
+                      return response(400, {"error": "Document ID not found in path or pathParameters"})
+
+              if method == "POST" and raw_path.endswith("/review"):
+                  return handle_review(event)
+
+              if method == "GET" and raw_path.rstrip("/").endswith("/manifest"):
+                  return handle_get_manifest()
+
+              logger.warning(f"No route matched for {method} {raw_path}")
+              return response(404, {"error": "Invalid route", "method": method, "path": raw_path})
+
+
+          # =====================================================
+          # API: HANDLE EXTRACT (FAST RETURN)
+          # =====================================================
+          def handle_extract(event, context):
+
+              headers = {k.lower(): v for k, v in (event.get("headers") or {}).items()}
+              content_type = headers.get("content-type", "")
+
+              if "multipart/form-data" not in content_type:
+                  return response(400, {"error": "multipart/form-data required"})
+
+              body = event.get("body", "")
+
+              if event.get("isBase64Encoded"):
+                  body = base64.b64decode(body)
+              elif isinstance(body, str):
+                  body = body.encode()
+
+              boundary_match = re.search(r"boundary=(.+?)(?:;|$)", content_type)
+              if not boundary_match:
+                  return response(400, {"error": "Boundary missing"})
+
+              boundary = boundary_match.group(1).encode()
+              parts = body.split(b"--" + boundary)
+
+              file_content = None
+              file_name = None
+              document_id = None
+
+              for part in parts:
+                  if b"Content-Disposition" not in part:
+                      continue
+
+                  # Extract field name (e.g., document_id, file)
+                  name_match = re.search(b'name="(.+?)"', part)
+                  if not name_match:
+                      continue
+
+                  field_name = name_match.group(1).decode()
+
+                  # ---- document_id text field ----
+                  if field_name == "document_id":
+                      try:
+                          value = part.split(b"\r\n\r\n", 1)[1]
+                          document_id = value.strip(b"\r\n--").decode().strip()
+                      except Exception:
+                          # If parsing fails, let it fall back to UUID below
+                          document_id = None
+
+                  # ---- file field ----
+                  elif field_name == "file" and b'filename="' in part:
+                      file_match = re.search(b'filename="(.+?)"', part)
+                      if file_match:
+                          file_name = file_match.group(1).decode()
+
+                      try:
+                          file_content = part.split(b"\r\n\r\n", 1)[1].rstrip(b"\r\n--")
+                      except Exception:
+                          file_content = None
+
+              if not file_content:
+                  return response(400, {"error": "File missing"})
+
+              # If UI didn't pass document_id, fallback to UUID
+              if not document_id:
+                  document_id = str(uuid.uuid4())
+
+              # Recommended: keep original filename but namespace by document_id to avoid collisions
+              safe_filename = os.path.basename(file_name or f"{document_id}.docx")
+              doc_key = f"instrument-docs/{document_id}/{safe_filename}"
+
+              logger.info(f"Uploading file to S3: {doc_key}")
+
+              # Upload to S3
+              s3.put_object(
+                  Bucket=DOCUMENT_BUCKET,
+                  Key=doc_key,
+                  Body=file_content,
+                  ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              )
+
+              now = datetime.utcnow().isoformat()
+
+              # Create Dynamo record
+              table.put_item(Item={
+                  "document_id": document_id,
+                  "docx_s3_key": doc_key,
+                  "file_name": safe_filename,
+                  "status": "EXTRACTING",
+                  "created_at": now,
+                  "updated_at": now
+              })
+
+              logger.info(f"Dynamo record created for {document_id}")
+
+              # Invoke same Lambda asynchronously
+              lambda_client.invoke(
+                  FunctionName=context.function_name,
+                  InvocationType="Event",
+                  Payload=json.dumps({
+                      "action": "process_extraction",
+                      "document_id": document_id,
+                      "doc_key": doc_key
+                  })
+              )
+
+              logger.info(f"Async extraction triggered for {document_id}")
+
+              return response(202, {
+                  "document_id": document_id,
+                  "doc_key" : doc_key,
+                  "status": "EXTRACTING"
+              })
+
+
+          # =====================================================
+          # BACKGROUND EXTRACTION PROCESS
+          # =====================================================
+          def process_extraction_background(event):
+              document_id = event["document_id"]
+              doc_key = event["doc_key"]
+
+              try:
+                  logger.info(f"Starting extraction for {document_id} doc_key={doc_key}")
+
+                  # 1) Invoke agent using the DOCX S3 key (doc_key)
+                  agent_response_raw = invoke_agent(
+                      "Read the document at file_path and extract instrument knowledge. "
+                      "Save the extracted JSON to S3 and return ONLY valid JSON like: "
+                      "{\"preview_s3_key\": \"preview-json/<something>.json\"}",
+                      doc_key
+                  )
+
+                  logger.info(f"FULL AGENT RESPONSE: {agent_response_raw}")
+
+                  # 2) Parse JSON from agent response
+                  start = agent_response_raw.find("{")
+                  end = agent_response_raw.rfind("}")
+                  if start == -1 or end == -1 or end <= start:
+                      raise Exception("No JSON object found in agent response")
+
+                  agent_response = json.loads(agent_response_raw[start:end+1])
+
+                  # 3) Get preview key
+                  preview_key = agent_response.get("preview_s3_key")
+                  if not preview_key:
+                      raise Exception(f"preview_s3_key missing in agent response: {agent_response}")
+
+                  # 4) Update Dynamo
+                  table.update_item(
+                      Key={"document_id": document_id},
+                      UpdateExpression="SET preview_s3_key=:p, #s=:s, updated_at=:u",
+                      ExpressionAttributeNames={"#s": "status"},
+                      ExpressionAttributeValues={
+                          ":p": preview_key,
+                          ":s": "EXTRACTION_COMPLETE",
+                          ":u": datetime.utcnow().isoformat()
+                      }
+                  )
+
+                  logger.info(f"Dynamo updated successfully with preview_s3_key={preview_key}")
+                  return {"ok": True, "document_id": document_id, "preview_s3_key": preview_key}
+
+              except Exception as e:
+                  logger.error(f"Extraction failed: {str(e)}", exc_info=True)
+
+                  # Update Dynamo as FAILED
+                  table.update_item(
+                      Key={"document_id": document_id},
+                      UpdateExpression="SET #s=:s, error_message=:e, updated_at=:u",
+                      ExpressionAttributeNames={"#s": "status"},
+                      ExpressionAttributeValues={
+                          ":s": "FAILED",
+                          ":e": str(e),
+                          ":u": datetime.utcnow().isoformat()
+                      }
+                  )
+                  raise
+
+          # =====================================================
+          # API: HANDLE GET ALL DOCUMENTS
+          # =====================================================
+
+          def handle_get_all_documents(event):
+              # Optional query params
+              qs = event.get("queryStringParameters") or {}
+              limit = int(qs.get("limit", "50"))
+              start_key_b64 = qs.get("next_token")
+
+              scan_kwargs = {
+                  "Limit": limit
+              }
+
+              # Pagination support (optional)
+              if start_key_b64:
+                  try:
+                      eks_json = base64.b64decode(start_key_b64).decode("utf-8")
+                      scan_kwargs["ExclusiveStartKey"] = json.loads(eks_json)
+                  except Exception:
+                      return response(400, {"error": "Invalid next_token"})
+
+              try:
+                  resp = table.scan(**scan_kwargs)
+                  items = resp.get("Items", [])
+
+                  # Return only summary fields (recommended)
+                  summaries = []
+                  for it in items:
+                      summaries.append({
+                          "document_id": it.get("document_id"),
+                          "status": it.get("status"),
+                          "created_at": it.get("created_at"),
+                          "updated_at": it.get("updated_at"),
+                          "docx_s3_key": it.get("docx_s3_key"),
+                          "preview_s3_key": it.get("preview_s3_key"),
+                          "error_message": it.get("error_message")
+                      })
+
+                  next_token = None
+                  if "LastEvaluatedKey" in resp:
+                      next_token = base64.b64encode(
+                          json.dumps(resp["LastEvaluatedKey"]).encode("utf-8")
+                      ).decode("utf-8")
+
+                  return response(200, {
+                      "items": summaries,
+                      "next_token": next_token
+                  })
+
+              except Exception as e:
+                  logger.error(f"GET /documents failed: {str(e)}", exc_info=True)
+                  return response(500, {"error": "Failed to list documents"})
+
+          # =====================================================
+          # API: HANDLE GET DOCUMENT BY ID
+          # =====================================================
+
+          def handle_get_document_by_id(event, document_id):
+              logger.info(f"Handling GET /documents/{document_id}")
+              
+              try:
+                  # Step 1: Get document metadata from DynamoDB
+                  logger.info(f"Querying DynamoDB for document_id: {document_id}")
+                  db_response = table.get_item(Key={"document_id": document_id})
+                  item = db_response.get("Item")
+
+                  if not item:
+                      logger.warning(f"Document not found in DynamoDB: {document_id}")
+                      return response(404, {
+                          "error": "Document not found", 
+                          "document_id": document_id
+                      })
+
+                  logger.info(f"Found document in DynamoDB: {json.dumps(item, default=str)}")
+
+                  # Step 2: Extract S3 keys
+                  docx_s3_key = item.get("docx_s3_key")
+                  preview_s3_key = item.get("preview_s3_key")
+                  
+                  # Build basic response
+                  result = {
+                      "document_id": item.get("document_id"),
+                      "status": item.get("status"),
+                      "file_name": item.get("file_name"),
+                      "created_at": item.get("created_at"),
+                      "updated_at": item.get("updated_at"),
+                      "docx_s3_key": docx_s3_key,
+                      "preview_s3_key": preview_s3_key,
+                      "error_message": item.get("error_message")
+                  }
+
+                  # Step 3: Fetch preview JSON from S3 if available
+                  if preview_s3_key:
+                      try:
+                          logger.info(f"Fetching preview JSON from S3: {DOCUMENT_BUCKET}/{preview_s3_key}")
+                          
+                          preview_obj = s3.get_object(
+                              Bucket=DOCUMENT_BUCKET, 
+                              Key=preview_s3_key
+                          )
+                          
+                          preview_content = preview_obj["Body"].read().decode("utf-8")
+                          logger.info(f"Retrieved preview JSON, size: {len(preview_content)} bytes")
+                          
+                          # Parse JSON
+                          try:
+                              preview_json = json.loads(preview_content)
+                              result["preview_json"] = preview_json
+                              logger.info("Successfully parsed preview JSON")
+                              
+                          except json.JSONDecodeError as je:
+                              logger.error(f"Invalid JSON in preview file: {str(je)}")
+                              result["preview_json_raw"] = preview_content
+                              result["preview_parse_error"] = f"Invalid JSON: {str(je)}"
+                          
+                      except s3.exceptions.NoSuchKey:
+                          logger.error(f"Preview file not found in S3: {preview_s3_key}")
+                          result["preview_error"] = "Preview file not found in S3"
+                          
+                      except Exception as e:
+                          logger.error(f"Failed to retrieve preview from S3: {str(e)}", exc_info=True)
+                          result["preview_error"] = f"Failed to retrieve preview: {str(e)}"
+                  else:
+                      logger.info("No preview_s3_key available - extraction may not be complete")
+                      result["preview_error"] = "Preview not yet generated - extraction may be in progress"
+
+                  logger.info(f"Successfully processed GET request for document: {document_id}")
+                  return response(200, result)
+
+              except Exception as e:
+                  logger.error(f"GET /documents/{document_id} failed: {str(e)}", exc_info=True)
+                  return response(500, {
+                      "error": "Failed to get document", 
+                      "details": str(e)
+                  })
+
+          # =====================================================
+          # API: HANDLE REVIEW
+          # =====================================================
+
+
+          def handle_review(event):
+              try:
+                  raw_body = event.get("body") or "{}"
+                  if event.get("isBase64Encoded"):
+                      raw_body = base64.b64decode(raw_body).decode("utf-8")
+
+                  body = json.loads(raw_body)
+
+                  document_id = body.get("document_id")
+                  action = (body.get("action") or "").upper()
+                  message = body.get("message")  # optional
+
+                  if not document_id:
+                      return response(400, {"error": "document_id required"})
+                  if action not in ("APPROVE", "REJECT"):
+                      return response(400, {"error": "action must be APPROVE or REJECT"})
+
+                  db = table.get_item(Key={"document_id": document_id})
+                  item = db.get("Item")
+                  if not item:
+                      return response(404, {"error": "Document not found", "document_id": document_id})
+
+                  # -------- REJECT --------
+                  if action == "REJECT":
+                      table.update_item(
+                          Key={"document_id": document_id},
+                          UpdateExpression="SET #s=:s, review_message=:m, updated_at=:u",
+                          ExpressionAttributeNames={"#s": "status"},
+                          ExpressionAttributeValues={
+                              ":s": "REVIEW_REJECTED",
+                              ":m": message or "Rejected by user",
+                              ":u": datetime.utcnow().isoformat()
+                          }
+                      )
+                      return response(200, {"document_id": document_id, "status": "REVIEW_REJECTED"})
+
+                  # -------- APPROVE --------
+                  preview_key = item.get("preview_s3_key")
+                  if not preview_key:
+                      return response(400, {"error": "preview_s3_key not available yet", "document_id": document_id})
+
+                  # deterministic TTL output key including document_id
+                  file_name = item.get("file_name") or "output.docx"
+                  file_base = os.path.splitext(os.path.basename(file_name))[0]
+                  ttl_output_key = f"final-ttl/{document_id}/{file_base}.ttl"
+
+                  # idempotency guard
+                  if item.get("status") in ("TTL_READY", "NEPTUNE_LOADING", "NEPTUNE_LOADED"):
+                      return response(200, {
+                          "document_id": document_id,
+                          "status": item.get("status"),
+                          "ttl_s3_key": item.get("ttl_s3_key"),
+                          "neptune_load_id": item.get("neptune_load_id")
+                      })
+
+                  # mark converting
+                  table.update_item(
+                      Key={"document_id": document_id},
+                      UpdateExpression="SET #s=:s, updated_at=:u",
+                      ExpressionAttributeNames={"#s": "status"},
+                      ExpressionAttributeValues={
+                          ":s": "CONVERTING_TO_TTL",
+                          ":u": datetime.utcnow().isoformat()
+                      }
+                  )
+
+                  agent_response_raw = invoke_agent(
+                      "Convert the JSON located at file_path into RDF Turtle (TTL). "
+                      "Write the TTL to S3 using ttl_output_key exactly. "
+                      "Return ONLY valid JSON with ttl_s3_key.",
+                      preview_key,
+                      extra_payload={
+                          "ttl_output_key": ttl_output_key,
+                          "document_id": document_id
+                      }
+                  )
+
+                  logger.info(f"Agent TTL response raw: {agent_response_raw}")
+
+                  start = agent_response_raw.find("{")
+                  end = agent_response_raw.rfind("}")
+                  if start == -1 or end == -1 or end <= start:
+                      raise Exception("No JSON object found in agent response")
+
+                  agent_resp = json.loads(agent_response_raw[start:end+1])
+
+                  ttl_key = agent_resp.get("ttl_s3_key") or ttl_output_key
+
+                  # make sure TTL exists before updating Dynamo
+                  s3.head_object(Bucket=DOCUMENT_BUCKET, Key=ttl_key)
+
+                  # update dynamo: TTL ready (S3 event will trigger Neptune load)
+                  table.update_item(
+                      Key={"document_id": document_id},
+                      UpdateExpression="SET #s=:s, ttl_s3_key=:t, updated_at=:u",
+                      ExpressionAttributeNames={"#s": "status"},
+                      ExpressionAttributeValues={
+                          ":s": "TTL_READY",
+                          ":t": ttl_key,   # ✅ use ttl_key, not ttl_output_key
+                          ":u": datetime.utcnow().isoformat()
+                      }
+                  )
+
+                  return response(200, {
+                      "document_id": document_id,
+                      "status": "TTL_READY",
+                      "ttl_s3_key": ttl_key,  # ✅ use ttl_key
+                      "next": "Neptune loader will run from S3 event"
+                  })
+
+              except Exception as e:
+                  logger.error(f"Review failed: {str(e)}", exc_info=True)
+                  try:
+                      if "document_id" in locals() and document_id:
+                          table.update_item(
+                              Key={"document_id": document_id},
+                              UpdateExpression="SET #s=:s, error_message=:e, updated_at=:u",
+                              ExpressionAttributeNames={"#s": "status"},
+                              ExpressionAttributeValues={
+                                  ":s": "REVIEW_FAILED",
+                                  ":e": str(e),
+                                  ":u": datetime.utcnow().isoformat()
+                              }
+                          )
+                  except Exception:
+                      pass
+                  return response(500, {"error": "Review processing failed", "details": str(e)})
+
+
+          # =====================================================
+          # API: HANDLE GET MANIFEST
+          # =====================================================
+
+          MANIFEST_BUCKET = "lab-processor-neptune-load"
+          MANIFEST_KEY = "extraction-jobs/manifest.json"
+
+          def handle_get_manifest():
+              try:
+                  obj = s3.get_object(Bucket=MANIFEST_BUCKET, Key=MANIFEST_KEY)
+                  content = obj["Body"].read().decode("utf-8")
+                  manifest = json.loads(content)
+                  return response(200, manifest)
+
+              except s3.exceptions.NoSuchKey:
+                  logger.error(f"Manifest not found: s3://{MANIFEST_BUCKET}/{MANIFEST_KEY}")
+                  return response(404, {"error": "Manifest file not found"})
+
+              except json.JSONDecodeError as e:
+                  logger.error(f"Invalid JSON in manifest: {str(e)}")
+                  return response(500, {"error": "Manifest contains invalid JSON"})
+
+              except Exception as e:
+                  logger.error(f"Failed to fetch manifest: {str(e)}", exc_info=True)
+                  return response(500, {"error": "Failed to fetch manifest", "details": str(e)})
+
+
+  GatewayAPI:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: !Sub ${UseCaseName}-kg-upload-api
+      ProtocolType: HTTP
+      CorsConfiguration:
+        AllowMethods: [ GET, POST, OPTIONS ]
+        AllowOrigins: [ "*" ]
+        AllowHeaders: [ "*" ]
+
+  LambdaIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref GatewayAPI
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !GetAtt APILambdaFunction.Arn
+      PayloadFormatVersion: '2.0'
+
+
+  ExtractRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref GatewayAPI
+      RouteKey: 'POST /extract'
+      Target: !Sub integrations/${LambdaIntegration}
+
+  ReviewRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref GatewayAPI
+      RouteKey: 'POST /review'
+      Target: !Sub integrations/${LambdaIntegration}
+
+  GetDocumentsRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref GatewayAPI
+      RouteKey: 'GET /documents'
+      Target: !Sub integrations/${LambdaIntegration}
+
+  GetDocumentByIdRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref GatewayAPI
+      RouteKey: 'GET /documents/{id}'
+      Target: !Sub integrations/${LambdaIntegration}
+
+  GetManifestRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref GatewayAPI
+      RouteKey: 'GET /manifest'
+      Target: !Sub integrations/${LambdaIntegration}
+
+
+  ApiStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref GatewayAPI
+      StageName: !Ref StageName
+      AutoDeploy: true
+
+  LambdaInvokePermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !GetAtt APILambdaFunction.Arn
+      Principal: 'apigateway.amazonaws.com'
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${GatewayAPI}/*/*'
+
+Outputs:
+  RestApiId:
+    Description: 'Rest API ID'
+    Value: !Ref GatewayAPI
+  ApiUrl:
+    Description: 'API Gateway URL'
+    Value: !Sub 'https://${GatewayAPI}.execute-api.${AWS::Region}.amazonaws.com/${StageName}'
+  ApiStageName:
+    Description: 'API Stage Name'
+    Value: !Ref ApiStage 
+  LambdaArn:
+    Description: "Lambda Function ARN"
+    Value: !GetAtt APILambdaFunction.Arn

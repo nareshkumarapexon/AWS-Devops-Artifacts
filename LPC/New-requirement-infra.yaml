@@ -1,0 +1,295 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 4 Kinesis -> 4 Lambda -> WebSocket API with $connect/$disconnect
+
+Parameters:
+  Env:
+    Type: String
+    Default: V1
+
+  UseCaseName:
+    Type: String
+    Default: LPC
+
+  LambdaRuntime:
+    Type: String
+    Default: python3.10
+
+Resources:
+
+# -----------------------
+# DynamoDB (WebSocket connections)
+# -----------------------
+  ConnectionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub ${UseCaseName}-connections-${Env}
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: connectionId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: connectionId
+          KeyType: HASH
+
+# -----------------------
+# WebSocket API
+# -----------------------
+  WebSocketApi:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: !Sub ${UseCaseName}-ws-api-${Env}
+      ProtocolType: WEBSOCKET
+      RouteSelectionExpression: "$request.body.action"
+
+  WebSocketStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref WebSocketApi
+      StageName: !Ref Env
+      AutoDeploy: true
+
+# -----------------------
+# IAM Role for all Lambdas
+# -----------------------
+  LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${UseCaseName}-lambda-role-${Env}
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: LambdaAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: kinesis:*
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:DeleteItem
+                  - dynamodb:Scan
+                Resource: !GetAtt ConnectionsTable.Arn
+              - Effect: Allow
+                Action: execute-api:ManageConnections
+                Resource: "*"
+
+# -----------------------
+# Kinesis Streams (4)
+# -----------------------
+  AnomalyStream:
+    Type: AWS::Kinesis::Stream
+    Properties:
+      Name: !Sub ${UseCaseName}-anomaly-${Env}
+      ShardCount: 1
+
+  EquipmentStream:
+    Type: AWS::Kinesis::Stream
+    Properties:
+      Name: !Sub ${UseCaseName}-equipment-${Env}
+      ShardCount: 1
+
+  MeasurementStream:
+    Type: AWS::Kinesis::Stream
+    Properties:
+      Name: !Sub ${UseCaseName}-measurement-${Env}
+      ShardCount: 1
+
+  WorkflowStream:
+    Type: AWS::Kinesis::Stream
+    Properties:
+      Name: !Sub ${UseCaseName}-workflow-${Env}
+      ShardCount: 1
+
+# -----------------------
+# Kinesis Processor Lambdas (4)
+# -----------------------
+  AnomalyLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub ${UseCaseName}-anomaly-processor-${Env}
+      Runtime: !Ref LambdaRuntime
+      Handler: index.handler
+      Role: !GetAtt LambdaRole.Arn
+      Environment:
+        Variables:
+          WS_ENDPOINT: !Sub "https://${WebSocketApi}.execute-api.${AWS::Region}.amazonaws.com/${Env}"
+          TABLE_NAME: !Ref ConnectionsTable
+      Code:
+        ZipFile: |
+          def handler(event, context):
+              print(event)
+
+  EquipmentLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub ${UseCaseName}-equipment-processor-${Env}
+      Runtime: !Ref LambdaRuntime
+      Handler: index.handler
+      Role: !GetAtt LambdaRole.Arn
+      Code:
+        ZipFile: |
+          def handler(event, context):
+              print(event)
+
+  MeasurementLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub ${UseCaseName}-measurement-processor-${Env}
+      Runtime: !Ref LambdaRuntime
+      Handler: index.handler
+      Role: !GetAtt LambdaRole.Arn
+      Code:
+        ZipFile: |
+          def handler(event, context):
+              print(event)
+
+  WorkflowLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub ${UseCaseName}-workflow-processor-${Env}
+      Runtime: !Ref LambdaRuntime
+      Handler: index.handler
+      Role: !GetAtt LambdaRole.Arn
+      Code:
+        ZipFile: |
+          def handler(event, context):
+              print(event)
+
+# -----------------------
+# Kinesis → Lambda mappings
+# -----------------------
+  AnomalyMapping:
+    Type: AWS::Lambda::EventSourceMapping
+    Properties:
+      EventSourceArn: !GetAtt AnomalyStream.Arn
+      FunctionName: !Ref AnomalyLambda
+      StartingPosition: LATEST
+
+  EquipmentMapping:
+    Type: AWS::Lambda::EventSourceMapping
+    Properties:
+      EventSourceArn: !GetAtt EquipmentStream.Arn
+      FunctionName: !Ref EquipmentLambda
+      StartingPosition: LATEST
+
+  MeasurementMapping:
+    Type: AWS::Lambda::EventSourceMapping
+    Properties:
+      EventSourceArn: !GetAtt MeasurementStream.Arn
+      FunctionName: !Ref MeasurementLambda
+      StartingPosition: LATEST
+
+  WorkflowMapping:
+    Type: AWS::Lambda::EventSourceMapping
+    Properties:
+      EventSourceArn: !GetAtt WorkflowStream.Arn
+      FunctionName: !Ref WorkflowLambda
+      StartingPosition: LATEST
+
+# -----------------------
+# $connect Lambda
+# -----------------------
+  ConnectLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub ${UseCaseName}-connect-${Env}
+      Runtime: !Ref LambdaRuntime
+      Handler: index.handler
+      Role: !GetAtt LambdaRole.Arn
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref ConnectionsTable
+      Code:
+        ZipFile: |
+          import boto3, os
+          def handler(event, context):
+              table = boto3.resource('dynamodb').Table(os.environ['TABLE_NAME'])
+              cid = event['requestContext']['connectionId']
+              table.put_item(Item={'connectionId': cid})
+              return {'statusCode': 200}
+
+# -----------------------
+# $disconnect Lambda
+# -----------------------
+  DisconnectLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub ${UseCaseName}-disconnect-${Env}
+      Runtime: !Ref LambdaRuntime
+      Handler: index.handler
+      Role: !GetAtt LambdaRole.Arn
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref ConnectionsTable
+      Code:
+        ZipFile: |
+          import boto3, os
+          def handler(event, context):
+              table = boto3.resource('dynamodb').Table(os.environ['TABLE_NAME'])
+              cid = event['requestContext']['connectionId']
+              table.delete_item(Key={'connectionId': cid})
+              return {'statusCode': 200}
+
+# -----------------------
+# WebSocket Integrations
+# -----------------------
+  ConnectIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref WebSocketApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ConnectLambda.Arn}/invocations
+
+  DisconnectIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref WebSocketApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DisconnectLambda.Arn}/invocations
+
+# -----------------------
+# WebSocket Routes
+# -----------------------
+  ConnectRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref WebSocketApi
+      RouteKey: $connect
+      Target: !Sub integrations/${ConnectIntegration}
+
+  DisconnectRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref WebSocketApi
+      RouteKey: $disconnect
+      Target: !Sub integrations/${DisconnectIntegration}
+
+# -----------------------
+# Lambda permissions
+# -----------------------
+  ConnectPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref ConnectLambda
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+
+  DisconnectPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref DisconnectLambda
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+
+Outputs:
+  WebSocketURL:
+    Value: !Sub "wss://${WebSocketApi}.execute-api.${AWS::Region}.amazonaws.com/${Env}"

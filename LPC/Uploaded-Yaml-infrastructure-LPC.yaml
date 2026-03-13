@@ -1,0 +1,299 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Instrument document upload using S3 presigned URLs
+
+Parameters:
+  BucketName:
+    Type: String
+    Default: lab-process-instrument-docs
+
+  UseCaseName:
+    Type: String
+    Default: lab-process
+    Description: "Name of the Use Case being developed"
+
+  ApiName:
+    Type: String
+    Default: lab-process-instrument-docs-api
+    Description: Name for the HTTP API
+
+  StageName:
+    Type: String
+    Default: v1
+    Description: Stage name
+
+Resources:
+######################################
+# S3 Bucket
+######################################
+  InstrumentDocsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref BucketName
+      VersioningConfiguration:
+        Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      CorsConfiguration:
+        CorsRules:
+          - AllowedOrigins:
+              - "*"            
+            AllowedMethods:
+              - PUT        
+            AllowedHeaders:
+              - "*"            
+            ExposedHeaders:
+              - ETag
+            MaxAge: 3000
+
+  ######################################
+  # S3 Bucket Policy (enforce TLS)
+  ######################################
+  InstrumentDocsBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref InstrumentDocsBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: EnforceTLS
+            Effect: Deny
+            Principal: '*'
+            Action: 's3:*'
+            Resource:
+              - !Sub 'arn:aws:s3:::${InstrumentDocsBucket}'
+              - !Sub 'arn:aws:s3:::${InstrumentDocsBucket}/*'
+            Condition:
+              Bool:
+                'aws:SecureTransport': 'false'
+
+  ######################################
+  # IAM Roles
+  ######################################
+  DocumentUploadLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${UseCaseName}-document-upload-lambda-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: !Sub ${UseCaseName}-document-upload-policy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:PutObject
+                Resource: !Sub arn:aws:s3:::${BucketName}/*
+              - Effect: Allow
+                Action: events:PutEvents
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: "*"
+
+  ######################################
+  # Lambda Functions
+  ######################################
+  DocumentUploadLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub ${UseCaseName}-document-upload
+      Handler: index.lambda_handler
+      Runtime: python3.12
+      Role: !GetAtt DocumentUploadLambdaRole.Arn
+      Timeout: 30
+      Tags:
+        - Key: Name
+          Value: !Sub ${UseCaseName}        
+      Code:
+        ZipFile: |
+            import json
+            import boto3
+            import os
+            import uuid
+            from datetime import datetime
+            
+            s3 = boto3.client("s3")
+            eventbridge = boto3.client("events")
+            
+            BUCKET = "lab-process-instrument-docs"
+            URL_EXPIRY_SECONDS = 900  # 15 minutes
+            
+            # def lambda_handler(event, context):
+            #     path = event.get("rawPath", "")
+                
+            #     if path == "/uploads/presign":
+            #         return handle_presign(event)
+            #     elif path == "/uploads/complete":
+            #         return handle_upload_complete(event)
+            #     else:
+            #         return {
+            #             "statusCode": 404,
+            #             "body": json.dumps({"error": "Not found"})
+            #         }
+
+            def lambda_handler(event, context):
+                raw_path = event.get("rawPath", "")
+
+                # Remove stage prefix (/v1)
+                stage = event.get("requestContext", {}).get("stage")
+                if stage and raw_path.startswith(f"/{stage}/"):
+                    path = raw_path[len(stage) + 1:]
+                elif stage and raw_path == f"/{stage}":
+                    path = "/"
+                else:
+                    path = raw_path
+
+                if path == "/uploads/presign":
+                    return handle_presign(event)
+                elif path == "/uploads/complete":
+                    return handle_upload_complete(event)
+                else:
+                    return {
+                        "statusCode": 404,
+                        "body": json.dumps({
+                            "error": "Not found",
+                            "received_path": raw_path,
+                            "normalized_path": path
+                        })
+                    }
+            def handle_presign(event):
+                body = json.loads(event.get("body", "{}"))
+            
+                instrument_id = body["instrument_id"]
+                doc_type = body["doc_type"]
+                file_name = body["file_name"]
+                content_type = body.get("content_type", "application/octet-stream")
+            
+                key = (
+                    f"instruments/{instrument_id}/"
+                    f"{doc_type}/"
+                    f"{datetime.utcnow().strftime('%Y%m%d')}_"
+                    f"{uuid.uuid4()}_{file_name}"
+                )
+            
+                presigned_url = s3.generate_presigned_url(
+                    ClientMethod="put_object",
+                    Params={
+                        "Bucket": BUCKET,
+                        "Key": key,
+                        "ContentType": content_type
+                    },
+                    ExpiresIn=URL_EXPIRY_SECONDS
+                )
+            
+                return {
+                    "statusCode": 200,
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "Access-Control-Allow-Origin": "*"
+                    },
+                    "body": json.dumps({
+                        "upload_url": presigned_url,
+                        "s3_key": key,
+                        "expires_in": URL_EXPIRY_SECONDS
+                    })
+                }
+
+            def handle_upload_complete(event):
+                body = json.loads(event["body"])
+            
+                eventbridge.put_events(
+                    Entries=[{
+                        "Source": "lpc.docs",
+                        "DetailType": "instrument_document_uploaded",
+                        "Detail": json.dumps({
+                            **body,
+                            "timestamp": datetime.utcnow().isoformat() + "Z"
+                        })
+                    }]
+                )
+            
+                return {
+                  "statusCode": 200,
+                  "body": json.dumps({"message": "Upload recorded"})
+                }
+
+
+  ######################################
+  # API Gateway (HTTP API)
+  ######################################
+  # 1) HTTP API
+  HttpApi:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: !Ref ApiName
+      ProtocolType: HTTP
+      CorsConfiguration:
+        AllowOrigins:
+          - '*'
+        AllowMethods:
+          - POST
+          - OPTIONS
+        AllowHeaders:
+          - '*'
+
+  # 2) Lambda integration
+  DocumentUploadIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref HttpApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !GetAtt DocumentUploadLambda.Arn
+      PayloadFormatVersion: '2.0'
+
+  # 3) Route: 
+  PresignRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref HttpApi
+      RouteKey: "POST /uploads/presign"
+      Target: !Sub 'integrations/${DocumentUploadIntegration}'
+
+  UploadCompleteRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref HttpApi
+      RouteKey: "POST /uploads/complete"
+      Target: !Sub 'integrations/${DocumentUploadIntegration}'
+
+  # 4) Stage
+  HttpApiStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref HttpApi
+      StageName: !Ref StageName
+      AutoDeploy: true
+
+  # 5) Lambda permission
+  PresignLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref DocumentUploadLambda
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${HttpApi}/*/*
+
+Outputs:
+  ApiUrl:
+    Description: HTTP API base URL
+    Value: !Sub https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com/${StageName}
+
+  S3BucketName:
+    Description: S3 bucket for instrument documents
+    Value: !Ref InstrumentDocsBucket
