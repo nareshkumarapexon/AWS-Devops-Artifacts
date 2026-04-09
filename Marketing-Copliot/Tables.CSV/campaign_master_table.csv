@@ -1,0 +1,401 @@
+campaign_id,user_id,hcp_id,campaign_name,channel,start_date,end_date,content_type,budget,target_segment,status
+CMP000001,USR000012,HCP000165,Joint Health Campaign,Webinar,3/28/2023,10/6/2023,Whitepaper,57060,Medium,Active
+CMP000002,USR000020,HCP000136,Nephrology Advancement,Event,3/15/2025,5/13/2025,Newsletter,91194,Low,Planned
+CMP000003,USR000020,HCP000340,Pediatrics Growth Program,Event,4/17/2024,8/22/2024,Infographic,86218,High,Planned
+CMP000004,USR000009,HCP000077,Pediatrics Growth Program,Social Media,9/9/2023,1/22/2025,Newsletter,79771,Medium,Completed
+CMP000005,USR000019,HCP000088,Skin Care Innovation,Webinar,12/17/2023,9/10/2024,Video,55835,Low,Active
+CMP000006,USR000002,HCP000266,Respiratory Health Focus,Social Media,3/17/2025,7/5/2025,Newsletter,50244,Medium,Active
+CMP000007,USR000020,HCP000143,Heart Health Awareness,Webinar,5/3/2023,5/26/2024,Whitepaper,71871,Medium,Completed
+CMP000008,USR000016,HCP000144,Cardio Awareness Campaign,Webinar,11/1/2023,12/31/2024,Newsletter,73374,High,Planned
+CMP000009,USR000012,HCP000084,Oncology Insights Initiative,Email,7/14/2023,10/26/2024,Webinar,55122,Medium,Planned
+CMP000010,USR000011,HCP000049,Skin Care Innovation,Webinar,8/12/2025,11/23/2025,Webinar,52110,Medium,Completed
+CMP000011,USR000014,HCP000094,Respiratory Health Focus,Email,5/26/2023,7/14/2025,Webinar,91329,High,Completed
+CMP000012,USR000012,HCP000075,Cardio Awareness Campaign,Webinar,9/22/2025,10/24/2025,Infographic,57325,Low,Completed
+CMP000013,USR000020,HCP000033,Mental Health Awareness,Webinar,7/8/2025,10/28/2025,Whitepaper,58853,Medium,Active
+CMP000014,USR000005,HCP000055,Endocrine Health Drive,Email,8/28/2023,5/19/2024,Whitepaper,73414,High,Active
+CMP000015,USR000001,HCP000150,Endocrine Health Drive,Email,10/20/2025,12/19/2025,Newsletter,92286,High,Active
+CMP000016,USR000018,HCP000067,Neurology Breakthrough Series,Email,7/29/2025,10/2/2025,Infographic,78008,Medium,Active
+CMP000017,USR000005,HCP000071,Psychiatric Wellness Initiative,Email,5/25/2025,6/9/2025,Whitepaper,41648,Low,Active
+CMP000018,USR000005,HCP000375,Respiratory Health Focus,Email,2/14/2023,6/20/2023,Newsletter,68542,Medium,Active
+CMP000019,USR000007,HCP000410,Urology Innovation,Webinar,3/12/2023,12/2/2025,Newsletter,44136,Low,Active
+CMP000020,USR000013,HCP000412,Oncology Insights Initiative,Webinar,6/14/2025,9/24/2025,Webinar,76152,High,Active
+CMP000021,USR000018,HCP000191,Respiratory Health Focus,Webinar,10/8/2025,10/28/2025,Whitepaper,74256,Medium,Active
+CMP000022,USR000014,HCP000196,Respiratory Health Focus,Webinar,6/7/2025,11/15/2025,Newsletter,55659,Low,Active
+CMP000023,USR000004,HCP000148,Cardio Awareness Campaign 2024,Email,8/18/2025,12/20/2025,Webinar,57689,Medium,Completed
+CMP000024,USR000012,HCP000496,Pulmonary Care Campaign 2025,Social Media,2/17/2023,3/31/2025,Webinar,94977,High,Completed
+CMP000025,USR000011,HCP000320,General Practice Outreach Q1,Webinar,9/1/2025,12/15/2025,Whitepaper,75912,High,Completed
+CMP000026,USR000017,HCP000014,Pulmonary Care Campaign Q2,Email,3/25/2024,8/5/2025,Whitepaper,63663,Medium,Planned
+CMP000027,USR000009,HCP000483,Cardio Awareness Campaign Q3,Email,4/14/2024,4/24/2025,Webinar,82676,High,Planned
+CMP000028,USR000014,HCP000494,Respiratory Health Focus Q4,Social Media,1/16/2024,10/2/2025,Video,71409,High,Completed
+CMP000029,USR000015,HCP000172,Cardio Awareness Campaign 2023,Social Media,11/30/2025,12/19/2025,Whitepaper,91337,High,Completed
+CMP000030,USR000010,HCP000355,Skin Care Innovation 2024,Webinar,4/7/2024,3/25/2025,Webinar,78545,Medium,Completed
+CMP000031,USR000010,HCP000093,Joint Health Campaign 2025,Email,4/24/2023,7/26/2023,Infographic,70372,High,Completed
+CMP000032,USR000007,HCP000215,Cardio Awareness Campaign Q1,Email,9/3/2023,7/16/2025,Whitepaper,78496,Medium,Completed
+CMP000033,USR000013,HCP000088,Mental Health Awareness Q2,Social Media,10/7/2024,10/18/2025,Infographic,57810,Low,Planned
+CMP000034,USR000009,HCP000052,Nephrology Advancement Q3,Webinar,12/22/2024,3/11/2025,Video,43003,Low,Planned
+CMP000035,USR000018,HCP000431,Cardio Awareness Campaign Q4,Email,6/12/2024,9/26/2025,Infographic,65588,Medium,Active
+CMP000036,USR000010,HCP000054,Dermatology Excellence 2023,Email,8/12/2023,12/9/2024,Infographic,47083,Low,Active
+CMP000037,USR000016,HCP000253,Mental Health Awareness 2024,Email,5/11/2024,12/2/2025,Video,57689,Medium,Completed
+CMP000038,USR000011,HCP000463,Rheumatology Focus 2025,Webinar,6/20/2024,4/25/2025,Newsletter,92257,High,Completed
+CMP000039,USR000007,HCP000362,Kidney Care Initiative Q1,Social Media,7/23/2023,2/17/2025,Infographic,84728,High,Completed
+CMP000040,USR000001,HCP000016,Heart Health Awareness Q2,Email,3/10/2025,10/14/2025,Infographic,83746,High,Completed
+CMP000041,USR000018,HCP000090,Joint Health Campaign Q3,Social Media,6/14/2023,10/21/2024,Video,95414,High,Planned
+CMP000042,USR000009,HCP000287,Endocrine Health Drive Q4,Webinar,1/11/2024,1/7/2025,Video,70364,High,Planned
+CMP000043,USR000020,HCP000290,Rheumatology Focus 2023,Webinar,7/10/2023,8/28/2024,Video,94544,High,Completed
+CMP000044,USR000002,HCP000192,Neurology Breakthrough Series 2024,Webinar,11/29/2024,6/9/2025,Newsletter,45344,Low,Completed
+CMP000045,USR000020,HCP000073,Brain Health Initiative 2025,Webinar,8/7/2023,1/4/2024,Webinar,56533,Medium,Completed
+CMP000046,USR000019,HCP000073,General Practice Outreach Q1,Webinar,3/20/2023,6/12/2024,Video,75756,High,Completed
+CMP000047,USR000013,HCP000299,Kidney Care Initiative Q2,Webinar,8/19/2024,12/9/2025,Infographic,45372,Low,Completed
+CMP000048,USR000013,HCP000156,Urology Innovation Q3,Email,10/11/2024,4/21/2025,Newsletter,77378,High,Completed
+CMP000049,USR000017,HCP000068,Cancer Care Excellence Q4,Webinar,9/6/2023,1/26/2025,Infographic,75500,Medium,Active
+CMP000050,USR000003,HCP000111,Urology Innovation 2023,Email,6/16/2025,10/15/2025,Webinar,88761,High,Active
+CMP000051,USR000018,HCP000182,Oncology Insights Initiative 2024,Email,10/22/2023,6/25/2024,Whitepaper,42586,Low,Active
+CMP000052,USR000005,HCP000307,Cardio Awareness Campaign 2025,Email,2/13/2025,8/31/2025,Webinar,79480,Medium,Active
+CMP000053,USR000007,HCP000138,Brain Health Initiative Q1,Event,12/26/2024,7/7/2025,Video,98590,High,Active
+CMP000054,USR000007,HCP000211,Dermatology Excellence Q2,Email,4/24/2024,5/15/2025,Whitepaper,49476,Low,Active
+CMP000055,USR000006,HCP000038,Mental Health Awareness Q3,Webinar,2/6/2023,6/25/2023,Video,56679,Low,Active
+CMP000056,USR000015,HCP000249,Pulmonary Care Campaign Q4,Webinar,9/2/2024,9/29/2025,Webinar,52614,Low,Active
+CMP000057,USR000009,HCP000234,Brain Health Initiative 2023,Email,12/11/2024,12/21/2025,Webinar,74153,Medium,Completed
+CMP000058,USR000007,HCP000124,Pediatrics Growth Program 2024,Social Media,1/9/2024,6/24/2024,Video,64172,Medium,Completed
+CMP000059,USR000014,HCP000442,Psychiatric Wellness Initiative 2025,Social Media,6/25/2025,9/1/2025,Infographic,65234,Medium,Completed
+CMP000060,USR000005,HCP000486,Brain Health Initiative Q1,Event,3/17/2023,6/3/2023,Infographic,88074,Medium,Completed
+CMP000061,USR000001,HCP000235,Rheumatology Focus Q2,Webinar,3/13/2024,4/1/2025,Video,44611,Low,Planned
+CMP000062,USR000017,HCP000164,Diabetes Management Q3,Event,7/17/2025,12/27/2025,Webinar,71597,Medium,Planned
+CMP000063,USR000011,HCP000070,Brain Health Initiative Q4,Event,10/13/2025,12/17/2025,Newsletter,94714,Medium,Completed
+CMP000064,USR000005,HCP000175,Cardio Awareness Campaign 2023,Webinar,1/1/2025,4/21/2025,Newsletter,63269,Medium,Planned
+CMP000065,USR000002,HCP000064,Diabetes Management 2024,Social Media,4/13/2025,4/16/2025,Video,63091,Medium,Planned
+CMP000066,USR000013,HCP000257,Rheumatology Focus 2025,Email,6/16/2023,4/15/2025,Video,85261,High,Completed
+CMP000067,USR000001,HCP000357,Cardio Awareness Campaign Q1,Webinar,7/28/2023,9/10/2024,Whitepaper,55930,Low,Completed
+CMP000068,USR000015,HCP000056,Pulmonary Care Campaign Q2,Social Media,7/22/2024,5/31/2025,Whitepaper,70432,High,Completed
+CMP000069,USR000010,HCP000234,Cardio Awareness Campaign Q3,Email,7/22/2024,8/26/2024,Whitepaper,40256,Low,Completed
+CMP000070,USR000002,HCP000329,Neurology Breakthrough Series Q4,Email,9/14/2024,10/23/2024,Infographic,54529,Medium,Completed
+CMP000071,USR000012,HCP000444,Joint Health Campaign 2023,Social Media,6/4/2025,8/18/2025,Infographic,59776,Medium,Completed
+CMP000072,USR000018,HCP000293,Mental Health Awareness 2024,Email,7/17/2024,9/19/2025,Webinar,57360,Low,Completed
+CMP000073,USR000020,HCP000230,Cancer Care Excellence 2025,Social Media,3/24/2024,5/20/2024,Whitepaper,66630,Medium,Completed
+CMP000074,USR000012,HCP000401,Skin Care Innovation Q1,Webinar,8/23/2024,9/18/2025,Whitepaper,67096,Medium,Completed
+CMP000075,USR000012,HCP000302,Brain Health Initiative Q2,Email,11/30/2024,7/5/2025,Webinar,72108,High,Active
+CMP000076,USR000010,HCP000080,Pulmonary Care Campaign Q3,Email,8/26/2025,12/22/2025,Webinar,77181,Medium,Active
+CMP000077,USR000011,HCP000112,Rheumatology Focus Q4,Event,7/4/2023,1/19/2024,Infographic,77838,Medium,Completed
+CMP000078,USR000003,HCP000361,Mental Health Awareness 2023,Email,5/31/2023,1/31/2025,Whitepaper,73453,Medium,Completed
+CMP000079,USR000005,HCP000302,Dermatology Excellence 2024,Social Media,8/2/2024,4/22/2025,Webinar,84106,High,Completed
+CMP000080,USR000017,HCP000173,Joint Health Campaign 2025,Email,5/16/2025,10/4/2025,Newsletter,44242,Low,Planned
+CMP000081,USR000008,HCP000166,Cardio Awareness Campaign Q1,Webinar,8/13/2023,6/17/2024,Webinar,78080,High,Planned
+CMP000082,USR000016,HCP000379,Kidney Care Initiative Q2,Social Media,7/24/2025,10/30/2025,Newsletter,62751,Medium,Completed
+CMP000083,USR000017,HCP000487,Oncology Insights Initiative Q3,Social Media,9/15/2024,10/8/2025,Webinar,73756,Medium,Active
+CMP000084,USR000019,HCP000493,Neurology Breakthrough Series Q4,Email,3/4/2023,5/13/2023,Newsletter,67288,Medium,Active
+CMP000085,USR000018,HCP000203,Endocrine Health Drive 2023,Webinar,3/2/2023,9/30/2023,Newsletter,73729,Medium,Completed
+CMP000086,USR000007,HCP000384,Cardio Awareness Campaign 2024,Webinar,6/1/2024,6/3/2025,Webinar,52671,Low,Completed
+CMP000087,USR000019,HCP000337,Skin Care Innovation 2025,Webinar,3/17/2025,9/10/2025,Infographic,95039,High,Completed
+CMP000088,USR000012,HCP000023,Dermatology Excellence Q1,Webinar,8/20/2023,10/28/2025,Whitepaper,50846,Low,Active
+CMP000089,USR000017,HCP000423,General Practice Outreach Q2,Social Media,8/6/2023,12/27/2024,Webinar,63113,Medium,Active
+CMP000090,USR000020,HCP000338,Pediatrics Growth Program Q3,Social Media,8/10/2025,10/10/2025,Infographic,74530,Medium,Active
+CMP000091,USR000010,HCP000320,Nephrology Advancement Q4,Email,9/10/2023,5/12/2025,Newsletter,40671,Low,Active
+CMP000092,USR000020,HCP000051,Endocrine Health Drive 2023,Social Media,8/15/2025,10/12/2025,Infographic,64260,Medium,Completed
+CMP000093,USR000015,HCP000490,Kidney Care Initiative 2024,Email,7/11/2025,9/14/2025,Whitepaper,80825,High,Completed
+CMP000094,USR000001,HCP000131,Diabetes Management 2025,Email,2/27/2025,9/12/2025,Newsletter,77115,Medium,Completed
+CMP000095,USR000004,HCP000241,Neurology Breakthrough Series Q1,Email,4/6/2025,10/13/2025,Newsletter,53411,Low,Completed
+CMP000096,USR000009,HCP000151,Cancer Care Excellence Q2,Webinar,5/24/2025,9/17/2025,Whitepaper,54482,Medium,Planned
+CMP000097,USR000009,HCP000122,Pediatrics Growth Program Q3,Webinar,1/7/2025,11/19/2025,Webinar,51545,Low,Planned
+CMP000098,USR000003,HCP000449,Neurology Breakthrough Series Q4,Webinar,1/26/2023,8/20/2024,Webinar,84318,High,Completed
+CMP000099,USR000014,HCP000369,Mental Health Awareness 2023,Email,5/29/2024,11/3/2025,Webinar,72837,High,Completed
+CMP000100,USR000012,HCP000055,Cancer Care Excellence 2024,Event,6/20/2023,3/28/2025,Whitepaper,85856,Medium,Completed
+CMP000101,USR000006,HCP000159,Respiratory Health Focus 2025,Webinar,6/25/2025,8/23/2025,Whitepaper,46468,Low,Completed
+CMP000102,USR000010,HCP000041,Skin Care Innovation Q1,Email,12/4/2025,12/5/2025,Whitepaper,66009,Medium,Completed
+CMP000103,USR000019,HCP000087,Heart Health Awareness Q2,Social Media,7/16/2025,10/16/2025,Video,59867,Low,Planned
+CMP000104,USR000005,HCP000120,Heart Health Awareness Q3,Social Media,2/17/2024,7/10/2025,Whitepaper,76391,High,Planned
+CMP000105,USR000018,HCP000096,Neurology Breakthrough Series Q4,Webinar,6/17/2025,9/13/2025,Newsletter,56429,Medium,Completed
+CMP000106,USR000008,HCP000463,Kidney Care Initiative 2023,Email,3/21/2023,9/12/2025,Newsletter,94188,High,Completed
+CMP000107,USR000002,HCP000122,Mental Health Awareness 2024,Social Media,1/16/2025,3/23/2025,Newsletter,47973,Low,Completed
+CMP000108,USR000020,HCP000016,Cardio Awareness Campaign 2025,Social Media,3/25/2025,11/24/2025,Video,72727,Medium,Completed
+CMP000109,USR000020,HCP000042,Kidney Care Initiative Q1,Social Media,8/20/2025,11/1/2025,Video,69517,Medium,Completed
+CMP000110,USR000010,HCP000179,Urology Innovation Q2,Webinar,8/18/2023,8/28/2024,Whitepaper,53960,Low,Completed
+CMP000111,USR000018,HCP000408,Skin Care Innovation Q3,Webinar,2/19/2023,7/27/2025,Newsletter,60720,Medium,Active
+CMP000112,USR000011,HCP000417,Pulmonary Care Campaign Q4,Webinar,12/24/2025,12/25/2025,Newsletter,55150,Low,Active
+CMP000113,USR000009,HCP000281,Kidney Care Initiative 2023,Webinar,10/24/2023,11/22/2023,Infographic,81236,High,Completed
+CMP000114,USR000006,HCP000017,Cardio Awareness Campaign 2024,Email,11/16/2024,7/17/2025,Infographic,93017,High,Active
+CMP000115,USR000018,HCP000154,Dermatology Excellence 2025,Event,10/12/2024,2/6/2025,Infographic,80546,High,Active
+CMP000116,USR000001,HCP000411,Pediatrics Growth Program Q1,Webinar,10/3/2024,3/10/2025,Whitepaper,77116,Medium,Active
+CMP000117,USR000003,HCP000037,Heart Health Awareness Q2,Email,9/29/2024,10/23/2025,Video,97757,High,Active
+CMP000118,USR000008,HCP000032,Rheumatology Focus Q3,Webinar,8/7/2025,11/6/2025,Newsletter,80583,High,Completed
+CMP000119,USR000014,HCP000033,Dermatology Excellence Q4,Webinar,4/7/2023,11/7/2023,Video,61219,Medium,Planned
+CMP000120,USR000011,HCP000336,Psychiatric Wellness Initiative 2023,Email,3/16/2025,6/4/2025,Infographic,56780,Medium,Planned
+CMP000121,USR000009,HCP000457,Mental Health Awareness 2024,Webinar,5/21/2025,9/24/2025,Webinar,61528,Medium,Completed
+CMP000122,USR000001,HCP000001,Joint Health Campaign 2025,Social Media,10/25/2025,12/10/2025,Newsletter,68321,Medium,Completed
+CMP000123,USR000017,HCP000338,Urology Innovation Q1,Email,3/27/2025,8/20/2025,Newsletter,77953,High,Completed
+CMP000124,USR000005,HCP000183,Cardio Awareness Campaign Q2,Event,5/2/2024,9/13/2024,Newsletter,96617,Medium,Completed
+CMP000125,USR000015,HCP000146,Endocrine Health Drive Q3,Email,12/15/2024,12/4/2025,Video,72048,Medium,Active
+CMP000126,USR000016,HCP000345,Rheumatology Focus Q4,Email,4/8/2025,8/18/2025,Whitepaper,53034,Low,Active
+CMP000127,USR000017,HCP000229,Dermatology Excellence 2023,Social Media,4/28/2025,9/12/2025,Infographic,77211,Medium,Completed
+CMP000128,USR000003,HCP000033,Heart Health Awareness 2024,Webinar,11/15/2025,12/22/2025,Newsletter,47938,Low,Completed
+CMP000129,USR000007,HCP000347,Diabetes Management 2025,Email,11/23/2025,12/24/2025,Whitepaper,55041,Medium,Completed
+CMP000130,USR000014,HCP000323,Pediatrics Growth Program Q1,Email,12/13/2025,12/19/2025,Video,93748,High,Completed
+CMP000131,USR000010,HCP000473,Rheumatology Focus Q2,Email,8/5/2025,11/7/2025,Newsletter,57973,Low,Active
+CMP000132,USR000017,HCP000215,Heart Health Awareness Q3,Email,10/26/2023,11/11/2024,Video,65588,Medium,Active
+CMP000133,USR000018,HCP000245,Pediatrics Growth Program Q4,Social Media,3/9/2024,5/16/2025,Infographic,58055,Medium,Active
+CMP000134,USR000004,HCP000373,Nephrology Advancement 2023,Webinar,4/8/2024,9/29/2024,Webinar,82043,High,Active
+CMP000135,USR000005,HCP000069,Heart Health Awareness 2024,Webinar,4/7/2024,11/26/2025,Whitepaper,54102,Medium,Completed
+CMP000136,USR000002,HCP000266,Joint Health Campaign 2025,Email,3/24/2024,9/22/2025,Whitepaper,52500,Low,Completed
+CMP000137,USR000015,HCP000110,Skin Care Innovation Q1,Social Media,11/18/2023,5/7/2025,Newsletter,71004,High,Completed
+CMP000138,USR000001,HCP000157,Endocrine Health Drive Q2,Social Media,1/29/2025,6/1/2025,Infographic,58606,Medium,Completed
+CMP000139,USR000003,HCP000015,General Practice Outreach Q3,Email,1/15/2025,5/30/2025,Webinar,59171,Low,Completed
+CMP000140,USR000006,HCP000296,Endocrine Health Drive Q4,Webinar,5/20/2025,9/3/2025,Video,88928,High,Active
+CMP000141,USR000003,HCP000292,Cardio Awareness Campaign 2023,Social Media,3/23/2024,6/25/2024,Infographic,75266,High,Active
+CMP000142,USR000016,HCP000164,Nephrology Advancement 2024,Event,6/9/2025,11/3/2025,Whitepaper,87772,Medium,Active
+CMP000143,USR000008,HCP000452,Cardio Awareness Campaign 2025,Email,9/4/2024,5/30/2025,Whitepaper,57165,Low,Active
+CMP000144,USR000009,HCP000053,Rheumatology Focus Q1,Email,8/16/2023,11/9/2024,Infographic,62510,Medium,Completed
+CMP000145,USR000016,HCP000351,Heart Health Awareness Q2,Email,3/7/2023,5/26/2024,Infographic,48009,Low,Completed
+CMP000146,USR000019,HCP000257,General Practice Outreach Q3,Email,5/3/2023,10/22/2024,Video,57713,Low,Completed
+CMP000147,USR000016,HCP000183,Endocrine Health Drive Q4,Email,11/18/2024,6/5/2025,Newsletter,71573,High,Completed
+CMP000148,USR000004,HCP000331,Nephrology Advancement 2023,Webinar,1/14/2025,4/7/2025,Webinar,75351,Medium,Completed
+CMP000149,USR000019,HCP000028,Endocrine Health Drive 2024,Email,11/10/2023,1/4/2025,Video,45876,Low,Completed
+CMP000150,USR000019,HCP000288,Endocrine Health Drive 2025,Email,5/23/2025,9/5/2025,Infographic,52510,Low,Completed
+CMP000151,USR000002,HCP000298,Diabetes Management Q1,Social Media,8/2/2023,1/18/2024,Whitepaper,41212,Low,Completed
+CMP000152,USR000006,HCP000417,Cardio Awareness Campaign Q2,Email,8/14/2025,12/5/2025,Infographic,78392,Medium,Active
+CMP000153,USR000018,HCP000116,Psychiatric Wellness Initiative Q3,Webinar,1/7/2024,7/13/2024,Whitepaper,91573,High,Active
+CMP000154,USR000007,HCP000017,Skin Care Innovation Q4,Webinar,3/20/2023,6/21/2025,Newsletter,66571,Medium,Active
+CMP000155,USR000001,HCP000285,Diabetes Management 2023,Email,12/17/2023,4/25/2025,Webinar,40437,Low,Active
+CMP000156,USR000005,HCP000071,Skin Care Innovation 2024,Event,12/28/2023,2/6/2024,Webinar,97090,Low,Completed
+CMP000157,USR000008,HCP000228,Cancer Care Excellence 2025,Webinar,6/5/2023,3/8/2025,Newsletter,82997,High,Active
+CMP000158,USR000001,HCP000379,Urology Innovation Q1,Email,5/28/2024,12/6/2025,Webinar,71420,High,Active
+CMP000159,USR000020,HCP000489,Respiratory Health Focus Q2,Email,1/3/2025,2/11/2025,Whitepaper,67922,Medium,Active
+CMP000160,USR000016,HCP000024,Neurology Breakthrough Series Q3,Email,11/24/2025,11/30/2025,Whitepaper,56864,Low,Active
+CMP000161,USR000005,HCP000159,General Practice Outreach Q4,Event,1/9/2023,5/12/2025,Newsletter,88756,Medium,Completed
+CMP000162,USR000018,HCP000225,Diabetes Management 2023,Email,9/3/2023,5/27/2025,Webinar,48050,Low,Completed
+CMP000163,USR000011,HCP000107,General Practice Outreach 2024,Social Media,10/11/2025,11/26/2025,Video,99116,High,Completed
+CMP000164,USR000012,HCP000035,Diabetes Management 2025,Email,1/11/2025,9/20/2025,Video,68402,Medium,Completed
+CMP000165,USR000020,HCP000114,Nephrology Advancement Q1,Email,11/6/2023,1/25/2025,Whitepaper,61695,Medium,Completed
+CMP000166,USR000003,HCP000229,Pediatrics Growth Program Q2,Email,5/13/2024,12/20/2024,Newsletter,52288,Low,Completed
+CMP000167,USR000013,HCP000163,Joint Health Campaign Q3,Social Media,9/30/2025,10/5/2025,Whitepaper,55369,Medium,Completed
+CMP000168,USR000016,HCP000146,Nephrology Advancement Q4,Social Media,5/19/2023,10/26/2025,Newsletter,56450,Medium,Active
+CMP000169,USR000007,HCP000271,Rheumatology Focus 2023,Event,12/27/2023,2/14/2025,Whitepaper,70232,Medium,Active
+CMP000170,USR000013,HCP000232,Endocrine Health Drive 2024,Social Media,2/27/2023,11/25/2023,Newsletter,51391,Medium,Active
+CMP000171,USR000012,HCP000185,Pulmonary Care Campaign 2025,Webinar,10/11/2024,2/24/2025,Video,57129,Low,Active
+CMP000172,USR000004,HCP000127,Dermatology Excellence Q1,Email,2/26/2023,11/3/2024,Infographic,54481,Low,Completed
+CMP000173,USR000003,HCP000401,Pulmonary Care Campaign Q2,Email,2/8/2025,4/21/2025,Webinar,73367,High,Completed
+CMP000174,USR000004,HCP000244,Oncology Insights Initiative Q3,Webinar,3/25/2024,4/23/2024,Newsletter,63747,Medium,Completed
+CMP000175,USR000003,HCP000031,Dermatology Excellence Q4,Email,1/15/2023,4/22/2024,Webinar,53015,Low,Completed
+CMP000176,USR000016,HCP000241,Heart Health Awareness 2023,Webinar,6/1/2025,7/12/2025,Webinar,74975,High,Completed
+CMP000177,USR000003,HCP000284,Pulmonary Care Campaign 2024,Email,6/4/2024,1/11/2025,Webinar,73029,Medium,Completed
+CMP000178,USR000020,HCP000163,Rheumatology Focus 2025,Webinar,12/6/2024,12/24/2025,Whitepaper,63844,Medium,Completed
+CMP000179,USR000012,HCP000193,Psychiatric Wellness Initiative Q1,Email,7/28/2023,9/18/2025,Webinar,48524,Low,Completed
+CMP000180,USR000015,HCP000464,Respiratory Health Focus Q2,Email,12/28/2024,4/12/2025,Whitepaper,93131,High,Completed
+CMP000181,USR000007,HCP000001,Nephrology Advancement Q3,Webinar,10/27/2023,4/18/2024,Webinar,76368,Medium,Completed
+CMP000182,USR000011,HCP000349,Joint Health Campaign Q4,Email,5/28/2024,10/1/2024,Newsletter,56572,Medium,Completed
+CMP000183,USR000020,HCP000375,Mental Health Awareness 2023,Email,12/13/2024,8/21/2025,Infographic,71909,High,Active
+CMP000184,USR000015,HCP000168,Respiratory Health Focus 2024,Email,2/4/2024,8/15/2025,Webinar,88074,High,Active
+CMP000185,USR000015,HCP000390,Cardio Awareness Campaign 2025,Email,10/17/2023,11/7/2023,Infographic,92124,High,Active
+CMP000186,USR000015,HCP000464,Cardio Awareness Campaign Q1,Email,6/7/2024,1/22/2025,Newsletter,59157,Medium,Active
+CMP000187,USR000017,HCP000440,Skin Care Innovation Q2,Webinar,6/1/2025,8/15/2025,Whitepaper,49104,Low,Completed
+CMP000188,USR000019,HCP000157,Urology Innovation Q3,Event,9/30/2023,6/20/2025,Infographic,91814,High,Completed
+CMP000189,USR000006,HCP000131,Oncology Insights Initiative Q4,Event,10/26/2024,11/30/2025,Video,86375,Medium,Completed
+CMP000190,USR000011,HCP000250,Dermatology Excellence 2023,Social Media,5/24/2024,7/30/2024,Video,72886,High,Completed
+CMP000191,USR000012,HCP000133,Rheumatology Focus 2024,Social Media,9/14/2024,11/27/2024,Infographic,79855,High,Completed
+CMP000192,USR000003,HCP000251,Respiratory Health Focus 2025,Webinar,10/15/2023,5/20/2024,Webinar,45789,Low,Completed
+CMP000193,USR000010,HCP000077,Nephrology Advancement Q1,Event,1/11/2025,5/16/2025,Whitepaper,70296,High,Completed
+CMP000194,USR000008,HCP000032,Brain Health Initiative Q2,Webinar,1/21/2024,1/26/2024,Newsletter,46554,Low,Completed
+CMP000195,USR000008,HCP000285,Mental Health Awareness Q3,Social Media,2/10/2024,12/3/2024,Newsletter,92588,High,Completed
+CMP000196,USR000009,HCP000194,Pulmonary Care Campaign Q4,Webinar,1/1/2024,12/12/2024,Newsletter,51953,Low,Completed
+CMP000197,USR000018,HCP000212,Oncology Insights Initiative 2023,Webinar,2/19/2024,11/1/2024,Webinar,73800,Medium,Completed
+CMP000198,USR000020,HCP000304,Diabetes Management 2024,Webinar,4/14/2024,7/10/2025,Newsletter,74087,High,Completed
+CMP000199,USR000004,HCP000241,Mental Health Awareness 2025,Email,6/8/2025,6/12/2025,Webinar,54925,Low,Completed
+CMP000200,USR000008,HCP000450,Heart Health Awareness Q1,Email,2/11/2024,7/2/2025,Infographic,52550,Medium,Completed
+CMP000201,USR000010,HCP000279,Dermatology Excellence Q2,Webinar,7/12/2024,1/11/2025,Video,91737,High,Active
+CMP000202,USR000019,HCP000430,Neurology Breakthrough Series Q3,Email,4/7/2023,10/7/2023,Video,70787,Medium,Active
+CMP000203,USR000006,HCP000395,Oncology Insights Initiative Q4,Webinar,12/23/2024,4/21/2025,Newsletter,77238,High,Active
+CMP000204,USR000014,HCP000387,Urology Innovation 2023,Webinar,9/6/2023,5/27/2025,Video,78664,High,Active
+CMP000205,USR000017,HCP000449,Diabetes Management 2024,Email,12/1/2025,12/25/2025,Video,79958,Medium,Completed
+CMP000206,USR000005,HCP000303,Diabetes Management 2025,Webinar,12/28/2025,12/30/2025,Webinar,78733,Medium,Completed
+CMP000207,USR000019,HCP000025,Neurology Breakthrough Series Q1,Social Media,4/28/2024,10/16/2025,Infographic,40760,Low,Completed
+CMP000208,USR000008,HCP000196,Urology Innovation Q2,Webinar,7/2/2023,10/2/2024,Infographic,55957,Medium,Completed
+CMP000209,USR000020,HCP000004,General Practice Outreach Q3,Social Media,7/24/2024,11/13/2025,Infographic,73395,High,Active
+CMP000210,USR000007,HCP000049,Brain Health Initiative Q4,Email,12/10/2023,5/28/2024,Newsletter,43514,Low,Active
+CMP000211,USR000002,HCP000417,Skin Care Innovation 2023,Social Media,7/27/2023,8/7/2025,Video,43146,Low,Active
+CMP000212,USR000015,HCP000266,Oncology Insights Initiative 2024,Webinar,8/26/2023,8/1/2025,Whitepaper,43937,Low,Active
+CMP000213,USR000009,HCP000114,Brain Health Initiative 2025,Event,7/29/2025,10/9/2025,Whitepaper,97152,Medium,Active
+CMP000214,USR000006,HCP000074,Pediatrics Growth Program Q1,Webinar,10/7/2024,12/7/2025,Infographic,78768,Medium,Active
+CMP000215,USR000006,HCP000410,Skin Care Innovation Q2,Webinar,1/1/2025,10/22/2025,Newsletter,57933,Medium,Active
+CMP000216,USR000001,HCP000308,Nephrology Advancement Q3,Email,4/15/2025,12/28/2025,Webinar,58044,Low,Active
+CMP000217,USR000011,HCP000324,Nephrology Advancement Q4,Webinar,12/6/2023,7/19/2025,Infographic,78231,Medium,Completed
+CMP000218,USR000018,HCP000014,Rheumatology Focus 2023,Event,1/20/2024,7/1/2025,Whitepaper,72881,Medium,Active
+CMP000219,USR000004,HCP000019,Skin Care Innovation 2024,Webinar,7/14/2025,12/30/2025,Video,66661,Medium,Active
+CMP000220,USR000016,HCP000274,Oncology Insights Initiative 2025,Webinar,5/8/2023,8/1/2025,Infographic,94373,High,Active
+CMP000221,USR000013,HCP000123,Kidney Care Initiative Q1,Webinar,11/24/2024,9/1/2025,Whitepaper,57821,Low,Active
+CMP000222,USR000005,HCP000446,Pediatrics Growth Program Q2,Email,5/2/2023,9/24/2025,Whitepaper,56629,Medium,Completed
+CMP000223,USR000009,HCP000093,General Practice Outreach Q3,Webinar,6/24/2023,9/27/2023,Newsletter,64588,Medium,Completed
+CMP000224,USR000010,HCP000134,Psychiatric Wellness Initiative Q4,Webinar,4/30/2025,11/12/2025,Newsletter,88738,High,Completed
+CMP000225,USR000015,HCP000089,Joint Health Campaign 2023,Webinar,11/11/2023,6/30/2024,Webinar,91310,High,Completed
+CMP000226,USR000002,HCP000420,Respiratory Health Focus 2024,Webinar,9/13/2023,2/3/2025,Infographic,50057,Low,Completed
+CMP000227,USR000017,HCP000297,Dermatology Excellence 2025,Social Media,3/19/2025,9/6/2025,Webinar,71249,High,Completed
+CMP000228,USR000001,HCP000068,Joint Health Campaign Q1,Email,6/30/2023,5/14/2024,Webinar,50588,Low,Completed
+CMP000229,USR000006,HCP000129,Diabetes Management Q2,Email,6/24/2025,9/26/2025,Webinar,42939,Low,Completed
+CMP000230,USR000015,HCP000183,Endocrine Health Drive Q3,Email,5/22/2023,7/22/2025,Webinar,56152,Low,Active
+CMP000231,USR000001,HCP000120,Nephrology Advancement Q4,Email,11/23/2024,1/5/2025,Newsletter,67675,Medium,Active
+CMP000232,USR000006,HCP000273,Rheumatology Focus 2023,Email,12/5/2024,3/17/2025,Newsletter,64345,Medium,Active
+CMP000233,USR000008,HCP000216,Diabetes Management 2024,Email,3/8/2025,8/16/2025,Video,64799,Medium,Active
+CMP000234,USR000003,HCP000289,Heart Health Awareness 2025,Email,12/10/2024,7/17/2025,Webinar,67274,Medium,Active
+CMP000235,USR000017,HCP000448,Diabetes Management Q1,Email,3/31/2023,8/15/2025,Video,75965,Medium,Active
+CMP000236,USR000020,HCP000263,Cardio Awareness Campaign Q2,Email,12/19/2024,9/6/2025,Video,98287,High,Active
+CMP000237,USR000020,HCP000282,Skin Care Innovation Q3,Email,4/23/2024,11/5/2025,Infographic,75935,High,Active
+CMP000238,USR000002,HCP000263,Skin Care Innovation Q4,Webinar,2/3/2023,10/10/2024,Infographic,83628,High,Completed
+CMP000239,USR000010,HCP000059,Heart Health Awareness 2023,Webinar,1/31/2024,10/26/2025,Whitepaper,46680,Low,Active
+CMP000240,USR000007,HCP000121,Brain Health Initiative 2024,Social Media,1/5/2023,12/9/2023,Infographic,52436,Low,Active
+CMP000241,USR000018,HCP000227,Kidney Care Initiative 2025,Webinar,6/17/2025,7/15/2025,Newsletter,57493,Low,Active
+CMP000242,USR000015,HCP000197,Joint Health Campaign Q1,Email,3/12/2023,12/29/2024,Video,64901,Medium,Active
+CMP000243,USR000018,HCP000378,Neurology Breakthrough Series Q2,Email,6/19/2024,12/15/2025,Newsletter,58099,Low,Completed
+CMP000244,USR000007,HCP000313,Mental Health Awareness Q3,Email,4/10/2023,7/28/2025,Video,56295,Low,Completed
+CMP000245,USR000012,HCP000211,Endocrine Health Drive Q4,Webinar,4/4/2023,7/20/2023,Webinar,96799,High,Completed
+CMP000246,USR000007,HCP000372,Psychiatric Wellness Initiative 2023,Webinar,1/3/2025,1/15/2025,Infographic,79928,Medium,Completed
+CMP000247,USR000004,HCP000176,Cancer Care Excellence 2024,Social Media,3/21/2024,2/1/2025,Newsletter,61080,Medium,Completed
+CMP000248,USR000002,HCP000429,Psychiatric Wellness Initiative 2025,Social Media,10/7/2023,5/4/2024,Whitepaper,64688,Medium,Completed
+CMP000249,USR000019,HCP000139,Pulmonary Care Campaign Q1,Email,9/23/2025,12/13/2025,Webinar,67009,Medium,Active
+CMP000250,USR000010,HCP000020,Urology Innovation Q2,Event,8/4/2024,5/28/2025,Video,76398,Low,Active
+CMP000251,USR000012,HCP000355,Diabetes Management Q3,Webinar,11/27/2024,9/16/2025,Newsletter,68171,Medium,Active
+CMP000252,USR000010,HCP000137,Endocrine Health Drive Q4,Webinar,8/6/2024,10/7/2024,Video,96470,High,Active
+CMP000253,USR000019,HCP000275,Brain Health Initiative 2023,Email,11/26/2025,12/28/2025,Whitepaper,47973,Low,Active
+CMP000254,USR000018,HCP000154,Skin Care Innovation 2024,Social Media,4/17/2025,6/7/2025,Webinar,78026,Medium,Active
+CMP000255,USR000003,HCP000311,Heart Health Awareness 2025,Webinar,10/12/2025,11/14/2025,Webinar,68262,Medium,Active
+CMP000256,USR000008,HCP000009,Urology Innovation Q1,Email,7/4/2023,4/6/2024,Infographic,44477,Low,Active
+CMP000257,USR000012,HCP000405,Cancer Care Excellence Q2,Webinar,4/14/2025,9/13/2025,Newsletter,79551,High,Completed
+CMP000258,USR000010,HCP000178,Pediatrics Growth Program Q3,Event,4/1/2025,5/20/2025,Newsletter,88284,High,Active
+CMP000259,USR000011,HCP000304,Pediatrics Growth Program Q4,Event,12/12/2023,9/20/2025,Webinar,84676,Medium,Active
+CMP000260,USR000016,HCP000047,Urology Innovation 2023,Email,1/6/2023,2/10/2023,Video,83342,High,Active
+CMP000261,USR000016,HCP000171,Dermatology Excellence 2024,Email,4/8/2024,4/2/2025,Video,51421,Medium,Active
+CMP000262,USR000019,HCP000235,Mental Health Awareness 2025,Webinar,11/12/2025,12/23/2025,Whitepaper,49029,Low,Completed
+CMP000263,USR000016,HCP000436,Pulmonary Care Campaign Q1,Social Media,4/6/2025,8/31/2025,Webinar,49919,Low,Completed
+CMP000264,USR000006,HCP000425,Skin Care Innovation Q2,Social Media,12/23/2023,7/2/2024,Newsletter,70347,High,Completed
+CMP000265,USR000015,HCP000466,Joint Health Campaign Q3,Webinar,12/16/2024,4/29/2025,Webinar,59422,Low,Completed
+CMP000266,USR000003,HCP000423,Neurology Breakthrough Series Q4,Social Media,8/29/2023,10/30/2024,Video,51159,Low,Completed
+CMP000267,USR000012,HCP000177,Endocrine Health Drive 2023,Email,10/20/2023,4/12/2024,Newsletter,54706,Low,Completed
+CMP000268,USR000014,HCP000135,Urology Innovation 2024,Webinar,2/20/2023,12/11/2025,Newsletter,54274,Medium,Completed
+CMP000269,USR000009,HCP000112,Heart Health Awareness 2025,Email,10/13/2024,10/25/2024,Webinar,78562,High,Active
+CMP000270,USR000005,HCP000437,Pediatrics Growth Program Q1,Social Media,1/9/2024,6/17/2024,Webinar,51966,Low,Active
+CMP000271,USR000020,HCP000134,Psychiatric Wellness Initiative Q2,Webinar,4/15/2023,9/18/2023,Newsletter,58860,Medium,Active
+CMP000272,USR000001,HCP000196,Rheumatology Focus Q3,Social Media,7/11/2025,7/17/2025,Video,53621,Medium,Active
+CMP000273,USR000020,HCP000252,Respiratory Health Focus Q4,Event,11/24/2024,12/31/2024,Webinar,74923,Medium,Active
+CMP000274,USR000015,HCP000454,Endocrine Health Drive 2023,Social Media,1/16/2024,8/13/2025,Whitepaper,53965,Low,Active
+CMP000275,USR000016,HCP000257,Pediatrics Growth Program 2024,Email,3/10/2023,11/23/2024,Webinar,73231,High,Active
+CMP000276,USR000008,HCP000032,Heart Health Awareness 2025,Email,11/12/2024,5/13/2025,Webinar,51672,Low,Active
+CMP000277,USR000020,HCP000239,Cancer Care Excellence Q1,Email,4/18/2025,7/11/2025,Infographic,45594,Low,Completed
+CMP000278,USR000010,HCP000189,Brain Health Initiative Q2,Email,3/29/2023,11/1/2023,Newsletter,54683,Low,Active
+CMP000279,USR000015,HCP000344,Urology Innovation Q3,Webinar,2/21/2025,6/13/2025,Whitepaper,76278,High,Active
+CMP000280,USR000015,HCP000185,Joint Health Campaign Q4,Webinar,12/30/2023,9/23/2025,Newsletter,79271,High,Active
+CMP000281,USR000008,HCP000497,Neurology Breakthrough Series 2023,Webinar,6/13/2025,10/14/2025,Newsletter,88142,High,Active
+CMP000282,USR000015,HCP000336,Cancer Care Excellence 2024,Event,6/16/2025,10/18/2025,Newsletter,74250,Medium,Completed
+CMP000283,USR000012,HCP000404,Respiratory Health Focus 2025,Email,1/4/2024,8/25/2024,Whitepaper,46927,Low,Completed
+CMP000284,USR000001,HCP000487,Heart Health Awareness Q1,Event,8/11/2023,10/28/2025,Webinar,83017,High,Completed
+CMP000285,USR000015,HCP000164,Brain Health Initiative Q2,Email,12/10/2023,10/26/2024,Newsletter,55880,Low,Completed
+CMP000286,USR000014,HCP000378,Heart Health Awareness Q3,Email,4/11/2024,11/10/2024,Newsletter,48680,Low,Completed
+CMP000287,USR000001,HCP000244,Urology Innovation Q4,Email,4/5/2023,8/16/2025,Newsletter,43495,Low,Completed
+CMP000288,USR000009,HCP000259,Oncology Insights Initiative 2023,Event,7/8/2025,12/25/2025,Newsletter,79664,Low,Completed
+CMP000289,USR000006,HCP000413,Urology Innovation 2024,Social Media,9/30/2023,7/24/2025,Video,68042,Medium,Completed
+CMP000290,USR000018,HCP000139,Joint Health Campaign 2025,Social Media,5/13/2025,11/21/2025,Newsletter,86946,High,Completed
+CMP000291,USR000018,HCP000099,Rheumatology Focus Q1,Webinar,3/14/2023,8/30/2024,Newsletter,58812,Low,Completed
+CMP000292,USR000005,HCP000134,Mental Health Awareness Q2,Email,9/26/2025,11/30/2025,Newsletter,66957,Medium,Completed
+CMP000293,USR000008,HCP000025,Rheumatology Focus Q3,Social Media,8/15/2024,9/26/2025,Whitepaper,73060,Medium,Active
+CMP000294,USR000005,HCP000185,Rheumatology Focus Q4,Email,5/10/2024,11/1/2025,Webinar,62712,Medium,Active
+CMP000295,USR000012,HCP000353,Psychiatric Wellness Initiative 2023,Email,10/8/2024,8/21/2025,Newsletter,42593,Low,Active
+CMP000296,USR000006,HCP000464,Mental Health Awareness 2024,Webinar,8/20/2023,11/27/2024,Webinar,57971,Medium,Active
+CMP000297,USR000015,HCP000349,Mental Health Awareness 2025,Webinar,8/7/2024,12/27/2024,Infographic,43823,Low,Active
+CMP000298,USR000010,HCP000492,Heart Health Awareness Q1,Email,4/15/2025,10/15/2025,Whitepaper,61277,Medium,Active
+CMP000299,USR000009,HCP000309,Skin Care Innovation Q2,Email,1/10/2024,10/30/2025,Infographic,86476,High,Active
+CMP000300,USR000011,HCP000043,Mental Health Awareness Q3,Webinar,12/17/2023,8/6/2024,Newsletter,78467,Medium,Active
+CMP000301,USR000009,HCP000220,Rheumatology Focus Q4,Email,8/13/2023,8/1/2025,Infographic,81210,High,Completed
+CMP000302,USR000003,HCP000242,Skin Care Innovation 2023,Social Media,3/31/2023,8/20/2025,Infographic,46125,Low,Active
+CMP000303,USR000009,HCP000212,Kidney Care Initiative 2024,Email,10/3/2024,8/22/2025,Newsletter,42500,Low,Active
+CMP000304,USR000017,HCP000401,Diabetes Management 2025,Webinar,5/15/2025,12/6/2025,Whitepaper,41502,Low,Active
+CMP000305,USR000019,HCP000412,Oncology Insights Initiative Q1,Webinar,7/28/2023,3/22/2025,Newsletter,70738,Medium,Active
+CMP000306,USR000011,HCP000165,Neurology Breakthrough Series Q2,Webinar,1/13/2024,7/29/2024,Newsletter,79978,High,Completed
+CMP000307,USR000010,HCP000328,Cardio Awareness Campaign Q3,Email,11/12/2023,4/8/2025,Whitepaper,72297,Medium,Completed
+CMP000308,USR000020,HCP000105,Urology Innovation Q4,Social Media,10/1/2025,10/8/2025,Webinar,40329,Low,Completed
+CMP000309,USR000019,HCP000446,Brain Health Initiative 2023,Email,11/29/2024,9/13/2025,Newsletter,92841,High,Completed
+CMP000310,USR000015,HCP000174,Cancer Care Excellence 2024,Event,5/24/2023,9/2/2025,Infographic,97676,High,Completed
+CMP000311,USR000002,HCP000096,Kidney Care Initiative 2025,Email,10/23/2023,1/11/2024,Infographic,42611,Low,Active
+CMP000312,USR000006,HCP000128,Rheumatology Focus Q1,Social Media,2/22/2024,12/10/2024,Video,46560,Low,Active
+CMP000313,USR000010,HCP000475,Heart Health Awareness Q2,Email,11/12/2025,11/15/2025,Webinar,65186,Medium,Active
+CMP000314,USR000005,HCP000132,Brain Health Initiative Q3,Webinar,4/24/2023,2/10/2024,Video,77391,High,Active
+CMP000315,USR000016,HCP000199,Heart Health Awareness Q4,Social Media,7/1/2025,11/18/2025,Whitepaper,66676,Medium,Active
+CMP000316,USR000012,HCP000044,Cardio Awareness Campaign 2023,Webinar,11/9/2025,11/30/2025,Infographic,51906,Medium,Active
+CMP000317,USR000020,HCP000375,Cancer Care Excellence 2024,Email,1/14/2025,4/5/2025,Whitepaper,78095,Medium,Active
+CMP000318,USR000020,HCP000243,Skin Care Innovation 2025,Event,6/1/2024,1/22/2025,Video,88706,Medium,Active
+CMP000319,USR000018,HCP000046,Endocrine Health Drive Q1,Event,1/24/2023,12/19/2023,Webinar,99454,High,Completed
+CMP000320,USR000002,HCP000067,Respiratory Health Focus Q2,Event,10/23/2023,4/22/2024,Video,87718,Medium,Active
+CMP000321,USR000019,HCP000485,Rheumatology Focus Q3,Email,1/13/2025,4/17/2025,Video,60064,Medium,Active
+CMP000322,USR000017,HCP000438,Mental Health Awareness Q4,Event,12/16/2025,12/30/2025,Webinar,70910,Low,Active
+CMP000323,USR000007,HCP000290,Diabetes Management 2023,Social Media,12/29/2025,12/29/2025,Infographic,66484,Medium,Active
+CMP000324,USR000010,HCP000342,Cardio Awareness Campaign 2024,Social Media,9/8/2024,3/12/2025,Whitepaper,41018,Low,Completed
+CMP000325,USR000017,HCP000348,Joint Health Campaign 2025,Email,5/7/2025,9/8/2025,Infographic,99410,High,Completed
+CMP000326,USR000005,HCP000461,Pulmonary Care Campaign Q1,Webinar,3/15/2024,1/4/2025,Whitepaper,50107,Medium,Completed
+CMP000327,USR000012,HCP000060,Brain Health Initiative Q2,Webinar,12/25/2024,7/20/2025,Webinar,73809,High,Completed
+CMP000328,USR000008,HCP000487,Oncology Insights Initiative Q3,Webinar,10/4/2025,11/7/2025,Newsletter,85250,High,Completed
+CMP000329,USR000004,HCP000337,Cardio Awareness Campaign Q4,Email,4/24/2024,11/13/2024,Infographic,90312,High,Completed
+CMP000330,USR000012,HCP000012,Kidney Care Initiative 2023,Webinar,7/12/2024,8/14/2025,Infographic,69659,Medium,Completed
+CMP000331,USR000011,HCP000013,Respiratory Health Focus 2024,Social Media,2/11/2025,8/10/2025,Infographic,43065,Low,Completed
+CMP000332,USR000014,HCP000284,Endocrine Health Drive 2025,Webinar,6/3/2023,6/1/2025,Infographic,77718,Medium,Active
+CMP000333,USR000003,HCP000023,Oncology Insights Initiative Q1,Email,5/12/2024,10/16/2024,Newsletter,75563,Medium,Active
+CMP000334,USR000020,HCP000420,Cancer Care Excellence Q2,Social Media,7/29/2024,3/29/2025,Video,95035,High,Active
+CMP000335,USR000017,HCP000334,Neurology Breakthrough Series Q3,Social Media,10/5/2024,11/9/2024,Whitepaper,52260,Low,Active
+CMP000336,USR000015,HCP000222,Psychiatric Wellness Initiative Q4,Email,5/23/2025,8/16/2025,Whitepaper,64246,Medium,Active
+CMP000337,USR000001,HCP000165,Kidney Care Initiative 2023,Webinar,8/15/2023,9/9/2023,Whitepaper,53546,Low,Active
+CMP000338,USR000012,HCP000192,Heart Health Awareness 2024,Email,2/10/2024,4/14/2025,Whitepaper,46630,Low,Active
+CMP000339,USR000008,HCP000270,Dermatology Excellence 2025,Email,6/26/2025,10/16/2025,Video,55021,Low,Active
+CMP000340,USR000013,HCP000029,Urology Innovation Q1,Email,10/10/2024,5/27/2025,Infographic,65924,Medium,Completed
+CMP000341,USR000003,HCP000352,Respiratory Health Focus Q2,Social Media,8/25/2023,6/24/2024,Newsletter,58740,Low,Active
+CMP000342,USR000020,HCP000112,General Practice Outreach Q3,Event,5/27/2024,11/21/2024,Video,82467,High,Active
+CMP000343,USR000019,HCP000428,Oncology Insights Initiative Q4,Social Media,8/13/2024,10/29/2025,Video,59548,Low,Active
+CMP000344,USR000020,HCP000014,Endocrine Health Drive 2023,Email,1/17/2024,2/7/2025,Video,57623,Medium,Active
+CMP000345,USR000016,HCP000071,General Practice Outreach 2024,Social Media,5/5/2025,9/13/2025,Video,59654,Low,Completed
+CMP000346,USR000015,HCP000420,Cancer Care Excellence 2025,Email,2/4/2024,9/18/2025,Whitepaper,43060,Low,Completed
+CMP000347,USR000008,HCP000215,Rheumatology Focus Q1,Social Media,1/29/2025,11/6/2025,Webinar,41903,Low,Active
+CMP000348,USR000006,HCP000216,Dermatology Excellence Q2,Email,9/23/2025,12/27/2025,Webinar,77452,Medium,Active
+CMP000349,USR000006,HCP000318,Cardio Awareness Campaign Q3,Social Media,12/16/2024,2/19/2025,Webinar,62314,Medium,Active
+CMP000350,USR000017,HCP000169,Diabetes Management Q4,Event,7/1/2024,11/9/2024,Newsletter,71949,Medium,Active
+CMP000351,USR000002,HCP000384,Mental Health Awareness 2023,Email,8/6/2023,12/2/2025,Infographic,52824,Low,Active
+CMP000352,USR000010,HCP000037,Pediatrics Growth Program 2024,Webinar,1/28/2025,4/9/2025,Webinar,54349,Medium,Active
+CMP000353,USR000014,HCP000046,Joint Health Campaign 2025,Social Media,4/22/2025,12/27/2025,Whitepaper,62203,Medium,Active
+CMP000354,USR000009,HCP000094,Endocrine Health Drive Q1,Email,4/2/2023,6/23/2025,Webinar,64253,Medium,Active
+CMP000355,USR000014,HCP000459,Rheumatology Focus Q2,Email,2/22/2023,6/17/2023,Video,73957,High,Completed
+CMP000356,USR000018,HCP000419,Cancer Care Excellence Q3,Webinar,11/4/2025,11/8/2025,Webinar,74732,Medium,Active
+CMP000357,USR000011,HCP000315,Heart Health Awareness Q4,Email,1/10/2023,10/11/2024,Video,44666,Low,Active
+CMP000358,USR000010,HCP000345,Brain Health Initiative 2023,Email,8/2/2023,7/26/2024,Newsletter,92124,High,Active
+CMP000359,USR000006,HCP000108,Cardio Awareness Campaign 2024,Event,4/16/2023,12/6/2023,Infographic,78933,Medium,Active
+CMP000360,USR000012,HCP000231,Brain Health Initiative 2025,Email,1/15/2023,12/20/2023,Infographic,74026,Medium,Completed
+CMP000361,USR000012,HCP000441,Mental Health Awareness Q1,Email,2/24/2025,8/20/2025,Whitepaper,55008,Low,Completed
+CMP000362,USR000019,HCP000048,Oncology Insights Initiative Q2,Event,8/2/2024,9/17/2024,Webinar,79649,Low,Completed
+CMP000363,USR000018,HCP000258,Cancer Care Excellence Q3,Webinar,8/17/2025,12/18/2025,Infographic,58473,Medium,Completed
+CMP000364,USR000017,HCP000217,Endocrine Health Drive Q4,Email,11/1/2025,12/30/2025,Video,44861,Low,Completed
+CMP000365,USR000005,HCP000025,Urology Innovation 2023,Social Media,1/20/2025,10/3/2025,Webinar,50334,Low,Completed
+CMP000366,USR000014,HCP000134,Skin Care Innovation 2024,Social Media,1/27/2025,2/2/2025,Webinar,73638,Medium,Completed
+CMP000367,USR000006,HCP000384,Nephrology Advancement 2025,Email,1/11/2023,4/16/2025,Infographic,76021,High,Active
+CMP000368,USR000002,HCP000236,Diabetes Management Q1,Webinar,5/6/2025,10/12/2025,Newsletter,57904,Medium,Active
+CMP000369,USR000008,HCP000173,Brain Health Initiative Q2,Event,1/19/2023,2/13/2023,Whitepaper,73093,High,Active
+CMP000370,USR000001,HCP000464,Respiratory Health Focus Q3,Webinar,4/2/2025,7/17/2025,Newsletter,46227,Low,Active
+CMP000371,USR000010,HCP000086,Oncology Insights Initiative Q4,Social Media,4/12/2025,8/1/2025,Newsletter,97873,High,Active
+CMP000372,USR000015,HCP000223,General Practice Outreach 2023,Email,1/27/2023,3/17/2025,Video,78955,High,Active
+CMP000373,USR000017,HCP000469,Pulmonary Care Campaign 2024,Webinar,12/20/2025,12/28/2025,Newsletter,60364,Medium,Active
+CMP000374,USR000015,HCP000321,Pulmonary Care Campaign 2025,Webinar,10/30/2024,3/18/2025,Webinar,75155,Medium,Active
+CMP000375,USR000013,HCP000135,Mental Health Awareness Q1,Email,6/16/2023,11/12/2023,Infographic,72485,Medium,Completed
+CMP000376,USR000016,HCP000074,Endocrine Health Drive Q2,Email,3/25/2025,5/21/2025,Webinar,86759,High,Active
+CMP000377,USR000019,HCP000172,Nephrology Advancement Q3,Webinar,1/10/2024,6/7/2024,Infographic,67997,Medium,Active
+CMP000378,USR000004,HCP000343,Diabetes Management Q4,Social Media,8/20/2025,11/30/2025,Webinar,45695,Low,Active
+CMP000379,USR000013,HCP000180,Skin Care Innovation 2023,Email,1/28/2024,10/22/2025,Newsletter,55527,Low,Active
+CMP000380,USR000015,HCP000034,General Practice Outreach 2024,Email,7/4/2024,1/27/2025,Infographic,93672,High,Completed
+CMP000381,USR000005,HCP000215,Dermatology Excellence 2025,Email,9/8/2024,11/8/2024,Whitepaper,77962,Medium,Completed
+CMP000382,USR000014,HCP000411,Cardio Awareness Campaign Q1,Email,8/2/2024,6/13/2025,Whitepaper,44364,Low,Completed
+CMP000383,USR000010,HCP000051,Dermatology Excellence Q2,Email,12/14/2024,7/21/2025,Whitepaper,78130,Medium,Active
+CMP000384,USR000002,HCP000196,Respiratory Health Focus Q3,Webinar,1/13/2024,7/7/2025,Infographic,50730,Medium,Active
+CMP000385,USR000019,HCP000265,Dermatology Excellence Q4,Email,12/17/2023,8/5/2024,Newsletter,40947,Low,Active
+CMP000386,USR000013,HCP000396,Mental Health Awareness 2023,Social Media,11/28/2025,12/1/2025,Video,57488,Low,Active
+CMP000387,USR000016,HCP000172,Psychiatric Wellness Initiative 2024,Event,10/12/2025,12/14/2025,Newsletter,84017,High,Active
+CMP000388,USR000004,HCP000026,Pulmonary Care Campaign 2025,Email,2/19/2023,7/14/2023,Video,75051,Medium,Active
+CMP000389,USR000008,HCP000119,Oncology Insights Initiative Q1,Event,9/21/2024,7/12/2025,Webinar,95037,Low,Active
+CMP000390,USR000014,HCP000087,Brain Health Initiative Q2,Event,8/8/2024,10/11/2025,Video,75526,High,Active
+CMP000391,USR000016,HCP000016,Neurology Breakthrough Series Q3,Event,1/9/2025,1/30/2025,Newsletter,86318,High,Completed
+CMP000392,USR000015,HCP000265,Endocrine Health Drive Q4,Social Media,9/16/2025,9/17/2025,Video,40619,Low,Active
+CMP000393,USR000007,HCP000290,Oncology Insights Initiative 2023,Email,12/27/2025,12/28/2025,Newsletter,53442,Medium,Active
+CMP000394,USR000006,HCP000096,Skin Care Innovation 2024,Social Media,5/9/2023,6/23/2025,Whitepaper,53142,Low,Active
+CMP000395,USR000005,HCP000377,Heart Health Awareness 2025,Email,11/5/2024,7/20/2025,Whitepaper,59196,Medium,Active
+CMP000396,USR000018,HCP000277,Heart Health Awareness Q1,Webinar,5/29/2025,7/5/2025,Infographic,56023,Low,Completed
+CMP000397,USR000004,HCP000162,Psychiatric Wellness Initiative Q2,Webinar,3/31/2025,4/16/2025,Newsletter,88107,High,Completed
+CMP000398,USR000002,HCP000152,Dermatology Excellence Q3,Webinar,12/23/2023,6/4/2024,Webinar,41999,Low,Completed
+CMP000399,USR000018,HCP000093,Joint Health Campaign Q4,Webinar,12/11/2025,12/24/2025,Newsletter,50246,Medium,Completed
+CMP000400,USR000016,HCP000344,Urology Innovation 2023,Social Media,1/8/2025,4/23/2025,Webinar,52186,Low,Completed

@@ -1,0 +1,501 @@
+hcp_id,product_id,perception_score,key_drivers,liked_attributes
+HCP000107,PRD000016,3.58,Convenience,High efficacy
+HCP000265,PRD000018,1.42,Convenience,Rapid onset
+HCP000476,PRD000010,1.03,Convenience,Minimal interactions
+HCP000343,PRD000047,1.02,Efficacy,Rapid onset
+HCP000309,PRD000040,3.55,Efficacy,Rapid onset
+HCP000239,PRD000005,1.68,Efficacy,Low side effects
+HCP000254,PRD000005,3.34,Safety,Innovative delivery
+HCP000107,PRD000039,2.86,Real-world evidence,Low side effects
+HCP000082,PRD000048,4.92,Ease of use,Long-term data
+HCP000366,PRD000038,1.72,Safety,Innovative delivery
+HCP000065,PRD000038,3.35,Efficacy,Once-daily dosing
+HCP000171,PRD000013,1.57,Cost,Once-daily dosing
+HCP000209,PRD000017,1.87,Efficacy,Innovative delivery
+HCP000029,PRD000048,2.1,Safety,Minimal interactions
+HCP000116,PRD000042,2.96,Convenience,Minimal interactions
+HCP000053,PRD000026,2.84,Efficacy,Affordable pricing
+HCP000156,PRD000002,4.96,Ease of use,Innovative delivery
+HCP000471,PRD000045,1.91,Convenience,Rapid onset
+HCP000289,PRD000011,3.54,Ease of use,Once-daily dosing
+HCP000304,PRD000003,1.28,Efficacy,Rapid onset
+HCP000455,PRD000028,2.88,Cost,Affordable pricing
+HCP000191,PRD000005,1.58,Safety,Innovative delivery
+HCP000106,PRD000012,4.82,Ease of use,Low side effects
+HCP000475,PRD000018,2.24,Safety,Innovative delivery
+HCP000005,PRD000029,3.57,Efficacy,Minimal interactions
+HCP000106,PRD000005,4.15,Cost,Once-daily dosing
+HCP000212,PRD000008,3.33,Efficacy,Long-term data
+HCP000350,PRD000027,2.36,Ease of use,Innovative delivery
+HCP000474,PRD000036,2.98,Convenience,Once-daily dosing
+HCP000114,PRD000001,1.41,Cost,High efficacy
+HCP000479,PRD000044,2.52,Safety,Innovative delivery
+HCP000146,PRD000047,3.97,Cost,Low side effects
+HCP000186,PRD000021,2.62,Convenience,High efficacy
+HCP000171,PRD000021,1.61,Cost,Minimal interactions
+HCP000060,PRD000024,3.04,Efficacy,Minimal interactions
+HCP000408,PRD000040,3.64,Cost,Rapid onset
+HCP000262,PRD000048,3.91,Safety,Long-term data
+HCP000215,PRD000046,4.66,Real-world evidence,Minimal interactions
+HCP000394,PRD000043,2.59,Ease of use,Affordable pricing
+HCP000295,PRD000024,1.68,Cost,Once-daily dosing
+HCP000061,PRD000041,4.1,Cost,Affordable pricing
+HCP000051,PRD000039,3.95,Ease of use,Long-term data
+HCP000344,PRD000028,2.8,Convenience,High efficacy
+HCP000418,PRD000017,3.83,Safety,Minimal interactions
+HCP000282,PRD000024,1.76,Real-world evidence,Minimal interactions
+HCP000431,PRD000048,4.67,Real-world evidence,Low side effects
+HCP000416,PRD000035,4.21,Safety,High efficacy
+HCP000379,PRD000004,2.54,Convenience,Rapid onset
+HCP000101,PRD000002,1.42,Convenience,Long-term data
+HCP000087,PRD000010,1.8,Convenience,Minimal interactions
+HCP000205,PRD000042,2.75,Cost,Low side effects
+HCP000280,PRD000024,3.0,Cost,Innovative delivery
+HCP000172,PRD000023,2.51,Real-world evidence,Once-daily dosing
+HCP000376,PRD000035,3.12,Real-world evidence,Long-term data
+HCP000421,PRD000023,3.05,Efficacy,Minimal interactions
+HCP000176,PRD000010,3.8,Cost,Once-daily dosing
+HCP000234,PRD000039,3.57,Cost,Minimal interactions
+HCP000021,PRD000009,2.02,Convenience,Low side effects
+HCP000233,PRD000024,2.22,Safety,Innovative delivery
+HCP000429,PRD000044,1.88,Efficacy,Minimal interactions
+HCP000093,PRD000019,2.82,Real-world evidence,Low side effects
+HCP000333,PRD000026,2.7,Efficacy,Rapid onset
+HCP000130,PRD000047,3.05,Convenience,Once-daily dosing
+HCP000404,PRD000050,2.3,Real-world evidence,High efficacy
+HCP000132,PRD000014,4.28,Real-world evidence,Low side effects
+HCP000474,PRD000026,2.14,Safety,Once-daily dosing
+HCP000387,PRD000001,4.34,Ease of use,Low side effects
+HCP000014,PRD000003,2.57,Cost,Minimal interactions
+HCP000213,PRD000026,3.21,Efficacy,Affordable pricing
+HCP000307,PRD000043,2.6,Ease of use,Once-daily dosing
+HCP000373,PRD000011,4.65,Safety,Minimal interactions
+HCP000464,PRD000046,4.77,Safety,Innovative delivery
+HCP000152,PRD000046,1.75,Ease of use,High efficacy
+HCP000230,PRD000040,1.59,Cost,Long-term data
+HCP000006,PRD000021,3.94,Efficacy,High efficacy
+HCP000395,PRD000044,4.08,Real-world evidence,Innovative delivery
+HCP000050,PRD000048,3.94,Safety,Long-term data
+HCP000378,PRD000024,3.22,Cost,Minimal interactions
+HCP000144,PRD000036,1.55,Convenience,Once-daily dosing
+HCP000236,PRD000037,3.99,Cost,Rapid onset
+HCP000215,PRD000043,1.07,Convenience,Minimal interactions
+HCP000255,PRD000008,2.7,Efficacy,Affordable pricing
+HCP000223,PRD000025,4.33,Cost,Rapid onset
+HCP000182,PRD000014,2.23,Real-world evidence,High efficacy
+HCP000199,PRD000012,2.38,Efficacy,Innovative delivery
+HCP000227,PRD000044,3.3,Safety,Affordable pricing
+HCP000467,PRD000010,1.32,Ease of use,Rapid onset
+HCP000009,PRD000009,1.01,Ease of use,Affordable pricing
+HCP000119,PRD000041,3.93,Convenience,Low side effects
+HCP000008,PRD000032,4.04,Efficacy,Once-daily dosing
+HCP000355,PRD000008,4.06,Convenience,Innovative delivery
+HCP000313,PRD000019,3.13,Cost,Rapid onset
+HCP000398,PRD000039,1.14,Efficacy,Low side effects
+HCP000356,PRD000017,4.62,Ease of use,Innovative delivery
+HCP000404,PRD000045,1.21,Cost,Affordable pricing
+HCP000105,PRD000036,3.59,Ease of use,High efficacy
+HCP000137,PRD000020,3.07,Cost,Rapid onset
+HCP000045,PRD000009,3.06,Safety,Affordable pricing
+HCP000001,PRD000005,2.66,Efficacy,High efficacy
+HCP000334,PRD000009,1.8,Efficacy,Innovative delivery
+HCP000462,PRD000025,3.24,Cost,Low side effects
+HCP000135,PRD000042,3.38,Cost,Low side effects
+HCP000057,PRD000036,3.65,Cost,Rapid onset
+HCP000224,PRD000027,2.17,Real-world evidence,Once-daily dosing
+HCP000071,PRD000012,1.09,Cost,Affordable pricing
+HCP000362,PRD000036,3.59,Real-world evidence,Innovative delivery
+HCP000469,PRD000016,4.98,Real-world evidence,Affordable pricing
+HCP000435,PRD000018,3.3,Ease of use,Rapid onset
+HCP000449,PRD000048,1.05,Efficacy,High efficacy
+HCP000005,PRD000042,4.67,Efficacy,Minimal interactions
+HCP000269,PRD000001,4.16,Ease of use,Minimal interactions
+HCP000320,PRD000032,4.99,Cost,Minimal interactions
+HCP000436,PRD000042,3.84,Efficacy,Affordable pricing
+HCP000321,PRD000017,1.34,Convenience,High efficacy
+HCP000498,PRD000028,3.58,Safety,Innovative delivery
+HCP000245,PRD000012,3.3,Safety,Long-term data
+HCP000398,PRD000002,3.24,Real-world evidence,Once-daily dosing
+HCP000454,PRD000037,4.4,Ease of use,Rapid onset
+HCP000489,PRD000006,4.22,Safety,Once-daily dosing
+HCP000489,PRD000037,2.71,Real-world evidence,Long-term data
+HCP000296,PRD000043,2.14,Cost,High efficacy
+HCP000083,PRD000038,1.84,Cost,Affordable pricing
+HCP000461,PRD000023,1.23,Cost,Low side effects
+HCP000289,PRD000024,3.22,Ease of use,Rapid onset
+HCP000034,PRD000038,2.46,Real-world evidence,Rapid onset
+HCP000296,PRD000016,2.48,Efficacy,Once-daily dosing
+HCP000063,PRD000048,2.18,Real-world evidence,Affordable pricing
+HCP000334,PRD000018,4.21,Cost,Rapid onset
+HCP000180,PRD000016,4.88,Real-world evidence,High efficacy
+HCP000282,PRD000028,4.45,Real-world evidence,Affordable pricing
+HCP000009,PRD000047,2.89,Efficacy,Long-term data
+HCP000122,PRD000032,2.57,Cost,High efficacy
+HCP000310,PRD000016,3.32,Ease of use,Rapid onset
+HCP000166,PRD000008,3.43,Ease of use,Innovative delivery
+HCP000482,PRD000014,1.49,Ease of use,Affordable pricing
+HCP000015,PRD000050,2.22,Real-world evidence,Long-term data
+HCP000113,PRD000040,3.09,Ease of use,Innovative delivery
+HCP000347,PRD000035,3.32,Cost,Once-daily dosing
+HCP000001,PRD000041,4.11,Efficacy,Affordable pricing
+HCP000161,PRD000033,4.93,Cost,Once-daily dosing
+HCP000444,PRD000023,1.43,Safety,High efficacy
+HCP000045,PRD000016,4.5,Real-world evidence,Minimal interactions
+HCP000337,PRD000012,1.22,Efficacy,Long-term data
+HCP000404,PRD000015,2.71,Efficacy,Minimal interactions
+HCP000034,PRD000028,2.88,Ease of use,Once-daily dosing
+HCP000094,PRD000026,3.12,Cost,Affordable pricing
+HCP000362,PRD000028,2.77,Convenience,Innovative delivery
+HCP000202,PRD000023,3.67,Efficacy,Low side effects
+HCP000493,PRD000018,3.28,Safety,Innovative delivery
+HCP000066,PRD000024,2.97,Efficacy,Long-term data
+HCP000493,PRD000050,1.44,Real-world evidence,Minimal interactions
+HCP000325,PRD000050,1.27,Convenience,Low side effects
+HCP000386,PRD000015,1.24,Real-world evidence,Once-daily dosing
+HCP000404,PRD000034,2.94,Real-world evidence,Minimal interactions
+HCP000287,PRD000023,1.5,Efficacy,Once-daily dosing
+HCP000348,PRD000039,4.81,Safety,Rapid onset
+HCP000163,PRD000032,2.92,Safety,Once-daily dosing
+HCP000121,PRD000035,2.3,Cost,Once-daily dosing
+HCP000029,PRD000006,1.5,Ease of use,Minimal interactions
+HCP000408,PRD000050,2.74,Real-world evidence,Rapid onset
+HCP000295,PRD000032,2.33,Real-world evidence,Rapid onset
+HCP000014,PRD000027,2.91,Safety,High efficacy
+HCP000102,PRD000017,2.47,Efficacy,Rapid onset
+HCP000057,PRD000011,3.81,Ease of use,Rapid onset
+HCP000302,PRD000034,3.01,Convenience,Rapid onset
+HCP000246,PRD000038,2.72,Safety,Minimal interactions
+HCP000394,PRD000026,4.0,Efficacy,Rapid onset
+HCP000375,PRD000034,1.14,Ease of use,Long-term data
+HCP000087,PRD000012,3.62,Safety,Rapid onset
+HCP000241,PRD000027,4.51,Real-world evidence,Rapid onset
+HCP000481,PRD000026,2.38,Convenience,Long-term data
+HCP000097,PRD000020,3.25,Safety,Long-term data
+HCP000081,PRD000044,1.05,Safety,Innovative delivery
+HCP000351,PRD000008,2.88,Safety,Rapid onset
+HCP000381,PRD000035,1.1,Convenience,Affordable pricing
+HCP000121,PRD000016,4.54,Convenience,Long-term data
+HCP000311,PRD000037,3.05,Efficacy,Innovative delivery
+HCP000378,PRD000045,1.75,Safety,Innovative delivery
+HCP000467,PRD000017,3.15,Cost,Affordable pricing
+HCP000183,PRD000050,1.92,Real-world evidence,Long-term data
+HCP000272,PRD000022,4.51,Efficacy,Innovative delivery
+HCP000483,PRD000047,4.27,Real-world evidence,Long-term data
+HCP000378,PRD000006,2.21,Safety,Low side effects
+HCP000439,PRD000039,1.81,Convenience,Once-daily dosing
+HCP000131,PRD000047,4.91,Cost,Rapid onset
+HCP000409,PRD000015,3.88,Safety,Minimal interactions
+HCP000206,PRD000006,3.86,Cost,Affordable pricing
+HCP000371,PRD000017,3.6,Efficacy,Rapid onset
+HCP000124,PRD000044,4.39,Safety,Affordable pricing
+HCP000097,PRD000010,2.06,Ease of use,High efficacy
+HCP000484,PRD000017,3.13,Cost,Rapid onset
+HCP000397,PRD000023,2.35,Safety,Affordable pricing
+HCP000342,PRD000047,2.04,Ease of use,Low side effects
+HCP000067,PRD000034,1.67,Ease of use,Long-term data
+HCP000147,PRD000030,3.82,Convenience,High efficacy
+HCP000078,PRD000002,1.69,Cost,Rapid onset
+HCP000454,PRD000032,4.83,Efficacy,Low side effects
+HCP000002,PRD000033,3.73,Safety,Rapid onset
+HCP000363,PRD000047,4.28,Cost,Minimal interactions
+HCP000056,PRD000038,3.58,Cost,Rapid onset
+HCP000184,PRD000041,2.76,Ease of use,Affordable pricing
+HCP000492,PRD000004,3.5,Efficacy,Minimal interactions
+HCP000440,PRD000031,3.21,Cost,Long-term data
+HCP000438,PRD000008,4.7,Efficacy,Long-term data
+HCP000349,PRD000020,4.12,Efficacy,Innovative delivery
+HCP000027,PRD000025,4.38,Real-world evidence,Innovative delivery
+HCP000295,PRD000015,2.91,Efficacy,Rapid onset
+HCP000072,PRD000028,2.67,Efficacy,Minimal interactions
+HCP000400,PRD000035,4.61,Ease of use,Low side effects
+HCP000308,PRD000029,3.46,Efficacy,Low side effects
+HCP000048,PRD000022,4.66,Ease of use,Affordable pricing
+HCP000079,PRD000001,2.78,Safety,High efficacy
+HCP000450,PRD000009,3.05,Safety,Minimal interactions
+HCP000207,PRD000015,4.05,Cost,Low side effects
+HCP000104,PRD000038,3.91,Convenience,Rapid onset
+HCP000039,PRD000010,2.55,Safety,Rapid onset
+HCP000039,PRD000004,1.59,Efficacy,Rapid onset
+HCP000095,PRD000025,1.54,Cost,Long-term data
+HCP000368,PRD000001,1.07,Efficacy,Rapid onset
+HCP000341,PRD000043,3.97,Real-world evidence,Long-term data
+HCP000155,PRD000019,1.98,Cost,Low side effects
+HCP000299,PRD000035,1.85,Convenience,Innovative delivery
+HCP000112,PRD000005,4.85,Convenience,Rapid onset
+HCP000231,PRD000047,1.11,Real-world evidence,Affordable pricing
+HCP000407,PRD000049,2.32,Cost,Minimal interactions
+HCP000077,PRD000023,3.8,Real-world evidence,Long-term data
+HCP000340,PRD000033,3.82,Cost,Low side effects
+HCP000357,PRD000029,2.04,Safety,Long-term data
+HCP000285,PRD000002,3.83,Convenience,Innovative delivery
+HCP000493,PRD000001,2.05,Efficacy,Long-term data
+HCP000293,PRD000008,4.44,Convenience,Low side effects
+HCP000390,PRD000045,1.34,Real-world evidence,Innovative delivery
+HCP000120,PRD000001,1.07,Efficacy,Innovative delivery
+HCP000413,PRD000031,2.9,Efficacy,Low side effects
+HCP000262,PRD000025,4.87,Efficacy,Innovative delivery
+HCP000421,PRD000027,4.94,Cost,Innovative delivery
+HCP000085,PRD000033,4.7,Efficacy,Innovative delivery
+HCP000354,PRD000009,1.05,Safety,Minimal interactions
+HCP000238,PRD000011,1.85,Ease of use,Affordable pricing
+HCP000013,PRD000007,3.06,Real-world evidence,High efficacy
+HCP000139,PRD000006,1.35,Efficacy,Once-daily dosing
+HCP000101,PRD000041,1.22,Efficacy,Minimal interactions
+HCP000094,PRD000028,3.45,Convenience,Long-term data
+HCP000442,PRD000005,2.99,Efficacy,Innovative delivery
+HCP000475,PRD000049,4.32,Ease of use,Minimal interactions
+HCP000348,PRD000048,2.64,Ease of use,Innovative delivery
+HCP000468,PRD000025,1.44,Ease of use,Rapid onset
+HCP000325,PRD000006,1.39,Safety,Minimal interactions
+HCP000310,PRD000023,3.09,Safety,Low side effects
+HCP000333,PRD000012,2.42,Real-world evidence,Low side effects
+HCP000247,PRD000036,3.18,Efficacy,Minimal interactions
+HCP000102,PRD000007,3.95,Convenience,Rapid onset
+HCP000451,PRD000030,4.99,Cost,Long-term data
+HCP000078,PRD000041,4.63,Efficacy,Once-daily dosing
+HCP000013,PRD000026,2.67,Cost,High efficacy
+HCP000497,PRD000021,1.77,Real-world evidence,Rapid onset
+HCP000040,PRD000043,2.71,Efficacy,Long-term data
+HCP000255,PRD000033,1.76,Safety,Long-term data
+HCP000049,PRD000014,4.82,Ease of use,Minimal interactions
+HCP000122,PRD000039,1.24,Ease of use,Rapid onset
+HCP000377,PRD000015,3.2,Cost,Minimal interactions
+HCP000316,PRD000013,1.36,Cost,Low side effects
+HCP000111,PRD000044,4.15,Cost,Minimal interactions
+HCP000134,PRD000012,2.4,Safety,Minimal interactions
+HCP000422,PRD000030,4.87,Ease of use,Innovative delivery
+HCP000164,PRD000049,2.74,Safety,Innovative delivery
+HCP000072,PRD000014,2.97,Efficacy,High efficacy
+HCP000055,PRD000020,1.43,Ease of use,Affordable pricing
+HCP000025,PRD000003,3.49,Safety,Innovative delivery
+HCP000296,PRD000038,1.63,Safety,Minimal interactions
+HCP000120,PRD000019,4.83,Ease of use,High efficacy
+HCP000078,PRD000038,2.79,Efficacy,Minimal interactions
+HCP000100,PRD000038,4.23,Real-world evidence,Affordable pricing
+HCP000255,PRD000033,3.22,Efficacy,Low side effects
+HCP000299,PRD000047,3.53,Cost,Long-term data
+HCP000388,PRD000026,4.18,Cost,High efficacy
+HCP000291,PRD000010,2.02,Ease of use,Low side effects
+HCP000021,PRD000015,1.78,Safety,Long-term data
+HCP000341,PRD000021,4.47,Real-world evidence,Once-daily dosing
+HCP000201,PRD000018,2.88,Efficacy,Affordable pricing
+HCP000226,PRD000010,2.33,Ease of use,Rapid onset
+HCP000488,PRD000024,3.5,Ease of use,Minimal interactions
+HCP000044,PRD000049,4.89,Cost,Once-daily dosing
+HCP000124,PRD000022,1.17,Ease of use,Once-daily dosing
+HCP000487,PRD000020,4.8,Ease of use,Affordable pricing
+HCP000324,PRD000024,1.77,Real-world evidence,Innovative delivery
+HCP000028,PRD000026,1.63,Efficacy,Low side effects
+HCP000390,PRD000035,2.1,Convenience,Affordable pricing
+HCP000202,PRD000030,1.82,Safety,Minimal interactions
+HCP000221,PRD000043,4.39,Efficacy,Long-term data
+HCP000068,PRD000036,4.56,Ease of use,Minimal interactions
+HCP000267,PRD000029,4.63,Safety,Rapid onset
+HCP000408,PRD000039,2.73,Efficacy,Once-daily dosing
+HCP000189,PRD000016,4.72,Convenience,Rapid onset
+HCP000262,PRD000034,1.62,Safety,Low side effects
+HCP000455,PRD000027,3.45,Safety,High efficacy
+HCP000463,PRD000025,1.0,Efficacy,Once-daily dosing
+HCP000435,PRD000045,4.52,Cost,Minimal interactions
+HCP000074,PRD000034,2.08,Safety,Long-term data
+HCP000102,PRD000041,1.67,Real-world evidence,Long-term data
+HCP000142,PRD000037,4.9,Safety,Low side effects
+HCP000439,PRD000047,1.72,Convenience,Innovative delivery
+HCP000462,PRD000050,3.49,Safety,Rapid onset
+HCP000185,PRD000019,1.83,Safety,Low side effects
+HCP000346,PRD000017,2.31,Convenience,Low side effects
+HCP000432,PRD000019,3.99,Real-world evidence,Once-daily dosing
+HCP000171,PRD000005,1.2,Convenience,Rapid onset
+HCP000186,PRD000008,4.75,Cost,Long-term data
+HCP000154,PRD000018,1.99,Efficacy,High efficacy
+HCP000212,PRD000016,1.55,Safety,Low side effects
+HCP000335,PRD000034,3.36,Convenience,Minimal interactions
+HCP000113,PRD000004,1.11,Ease of use,High efficacy
+HCP000407,PRD000047,4.19,Real-world evidence,High efficacy
+HCP000494,PRD000016,1.27,Ease of use,Innovative delivery
+HCP000177,PRD000045,2.77,Ease of use,High efficacy
+HCP000069,PRD000009,3.18,Efficacy,Long-term data
+HCP000282,PRD000028,3.14,Safety,Low side effects
+HCP000038,PRD000004,2.73,Safety,Innovative delivery
+HCP000099,PRD000003,2.78,Convenience,Long-term data
+HCP000030,PRD000021,1.17,Efficacy,Minimal interactions
+HCP000360,PRD000015,2.59,Real-world evidence,Rapid onset
+HCP000230,PRD000021,2.32,Convenience,Innovative delivery
+HCP000441,PRD000037,4.28,Efficacy,Low side effects
+HCP000496,PRD000049,4.07,Ease of use,Innovative delivery
+HCP000259,PRD000021,4.46,Safety,Low side effects
+HCP000493,PRD000046,2.61,Safety,Once-daily dosing
+HCP000219,PRD000027,4.0,Efficacy,Once-daily dosing
+HCP000027,PRD000046,4.43,Efficacy,Once-daily dosing
+HCP000352,PRD000050,1.47,Convenience,Once-daily dosing
+HCP000186,PRD000031,1.92,Real-world evidence,High efficacy
+HCP000393,PRD000009,3.18,Real-world evidence,Rapid onset
+HCP000278,PRD000016,2.01,Cost,Minimal interactions
+HCP000251,PRD000038,1.77,Efficacy,Long-term data
+HCP000312,PRD000046,2.8,Efficacy,Minimal interactions
+HCP000236,PRD000048,2.15,Ease of use,Affordable pricing
+HCP000071,PRD000008,2.89,Ease of use,Affordable pricing
+HCP000045,PRD000037,2.29,Ease of use,Long-term data
+HCP000038,PRD000035,4.21,Safety,Minimal interactions
+HCP000068,PRD000037,2.64,Ease of use,High efficacy
+HCP000390,PRD000013,3.8,Efficacy,Minimal interactions
+HCP000244,PRD000036,1.36,Efficacy,Rapid onset
+HCP000429,PRD000042,1.83,Safety,High efficacy
+HCP000333,PRD000050,2.62,Cost,Low side effects
+HCP000381,PRD000031,4.48,Safety,Rapid onset
+HCP000311,PRD000029,4.56,Convenience,Low side effects
+HCP000393,PRD000037,3.38,Efficacy,Affordable pricing
+HCP000185,PRD000024,1.85,Efficacy,Rapid onset
+HCP000018,PRD000025,2.99,Safety,Once-daily dosing
+HCP000090,PRD000008,3.29,Efficacy,Once-daily dosing
+HCP000263,PRD000017,4.35,Safety,Minimal interactions
+HCP000064,PRD000012,3.1,Safety,Once-daily dosing
+HCP000256,PRD000015,1.88,Real-world evidence,Innovative delivery
+HCP000384,PRD000028,3.77,Safety,Low side effects
+HCP000287,PRD000041,4.06,Convenience,High efficacy
+HCP000306,PRD000029,2.94,Ease of use,Rapid onset
+HCP000378,PRD000028,2.16,Safety,High efficacy
+HCP000332,PRD000019,2.84,Convenience,Long-term data
+HCP000418,PRD000039,4.31,Ease of use,Once-daily dosing
+HCP000252,PRD000037,3.4,Efficacy,Affordable pricing
+HCP000207,PRD000042,2.1,Real-world evidence,Innovative delivery
+HCP000494,PRD000026,3.86,Ease of use,Long-term data
+HCP000206,PRD000002,3.85,Convenience,High efficacy
+HCP000071,PRD000048,2.04,Safety,High efficacy
+HCP000086,PRD000023,2.85,Ease of use,Low side effects
+HCP000472,PRD000029,1.29,Convenience,Rapid onset
+HCP000263,PRD000028,4.5,Efficacy,Affordable pricing
+HCP000423,PRD000040,2.14,Ease of use,High efficacy
+HCP000059,PRD000013,1.99,Safety,High efficacy
+HCP000465,PRD000048,2.19,Safety,Rapid onset
+HCP000113,PRD000045,4.19,Efficacy,Minimal interactions
+HCP000316,PRD000042,1.51,Convenience,Minimal interactions
+HCP000304,PRD000039,4.51,Efficacy,Rapid onset
+HCP000220,PRD000028,1.53,Efficacy,Innovative delivery
+HCP000036,PRD000050,1.2,Ease of use,Once-daily dosing
+HCP000318,PRD000048,2.48,Convenience,Once-daily dosing
+HCP000366,PRD000034,3.91,Cost,Once-daily dosing
+HCP000487,PRD000027,4.0,Cost,Innovative delivery
+HCP000345,PRD000026,1.97,Safety,Minimal interactions
+HCP000281,PRD000036,3.31,Cost,Minimal interactions
+HCP000250,PRD000001,1.38,Efficacy,Innovative delivery
+HCP000010,PRD000024,2.58,Efficacy,Low side effects
+HCP000040,PRD000001,1.71,Efficacy,Once-daily dosing
+HCP000137,PRD000016,4.41,Efficacy,Once-daily dosing
+HCP000299,PRD000050,2.46,Convenience,Long-term data
+HCP000384,PRD000024,2.95,Convenience,High efficacy
+HCP000165,PRD000013,1.66,Efficacy,High efficacy
+HCP000362,PRD000032,3.11,Real-world evidence,Rapid onset
+HCP000339,PRD000006,4.51,Ease of use,Long-term data
+HCP000249,PRD000022,3.89,Cost,Innovative delivery
+HCP000244,PRD000029,2.14,Ease of use,Minimal interactions
+HCP000282,PRD000046,2.99,Real-world evidence,High efficacy
+HCP000430,PRD000040,4.74,Ease of use,Rapid onset
+HCP000192,PRD000045,2.01,Efficacy,Once-daily dosing
+HCP000081,PRD000001,1.47,Safety,Innovative delivery
+HCP000130,PRD000032,2.89,Safety,Long-term data
+HCP000293,PRD000031,1.81,Safety,Rapid onset
+HCP000262,PRD000015,2.2,Efficacy,Long-term data
+HCP000300,PRD000042,2.98,Cost,Rapid onset
+HCP000413,PRD000003,2.27,Convenience,High efficacy
+HCP000470,PRD000042,3.53,Ease of use,Affordable pricing
+HCP000059,PRD000021,4.45,Real-world evidence,Once-daily dosing
+HCP000329,PRD000005,3.83,Ease of use,Long-term data
+HCP000106,PRD000001,3.69,Safety,Once-daily dosing
+HCP000316,PRD000046,3.8,Safety,Innovative delivery
+HCP000437,PRD000006,3.1,Convenience,Innovative delivery
+HCP000495,PRD000039,3.63,Efficacy,Low side effects
+HCP000108,PRD000016,4.11,Cost,Affordable pricing
+HCP000133,PRD000011,4.03,Convenience,Low side effects
+HCP000278,PRD000037,3.82,Convenience,Rapid onset
+HCP000483,PRD000031,3.8,Efficacy,Innovative delivery
+HCP000482,PRD000004,1.22,Efficacy,Affordable pricing
+HCP000122,PRD000009,3.79,Safety,High efficacy
+HCP000452,PRD000041,4.7,Ease of use,Minimal interactions
+HCP000117,PRD000019,1.92,Real-world evidence,Once-daily dosing
+HCP000003,PRD000037,2.02,Safety,Rapid onset
+HCP000398,PRD000009,3.3,Safety,Minimal interactions
+HCP000213,PRD000015,2.9,Cost,Rapid onset
+HCP000129,PRD000032,4.47,Convenience,Long-term data
+HCP000222,PRD000022,4.42,Cost,Innovative delivery
+HCP000386,PRD000047,1.21,Cost,Long-term data
+HCP000297,PRD000014,3.5,Real-world evidence,Rapid onset
+HCP000413,PRD000011,1.42,Safety,Rapid onset
+HCP000036,PRD000015,3.23,Safety,Innovative delivery
+HCP000312,PRD000017,1.46,Ease of use,Innovative delivery
+HCP000476,PRD000018,1.15,Real-world evidence,Rapid onset
+HCP000078,PRD000016,2.89,Cost,Rapid onset
+HCP000465,PRD000007,2.12,Cost,Long-term data
+HCP000341,PRD000003,2.8,Efficacy,Low side effects
+HCP000454,PRD000014,4.73,Convenience,Innovative delivery
+HCP000093,PRD000035,2.55,Efficacy,Rapid onset
+HCP000483,PRD000044,4.02,Efficacy,High efficacy
+HCP000066,PRD000013,1.32,Real-world evidence,Long-term data
+HCP000158,PRD000034,4.34,Safety,Rapid onset
+HCP000432,PRD000044,1.61,Ease of use,Innovative delivery
+HCP000338,PRD000019,4.82,Convenience,Rapid onset
+HCP000079,PRD000041,3.15,Efficacy,Affordable pricing
+HCP000260,PRD000038,2.2,Ease of use,Affordable pricing
+HCP000343,PRD000040,4.72,Real-world evidence,Low side effects
+HCP000439,PRD000011,2.73,Efficacy,Rapid onset
+HCP000281,PRD000018,3.48,Efficacy,Innovative delivery
+HCP000010,PRD000007,1.33,Efficacy,Minimal interactions
+HCP000271,PRD000016,4.88,Safety,Innovative delivery
+HCP000031,PRD000044,2.92,Efficacy,High efficacy
+HCP000370,PRD000035,4.69,Ease of use,Minimal interactions
+HCP000227,PRD000036,4.45,Convenience,Rapid onset
+HCP000424,PRD000032,4.88,Cost,Long-term data
+HCP000390,PRD000028,4.43,Efficacy,Rapid onset
+HCP000045,PRD000042,1.97,Ease of use,Low side effects
+HCP000087,PRD000050,4.65,Cost,Low side effects
+HCP000011,PRD000050,2.41,Cost,Once-daily dosing
+HCP000235,PRD000011,2.4,Safety,Affordable pricing
+HCP000224,PRD000025,1.75,Ease of use,Low side effects
+HCP000467,PRD000028,4.7,Real-world evidence,Innovative delivery
+HCP000042,PRD000046,4.32,Cost,Innovative delivery
+HCP000333,PRD000005,2.94,Convenience,Minimal interactions
+HCP000478,PRD000032,1.69,Cost,Minimal interactions
+HCP000166,PRD000028,1.78,Ease of use,Minimal interactions
+HCP000427,PRD000019,1.64,Efficacy,Rapid onset
+HCP000122,PRD000046,4.54,Efficacy,Affordable pricing
+HCP000334,PRD000036,3.77,Ease of use,Long-term data
+HCP000320,PRD000012,2.43,Safety,Once-daily dosing
+HCP000296,PRD000004,1.52,Cost,High efficacy
+HCP000409,PRD000005,4.21,Convenience,Low side effects
+HCP000008,PRD000009,1.7,Ease of use,High efficacy
+HCP000263,PRD000032,4.02,Convenience,Once-daily dosing
+HCP000165,PRD000019,4.56,Convenience,Low side effects
+HCP000313,PRD000028,3.19,Convenience,Once-daily dosing
+HCP000191,PRD000031,3.18,Cost,Low side effects
+HCP000087,PRD000003,3.7,Cost,High efficacy
+HCP000107,PRD000020,1.96,Safety,Innovative delivery
+HCP000377,PRD000015,2.87,Real-world evidence,Once-daily dosing
+HCP000254,PRD000029,4.73,Cost,Long-term data
+HCP000047,PRD000023,3.81,Efficacy,Affordable pricing
+HCP000113,PRD000003,2.84,Cost,Affordable pricing
+HCP000193,PRD000015,2.88,Safety,Once-daily dosing
+HCP000147,PRD000044,2.09,Convenience,Long-term data
+HCP000282,PRD000044,1.34,Real-world evidence,Affordable pricing
+HCP000398,PRD000022,3.52,Efficacy,Affordable pricing
+HCP000236,PRD000027,4.87,Cost,Affordable pricing
+HCP000319,PRD000041,2.47,Ease of use,High efficacy
+HCP000364,PRD000037,2.55,Ease of use,Innovative delivery
+HCP000173,PRD000029,3.16,Real-world evidence,Innovative delivery
+HCP000496,PRD000010,2.8,Ease of use,Once-daily dosing
+HCP000424,PRD000005,2.49,Ease of use,Once-daily dosing
+HCP000071,PRD000017,2.09,Real-world evidence,Minimal interactions
+HCP000271,PRD000037,3.6,Cost,High efficacy
+HCP000053,PRD000021,2.2,Cost,Low side effects
+HCP000113,PRD000032,2.43,Efficacy,Low side effects
+HCP000450,PRD000026,2.77,Efficacy,Innovative delivery
+HCP000420,PRD000019,2.1,Safety,Long-term data
+HCP000475,PRD000044,1.62,Safety,Rapid onset
+HCP000265,PRD000045,3.87,Efficacy,Long-term data
+HCP000488,PRD000003,3.24,Efficacy,Once-daily dosing
+HCP000104,PRD000049,4.81,Ease of use,Affordable pricing
+HCP000253,PRD000014,2.33,Convenience,Once-daily dosing
+HCP000307,PRD000024,3.8,Real-world evidence,Minimal interactions
+HCP000179,PRD000004,2.09,Efficacy,Rapid onset
+HCP000006,PRD000031,3.94,Real-world evidence,Low side effects
+HCP000459,PRD000003,1.1,Cost,High efficacy
+HCP000432,PRD000016,2.87,Ease of use,Affordable pricing

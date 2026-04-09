@@ -1,0 +1,7 @@
+{
+    "Parameters": {
+      "UseCaseName": "sales-copilot",
+      "ServiceName": "Structure-Agent",
+      "AgentPath": "Agents/Post-Call/Structure-Agent"
+    }
+}

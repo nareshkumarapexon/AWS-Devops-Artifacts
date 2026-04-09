@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: Sample CloudFormation template with YAML - CodeBuild
+
+
+Resources:
+  UICodebuild:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: marketing-copilot-codebuild-ui-cloudfront
+      Source:
+        Type: GITHUB
+        Location: https://github.com/vivekapexon/marketing-copilot.git
+        GitCloneDepth: 1
+        BuildSpec: UI/buildspec.yaml
+        Auth:
+          Type: CODECONNECTIONS
+          Resource: arn:aws:codeconnections:us-east-1:969385807621:connection/097f91a2-f0b9-4f5c-ab2b-fc7b14f4dd1b
+      Triggers:
+        Webhook: true
+        FilterGroups:
+          - - Type: EVENT
+              Pattern: PUSH
+            - Type: HEAD_REF
+              Pattern: ^refs/heads/main
+            - Type: FILE_PATH
+              Pattern: !Sub ^UI/.* 
+
+      Environment:
+        Type: LINUX_CONTAINER
+        Image: 969385807621.dkr.ecr.us-east-1.amazonaws.com/codebuild-node-amd64:latest
+        ImagePullCredentialsType: SERVICE_ROLE
+        ComputeType: BUILD_GENERAL1_MEDIUM
+      ServiceRole: arn:aws:iam::969385807621:role/sales-copilot-codebuild-service-role
+
+      Artifacts:
+        Type: NO_ARTIFACTS
+      LogsConfig:
+        CloudWatchLogs:
+          Status: ENABLED
+          GroupName: marketing-copilot-codebuild-ui
+ 

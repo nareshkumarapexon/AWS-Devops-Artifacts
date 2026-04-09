@@ -1,0 +1,131 @@
+version: 0.2
+
+env:
+  variables:
+    S3_BUCKET: "marketing-copilot-ui-bucket"
+    CLOUDFRONT_DISTRIBUTION_ID: "E1R5392MER5NRD"
+    BUILD_OUTPUT_DIR: "dist"
+    AWS_REGION: "us-east-1"
+    GIT_BRANCH: "main"
+    NODE_VERSION: "10"
+    INVALIDATION_PATHS: "/*"
+    CACHE_CONTROL_STATIC: "public, max-age=31536000, immutable"
+    CACHE_CONTROL_HTML: "public, max-age=3600, must-revalidate"
+    VITE_COGNITO_USER_POOL_ID: "us-east-1_YjXMWetfH"
+    VITE_COGNITO_CLIENT_ID: "cugceg3ohb115rn7v0gjo900m"
+    VITE_COGNITO_DOMAIN: "https://marketingcopilot-agentcore-identity-pool-nc2f1.auth.us-east-1.amazoncognito.com"
+    VITE_COGNITO_REDIRECT_URI: "https://d1xzv142vwhfdn.cloudfront.net/sso-login"
+    VITE_BEDROCK_DATA_EXPLORATION_ARN: "arn:aws:bedrock-agentcore:us-east-1:969385807621:runtime/mcp_dea_agent_v1-Ocrgny8NoO"
+    VITE_BEDROCK_DEFAULT_QUALIFIER: "DEFAULT"
+    VITE_BEDROCK_STRATEGY_RECOMENDATION_ARN: "arn:aws:bedrock-agentcore:us-east-1:969385807621:runtime/mcp_supervisor_agent-iW0USsBE2C"
+    VITE_BEDROCK_DASHBOARD_ARN: "arn:aws:lambda:us-east-1:969385807621:function:marketing_copilot-lambda_kpi_api"
+    VITE_API_BASE_URL: "https://05wvq3ap59.execute-api.us-east-1.amazonaws.com/v1"
+    VITE_DASHBOARD_API_BASE_URL: "https://kwffvl1cuh.execute-api.us-east-1.amazonaws.com/v1"
+    ACCESS_KEY: "MC_VITE_ACCESS_KEY"
+    SECRET_KEY: "MC_VITE_SECRET_KEY"
+    USE_COGNITO_CLIENT_SECRET: "MC_VITE_USE_COGNITO_CLIENT_SECRET"
+#This is comment
+
+phases:
+  install:
+    commands:
+      - echo "=== INSTALL PHASE ==="
+      - pwd
+      - git submodule update --init --recursive
+
+      - |
+          if ! command -v aws &> /dev/null; then
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            ./aws/install
+          fi
+
+
+      - node --version
+      - npm --version
+      - aws --version
+
+  pre_build:
+    commands:
+      - cd UI
+      - |
+        VITE_COGNITO_CLIENT_SECRET=$(aws ssm get-parameter \
+            --name $USE_COGNITO_CLIENT_SECRET \
+            --with-decryption \
+            --query "Parameter.Value" \
+            --output text)        
+      - |
+        VITE_AWS_ACCESS_KEY=$(aws ssm get-parameter \
+            --name $ACCESS_KEY \
+            --with-decryption \
+            --query "Parameter.Value" \
+            --output text)        
+      - |
+        VITE_AWS_SECRET_KEY=$(aws ssm get-parameter \
+            --name $SECRET_KEY \
+            --with-decryption \
+            --query "Parameter.Value" \
+            --output text)        
+
+      - touch .env
+      # export the env variables
+      - echo VITE_COGNITO_USER_POOL_ID=${VITE_COGNITO_USER_POOL_ID} >> .env
+      - echo VITE_COGNITO_CLIENT_ID=${VITE_COGNITO_CLIENT_ID} >> .env
+      - echo VITE_COGNITO_CLIENT_SECRET=${VITE_COGNITO_CLIENT_SECRET} >> .env
+      - echo VITE_COGNITO_DOMAIN=${VITE_COGNITO_DOMAIN} >> .env
+      - echo VITE_COGNITO_REDIRECT_URI=${VITE_COGNITO_REDIRECT_URI} >> .env
+      - echo VITE_AWS_ACCESS_KEY_ID=${VITE_AWS_ACCESS_KEY_ID} >> .env
+      - echo VITE_AWS_SECRET_ACCESS_KEY=${VITE_AWS_SECRET_ACCESS_KEY} >> .env
+      - echo VITE_MOCK_SERVER_URL=${VITE_MOCK_SERVER_URL} >> .env
+      - echo VITE_BEDROCK_DATA_EXPLORATION_ARN=${VITE_BEDROCK_DATA_EXPLORATION_ARN} >> .env
+      - echo VITE_BEDROCK_DEFAULT_QUALIFIER=${VITE_BEDROCK_DEFAULT_QUALIFIER} >> .env
+      - echo VITE_BEDROCK_STRATEGY_RECOMENDATION_ARN=${VITE_BEDROCK_STRATEGY_RECOMENDATION_ARN} >> .env
+      - echo VITE_BEDROCK_DASHBOARD_ARN=${VITE_BEDROCK_DASHBOARD_ARN} >> .env
+      - echo VITE_API_BASE_URL=${VITE_API_BASE_URL} >> .env
+      - echo VITE_DASHBOARD_API_BASE_URL=${VITE_DASHBOARD_API_BASE_URL} >> .env
+               
+
+      - rm -rf node_modules package-lock.json
+      - npm install
+
+  build:
+    commands:
+      - npm run build
+      - |
+          echo "Build ID: $CODEBUILD_BUILD_ID" > $BUILD_OUTPUT_DIR/build-info.txt
+          echo "Commit: $(git rev-parse HEAD || echo unknown)" >> $BUILD_OUTPUT_DIR/build-info.txt
+          echo "Build Date: $(date)" >> $BUILD_OUTPUT_DIR/build-info.txt
+
+  post_build:
+    commands:
+      - |
+          if [ ! -d "$BUILD_OUTPUT_DIR" ]; then
+            echo "ERROR: Build output directory not found"
+            exit 1
+          fi
+
+      - |
+          aws s3 sync $BUILD_OUTPUT_DIR/ s3://$S3_BUCKET/ \
+            --exclude "*.html" \
+            --cache-control "$CACHE_CONTROL_STATIC" \
+            --delete
+
+      - |
+          aws s3 sync $BUILD_OUTPUT_DIR/ s3://$S3_BUCKET/ \
+            --include "*.html" \
+            --cache-control "$CACHE_CONTROL_HTML" \
+            --delete
+
+      - |
+          aws cloudfront create-invalidation \
+            --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
+            --paths "$INVALIDATION_PATHS"
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: $BUILD_OUTPUT_DIR
+
+cache:
+  paths:
+    - node_modules/**/*

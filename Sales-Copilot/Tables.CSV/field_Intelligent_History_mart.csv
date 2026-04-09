@@ -1,0 +1,51 @@
+hcp_id,hcp_name,territory_id,call_date,interaction_type,topic_discussed,objection_raised,materials_shared,outcome,followup_flag,opened_moa_email_flag,clicked_kol_video_flag,clicked_campaign_link_flag,formulary_update_30d_flag,formulary_update_summary,created_at
+HCP0001,Dr. James Smith,US-CA-SF01,09-20-2025,In-person Meeting,Payer Coverage,Cost concerns,Clinical Study PDF,Neutral - Needs follow-up,0,0,0,0,1,Tier improvement,12-11-2025 03:56
+HCP0002,Dr. Linda Johnson,US-CA-SF01,12-07-2025,Virtual Call,MOA Review,Cost concerns,Payer Access Sheet,Requested payer info,0,0,1,0,1,Removed restriction,12-11-2025 03:56
+HCP0003,Dr. Robert Brown,US-CA-SF01,11-05-2025,Virtual Call,Payer Coverage,Cost concerns,Patient Card,Negative - Rejected,1,0,0,1,0,Tier improvement,12-11-2025 03:56
+HCP0004,Dr. Susan Miller,US-CA-SF01,10-23-2025,Email Follow-up,Patient Selection,Cost concerns,Payer Access Sheet,Negative - Rejected,0,1,0,1,0,Removed restriction,12-11-2025 03:56
+HCP0005,Dr. Charles Davis,US-CA-SF01,11-03-2025,Email Follow-up,Real-world Evidence,None,Dosing Guide,Positive - Agreed to trial,0,0,1,0,0,Tier improvement,12-11-2025 03:56
+HCP0006,Dr. Jennifer Wilson,US-CA-SF01,10-23-2025,Conference Interaction,Payer Coverage,Side-effect risk,Clinical Study PDF,Neutral - Needs follow-up,1,1,0,1,0,Removed restriction,12-11-2025 03:56
+HCP0007,Dr. William Martinez,US-CA-SF01,09-20-2025,Lunch & Learn,Payer Coverage,Prior authorization burden,Dosing Guide,Neutral - Needs follow-up,1,1,1,0,1,Tier improvement,12-11-2025 03:56
+HCP0008,Dr. Sarah Anderson,US-CA-SF01,11-11-2025,Email Follow-up,Side Effects,Cost concerns,Clinical Study PDF,Positive - Agreed to trial,0,1,0,1,1,No change,12-11-2025 03:56
+HCP0009,Dr. Michael Thomas,US-CA-SF01,11-22-2025,Virtual Call,MOA Review,Side-effect risk,Payer Access Sheet,Requested payer info,1,1,1,1,0,Tier downgrade,12-11-2025 03:56
+HCP0010,Dr. Karen Moore,US-CA-SF01,10-06-2025,In-person Meeting,Dosing,Prefers competitor,MOA Brochure,Neutral - Needs follow-up,0,1,0,1,1,Removed restriction,12-11-2025 03:56
+HCP0011,Dr. Oliver Smith,GB-LON-01,10-12-2025,Email Follow-up,Real-world Evidence,None,MOA Brochure,Positive - Agreed to trial,1,1,0,1,1,Tier downgrade,12-11-2025 03:56
+HCP0012,Dr. Amelia Jones,GB-LON-01,10-13-2025,Email Follow-up,Real-world Evidence,Cost concerns,Dosing Guide,Requested payer info,0,1,0,0,1,Tier downgrade,12-11-2025 03:56
+HCP0013,Dr. George Taylor,GB-LON-01,10-02-2025,In-person Meeting,Real-world Evidence,None,Clinical Study PDF,Requested samples,0,0,1,1,0,Tier improvement,12-11-2025 03:56
+HCP0014,Dr. Isla Brown,GB-LON-01,11-10-2025,In-person Meeting,Dosing,None,Patient Card,Positive - Agreed to trial,0,0,1,0,1,Removed restriction,12-11-2025 03:56
+HCP0015,Dr. Harry Wilson,GB-LON-01,09-24-2025,Virtual Call,Real-world Evidence,Prefers competitor,Dosing Guide,Negative - Rejected,1,1,1,1,0,Tier downgrade,12-11-2025 03:56
+HCP0016,Dr. Grace Patel,GB-LON-01,11-12-2025,Email Follow-up,Dosing,Cost concerns,Payer Access Sheet,Requested payer info,0,0,0,0,0,Tier downgrade,12-11-2025 03:56
+HCP0017,Dr. Noah Wright,GB-LON-01,12-02-2025,Email Follow-up,Dosing,Cost concerns,Payer Access Sheet,Neutral - Needs follow-up,1,1,0,0,1,Tier downgrade,12-11-2025 03:56
+HCP0018,Dr. Sophia Evans,GB-LON-01,10-11-2025,Virtual Call,Dosing,Prefers competitor,MOA Brochure,Requested samples,1,1,1,1,0,Tier improvement,12-11-2025 03:56
+HCP0019,Dr. Jack Green,GB-LON-01,12-03-2025,Email Follow-up,Dosing,Prefers competitor,Dosing Guide,Neutral - Needs follow-up,0,1,0,1,0,New PA requirement,12-11-2025 03:56
+HCP0020,Dr. Emily Harris,GB-LON-01,10-12-2025,In-person Meeting,Side Effects,Prior authorization burden,Payer Access Sheet,Positive - Agreed to trial,0,0,0,0,0,No change,12-11-2025 03:56
+HCP0021,Dr. Hans Müller,DE-BER-01,10-09-2025,Virtual Call,Side Effects,Prefers competitor,MOA Brochure,Neutral - Needs follow-up,1,0,1,1,1,New PA requirement,12-11-2025 03:56
+HCP0022,Dr. Anna Schmidt,DE-BER-01,10-17-2025,Conference Interaction,MOA Review,None,Dosing Guide,Negative - Rejected,0,0,0,1,0,Tier improvement,12-11-2025 03:56
+HCP0023,Dr. Klaus Fischer,DE-BER-01,09-27-2025,Lunch & Learn,Real-world Evidence,Prefers competitor,Dosing Guide,Positive - Agreed to trial,0,0,0,0,0,No change,12-11-2025 03:56
+HCP0024,Dr. Petra Weber,DE-BER-01,11-25-2025,Virtual Call,Real-world Evidence,None,Payer Access Sheet,Positive - Agreed to trial,0,1,1,1,0,New PA requirement,12-11-2025 03:56
+HCP0025,Dr. Jürgen Becker,DE-BER-01,11-10-2025,Conference Interaction,MOA Review,Side-effect risk,Clinical Study PDF,Requested samples,1,0,0,1,0,Tier improvement,12-11-2025 03:56
+HCP0026,Dr. Stefan Wagner,DE-BER-01,10-03-2025,Lunch & Learn,Patient Selection,Prior authorization burden,Dosing Guide,Negative - Rejected,0,0,1,1,0,No change,12-11-2025 03:56
+HCP0027,Dr. Monika Schäfer,DE-BER-01,10-02-2025,Lunch & Learn,Payer Coverage,Side-effect risk,Payer Access Sheet,Positive - Agreed to trial,1,0,0,1,0,Tier improvement,12-11-2025 03:56
+HCP0028,Dr. Karl Hoffmann,DE-BER-01,10-01-2025,Email Follow-up,Patient Selection,Prior authorization burden,Payer Access Sheet,Neutral - Needs follow-up,1,0,1,1,1,Tier improvement,12-11-2025 03:56
+HCP0029,Dr. Julia Meyer,DE-BER-01,11-29-2025,Email Follow-up,Dosing,Prefers competitor,MOA Brochure,Negative - Rejected,0,1,0,1,1,Removed restriction,12-11-2025 03:56
+HCP0030,Dr. Ingrid Braun,DE-BER-01,12-09-2025,In-person Meeting,Payer Coverage,Cost concerns,Dosing Guide,Requested payer info,0,1,0,1,0,Tier improvement,12-11-2025 03:56
+HCP0031,Dr. Oliver Walker,AU-NSW-01,11-01-2025,In-person Meeting,Patient Selection,Side-effect risk,Dosing Guide,Neutral - Needs follow-up,0,1,1,0,0,Tier downgrade,12-11-2025 03:56
+HCP0032,Dr. Charlotte White,AU-NSW-01,11-18-2025,In-person Meeting,MOA Review,Prefers competitor,Clinical Study PDF,Requested samples,0,1,0,0,1,Tier improvement,12-11-2025 03:56
+HCP0033,Dr. Noah Taylor,AU-NSW-01,10-11-2025,Virtual Call,Side Effects,Prior authorization burden,Clinical Study PDF,Negative - Rejected,0,0,0,0,1,New PA requirement,12-11-2025 03:56
+HCP0034,Dr. Ava Anderson,AU-NSW-01,11-05-2025,Email Follow-up,Patient Selection,Cost concerns,Payer Access Sheet,Requested samples,1,0,0,1,0,Removed restriction,12-11-2025 03:56
+HCP0035,Dr. Jack Harris,AU-NSW-01,11-07-2025,In-person Meeting,Real-world Evidence,Cost concerns,Patient Card,Negative - Rejected,1,1,0,1,0,New PA requirement,12-11-2025 03:56
+HCP0036,Dr. Sophie Martin,AU-NSW-01,12-05-2025,In-person Meeting,Real-world Evidence,Prefers competitor,Payer Access Sheet,Neutral - Needs follow-up,1,1,0,1,1,Tier improvement,12-11-2025 03:56
+HCP0037,Dr. Leo King,AU-NSW-01,11-02-2025,Email Follow-up,Payer Coverage,None,Patient Card,Negative - Rejected,1,1,0,0,1,No change,12-11-2025 03:56
+HCP0038,Dr. Mia Thompson,AU-NSW-01,09-15-2025,Lunch & Learn,Real-world Evidence,Prior authorization burden,Clinical Study PDF,Requested samples,0,1,1,0,1,Removed restriction,12-11-2025 03:56
+HCP0039,Dr. Henry Scott,AU-NSW-01,09-24-2025,Conference Interaction,Side Effects,Side-effect risk,Patient Card,Neutral - Needs follow-up,1,0,0,1,1,Tier improvement,12-11-2025 03:56
+HCP0040,Dr. Chloe Hill,AU-NSW-01,11-10-2025,Virtual Call,MOA Review,Side-effect risk,Dosing Guide,Positive - Agreed to trial,0,0,1,0,1,No change,12-11-2025 03:56
+HCP0041,Dr. Miguel Silva,BR-SP-01,09-21-2025,Virtual Call,Payer Coverage,None,Patient Card,Requested samples,1,0,0,0,0,No change,12-11-2025 03:56
+HCP0042,Dr. Helena Santos,BR-SP-01,11-12-2025,Lunch & Learn,Side Effects,Prior authorization burden,MOA Brochure,Requested payer info,0,0,1,0,1,Removed restriction,12-11-2025 03:56
+HCP0043,Dr. Arthur Oliveira,BR-SP-01,09-30-2025,Email Follow-up,Side Effects,None,Payer Access Sheet,Requested payer info,1,1,0,1,1,New PA requirement,12-11-2025 03:56
+HCP0044,Dr. Valentina Souza,BR-SP-01,11-09-2025,Lunch & Learn,Side Effects,Side-effect risk,Dosing Guide,Negative - Rejected,1,0,1,0,1,New PA requirement,12-11-2025 03:56
+HCP0045,Dr. Heitor Rodrigues,BR-SP-01,10-31-2025,In-person Meeting,MOA Review,None,Dosing Guide,Neutral - Needs follow-up,1,0,0,0,1,No change,12-11-2025 03:56
+HCP0046,Dr. Manuela Ferreira,BR-SP-01,10-29-2025,Conference Interaction,Side Effects,None,MOA Brochure,Neutral - Needs follow-up,1,1,0,1,1,Tier improvement,12-11-2025 03:56
+HCP0047,Dr. Rafael Alves,BR-SP-01,10-26-2025,Conference Interaction,Side Effects,Side-effect risk,Payer Access Sheet,Requested payer info,0,1,0,1,1,No change,12-11-2025 03:56
+HCP0048,Dr. Laura Pereira,BR-SP-01,12-07-2025,Email Follow-up,Payer Coverage,Prefers competitor,Patient Card,Neutral - Needs follow-up,1,0,0,1,0,Tier improvement,12-11-2025 03:56
+HCP0049,Dr. Davi Lima,BR-SP-01,09-19-2025,Virtual Call,Side Effects,Prefers competitor,Dosing Guide,Positive - Agreed to trial,1,1,1,0,1,New PA requirement,12-11-2025 03:56
+HCP0050,Dr. Sophia Gomes,BR-SP-01,10-28-2025,Email Follow-up,Side Effects,Prefers competitor,Clinical Study PDF,Positive - Agreed to trial,1,0,0,1,0,Tier improvement,12-11-2025 03:56

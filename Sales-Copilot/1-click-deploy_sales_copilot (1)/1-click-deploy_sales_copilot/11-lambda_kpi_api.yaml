@@ -1,0 +1,99 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Lambda to connect to Redshift Serverless
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Default: marketing-copilot
+    Description: "Name of the Use Case being developed"
+
+
+  lambdaHandler:
+    Type: String
+    Description: Name of the lambda handler
+
+  lambdaS3Artifacts:
+    Type: String
+    Description: lambda source package
+
+  lambdaS3key:
+    Type: String
+    Description: s3 key prefix
+
+
+Resources:
+  # --------------------------------------------------------------------------
+  # Lambda IAM Role
+  # --------------------------------------------------------------------------
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${UseCaseName}KPIAPILambdaExecutionRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole 
+      Policies:
+        - PolicyName: !Sub ${UseCaseName}KPIAPILambdaRedshiftAccessPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Sid: RedshiftDataAPIPermissions
+                Effect: Allow
+                Action:
+                  - redshift-data:ExecuteStatement
+                  - redshift-data:DescribeStatement
+                  - redshift-data:GetStatementResult
+                Resource: "*"
+              - Sid: SSMParameterStoreRead
+                Effect: Allow
+                Action:
+                  - ssm:GetParameter
+                Resource: "*"
+                  
+              - Sid: SecretsManagerAccess
+                Effect: Allow
+                Action:
+                  - secretsmanager:GetSecretValue
+                Resource: "arn:aws:secretsmanager:us-east-1:969385807621:secret:*marketing-copilot*"
+      Tags:
+        - Key: Name
+          Value: !Sub ${UseCaseName}          
+
+
+  # --------------------------------------------------------------------------
+  # Lambda Function - Redshift KPI API
+  # --------------------------------------------------------------------------
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub ${UseCaseName}-lambda_kpi_api
+      Handler: !Ref lambdaHandler
+      Runtime: python3.12
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Timeout: 30
+      Tags:
+        - Key: Name
+          Value: !Sub ${UseCaseName}         
+      Code:
+        S3Bucket: !Ref lambdaS3Artifacts
+        S3Key: !Ref lambdaS3key        
+
+
+Outputs:
+  LambdaRole:
+    Description: Lambda Redshift KPI API Role
+    Value: !Ref LambdaExecutionRole
+
+  LambdaFunc:
+    Description: Lambda Redshift KPI API
+    Value: !Ref LambdaFunction
+
+  LambdaFuncARN:
+    Description: Lambda Redshift KPI API
+    Value: !GetAtt LambdaFunction.Arn

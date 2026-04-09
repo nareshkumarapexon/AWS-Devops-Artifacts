@@ -1,0 +1,201 @@
+hcp_id,territory_id,market_share_percent,competitor_market_share,comp_trx_share_28d,share_shift_percent,comp_share_28d_delta,comp_detail_60d_cnt,comp_sample_60d_cnt,comp_event_90d_cnt,drug_id,drug_name,brand_name,manufacturer,drug_category,therapy_area
+HCP0001,US-TX-W,15.57,52.25,49.7,1.12,0.01,6,7,3,COMP-C003,sacubitril/valsartan,Entresto,Novartis,ARNI,Cardiology
+HCP0002,US-PA-E,11.49,36.56,36.61,0.21,0.02,6,18,1,COMP-PD001,montelukast,Singulair,Merck,Leukotriene Inhibitor,Pediatrics
+HCP0003,US-CA-N,39.46,40.24,35.3,6.45,0.07,10,18,3,COMP-D002,empagliflozin,Jardiance,Boehringer,SGLT2,Endocrinology
+HCP0004,US-TX-E,57.86,16.73,12.66,0.77,0.08,14,18,8,COMP-OG001,elagolix,Orilissa,AbbVie,GnRH Antagonist,Obstetrics & Gynecology
+HCP0005,US-PA-E,46.49,20.72,25.45,3.03,0.06,15,29,8,COMP-G001,adalimumab,Humira,AbbVie,TNF Inhibitor,Gastroenterology
+HCP0006,US-NY-W,38.87,37.61,33.07,1.82,0.03,2,12,0,COMP-PD002,methylphenidate,Ritalin,Novartis,Stimulant,Pediatrics
+HCP0007,US-CA-S,23.9,49.07,47.72,2.96,0.02,4,7,1,COMP-O002,trastuzumab,Herceptin,Roche,HER2 Inhibitor,Oncology
+HCP0008,US-TX-E,18.17,41.38,46.28,5.12,0.06,15,20,8,COMP-R001,adalimumab,Humira,AbbVie,TNF Inhibitor,Rheumatology
+HCP0009,US-PA-E,21.45,30.96,29.11,2.14,0.02,6,15,1,COMP-PD001,montelukast,Singulair,Merck,Leukotriene Inhibitor,Pediatrics
+HCP0010,US-CA-S,29.78,42.86,42.45,2.12,0.02,6,13,3,COMP-O002,trastuzumab,Herceptin,Roche,HER2 Inhibitor,Oncology
+HCP0011,US-TX-W,28.1,44.93,41.31,3.95,0.08,6,14,7,COMP-FM002,lisinopril,Prinivil,Merck,ACE Inhibitor,Family Medicine
+HCP0012,US-FL-S,49.6,18.44,14.08,3.05,0.1,13,18,6,COMP-G001,adalimumab,Humira,AbbVie,TNF Inhibitor,Gastroenterology
+HCP0013,US-TX-W,44.01,12.29,16.14,6.01,0.08,10,13,4,COMP-P001,aripiprazole,Abilify,Otsuka,Atypical Antipsychotic,Psychiatry
+HCP0014,US-PA-E,17.91,30.1,32.32,5.76,0.1,7,26,2,COMP-D002,empagliflozin,Jardiance,Boehringer,SGLT2,Endocrinology
+HCP0015,US-NY-E,52.08,20.15,17.14,2.99,0.02,6,5,2,COMP-OG002,ospemifene,Osphena,Duchesnay,SERM,Obstetrics & Gynecology
+HCP0016,US-NY-W,10.97,57.87,61.66,6.65,0.03,2,12,0,COMP-AI002,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Allergy and Immunology
+HCP0017,US-TX-W,46.6,26.32,31.1,4.26,0.01,5,10,2,COMP-AI001,omalizumab,Xolair,Genentech,Anti-IgE,Allergy and Immunology
+HCP0018,US-PA-W,58.22,28.58,31.13,5.52,0.07,11,31,7,COMP-P002,quetiapine,Seroquel,AstraZeneca,Atypical Antipsychotic,Psychiatry
+HCP0019,US-TX-E,31.91,32.94,29.15,1.8,0.03,6,12,1,COMP-AI002,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Allergy and Immunology
+HCP0020,US-NY-W,13.55,48.93,46.22,7.24,0.09,6,26,3,COMP-OG001,elagolix,Orilissa,AbbVie,GnRH Antagonist,Obstetrics & Gynecology
+HCP0021,US-CA-N,43.45,14.28,10.6,7.48,0.06,12,17,8,COMP-O002,trastuzumab,Herceptin,Roche,HER2 Inhibitor,Oncology
+HCP0022,US-NY-W,50.37,13.81,9.78,3.45,0.04,5,6,0,COMP-DM002,ustekinumab,Stelara,Janssen,IL-12/23 Inhibitor,Dermatology
+HCP0023,US-FL-N,30.13,28.48,32.1,1.99,0.02,5,9,3,COMP-O001,pembrolizumab,Keytruda,Merck,PD-1 Inhibitor,Oncology
+HCP0024,US-TX-W,23.93,37.49,41.72,3.55,0.09,13,13,2,COMP-R001,adalimumab,Humira,AbbVie,TNF Inhibitor,Rheumatology
+HCP0025,US-PA-W,58.45,28.53,32.02,1.33,0.05,3,17,0,COMP-DM001,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Dermatology
+HCP0026,US-CA-N,28.95,44.63,42.28,6.27,0.05,5,20,1,COMP-NP001,dapagliflozin,Farxiga,AstraZeneca,SGLT2,Nephrology
+HCP0027,US-NY-E,24.84,59.06,59.85,4.34,0.07,5,11,6,COMP-O001,pembrolizumab,Keytruda,Merck,PD-1 Inhibitor,Oncology
+HCP0028,US-PA-E,35.14,41.32,37.89,7.69,0.01,3,7,0,COMP-D002,empagliflozin,Jardiance,Boehringer,SGLT2,Endocrinology
+HCP0029,US-PA-E,30.19,43.54,44.24,4.63,0,0,6,2,COMP-DM001,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Dermatology
+HCP0030,US-CA-N,56.74,14.09,16.25,1.91,0.04,4,19,2,COMP-R002,upadacitinib,Rinvoq,AbbVie,JAK Inhibitor,Rheumatology
+HCP0031,US-TX-E,10.47,48.63,49.26,0.8,0.05,6,13,1,COMP-OG001,elagolix,Orilissa,AbbVie,GnRH Antagonist,Obstetrics & Gynecology
+HCP0032,US-TX-W,54.04,27.59,26.29,1.26,0.08,9,29,8,COMP-N002,ocrelizumab,Ocrevus,Roche,CD20 Inhibitor,Neurology
+HCP0033,US-NY-W,43.39,21.09,25.41,0.83,0.09,9,13,2,COMP-G001,adalimumab,Humira,AbbVie,TNF Inhibitor,Gastroenterology
+HCP0034,US-FL-N,23.62,48.14,50.32,1.63,0.06,9,26,5,COMP-G001,adalimumab,Humira,AbbVie,TNF Inhibitor,Gastroenterology
+HCP0035,US-NY-E,55.27,26.92,22.84,3.39,0.03,2,15,1,COMP-AI002,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Allergy and Immunology
+HCP0036,US-FL-S,58.99,13.23,12.65,5.65,0.06,6,12,7,COMP-D003,sitagliptin,Januvia,Merck,DPP-4,Endocrinology
+HCP0037,US-NY-W,37.28,40.86,41.69,1.18,0.01,4,16,0,COMP-G001,adalimumab,Humira,AbbVie,TNF Inhibitor,Gastroenterology
+HCP0038,US-CA-S,20.5,37.49,33.52,6.24,0.09,11,29,7,COMP-C002,atorvastatin,Lipitor,Pfizer,Statin,Cardiology
+HCP0039,US-NY-W,56.29,14.73,11.36,6.4,0.02,5,5,1,COMP-O001,pembrolizumab,Keytruda,Merck,PD-1 Inhibitor,Oncology
+HCP0040,US-NY-E,49.12,18.23,19.93,5.88,0.02,3,8,3,COMP-AI002,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Allergy and Immunology
+HCP0041,US-FL-S,52.93,14.45,17.62,3.68,0.03,3,12,0,COMP-P001,aripiprazole,Abilify,Otsuka,Atypical Antipsychotic,Psychiatry
+HCP0042,US-PA-W,29.92,26.97,22.66,6.19,0.04,6,17,2,COMP-N001,natalizumab,Tysabri,Biogen,Integrin Inhibitor,Neurology
+HCP0043,US-CA-N,15.77,59.11,55.9,7.7,0.03,2,18,2,COMP-C001,apixaban,Eliquis,BMS/Pfizer,DOAC,Cardiology
+HCP0044,US-FL-S,31.82,44.61,40.77,7.2,0.02,2,18,0,COMP-N002,ocrelizumab,Ocrevus,Roche,CD20 Inhibitor,Neurology
+HCP0045,US-CA-S,28.21,21.75,23.39,2.64,0.03,2,14,2,COMP-FM001,metformin,Glucophage,Merck,Biguanide,Family Medicine
+HCP0046,US-NY-W,26.31,37.43,37.97,1.53,0.07,11,31,7,COMP-PL002,fluticasone/salmeterol,Advair,GSK,ICS/LABA,Pulmonology
+HCP0047,US-NY-W,40.78,16.02,16.5,0,0.03,5,15,3,COMP-NP001,dapagliflozin,Farxiga,AstraZeneca,SGLT2,Nephrology
+HCP0048,US-CA-S,32.11,25.34,25.07,7.21,0.08,7,31,2,COMP-R002,upadacitinib,Rinvoq,AbbVie,JAK Inhibitor,Rheumatology
+HCP0049,US-NY-W,35.77,35.82,34.17,6.55,0.08,15,19,3,COMP-G002,vedolizumab,Entyvio,Takeda,Integrin Inhibitor,Gastroenterology
+HCP0050,US-NY-W,17.37,31.39,36.23,4.89,0.08,12,23,7,COMP-D001,semaglutide,Ozempic,Novo Nordisk,GLP-1,Endocrinology
+HCP0051,US-TX-E,45.92,17.68,16.68,1.18,0.07,6,34,5,COMP-FM001,metformin,Glucophage,Merck,Biguanide,Family Medicine
+HCP0052,US-NY-W,18.79,58.74,58.92,0.4,0.02,2,19,1,COMP-P001,aripiprazole,Abilify,Otsuka,Atypical Antipsychotic,Psychiatry
+HCP0053,US-TX-W,43.38,29.76,30.71,7.6,0.09,14,36,7,COMP-AI002,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Allergy and Immunology
+HCP0054,US-NY-W,31.34,42.67,42.13,1.27,0.09,12,18,8,COMP-C003,sacubitril/valsartan,Entresto,Novartis,ARNI,Cardiology
+HCP0055,US-NY-E,51.99,15.55,18.33,3.88,0.02,5,7,2,COMP-DM001,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Dermatology
+HCP0056,US-FL-S,23.59,39.59,39.99,1.11,0.02,3,11,0,COMP-PL001,tiotropium,Spiriva,Boehringer,LAMA,Pulmonology
+HCP0057,US-FL-S,30.38,33.57,32.73,1.65,0.04,6,5,3,COMP-PD002,methylphenidate,Ritalin,Novartis,Stimulant,Pediatrics
+HCP0058,US-FL-S,10.29,40.55,43.08,6.83,0.1,11,27,7,COMP-OG002,ospemifene,Osphena,Duchesnay,SERM,Obstetrics & Gynecology
+HCP0059,US-FL-S,37.31,35.08,32.29,1.76,0.04,2,17,2,COMP-C003,sacubitril/valsartan,Entresto,Novartis,ARNI,Cardiology
+HCP0060,US-PA-W,43.96,18.09,14.74,3.74,0.01,6,5,3,COMP-D003,sitagliptin,Januvia,Merck,DPP-4,Endocrinology
+HCP0061,US-NY-W,14.2,42.86,46.53,1.45,0.03,4,11,3,COMP-P001,aripiprazole,Abilify,Otsuka,Atypical Antipsychotic,Psychiatry
+HCP0062,US-TX-W,26.88,41.99,39.77,7.61,0.04,2,20,0,COMP-R002,upadacitinib,Rinvoq,AbbVie,JAK Inhibitor,Rheumatology
+HCP0063,US-NY-E,60,17,18.5,6.25,0.07,5,40,3,COMP-N001,natalizumab,Tysabri,Biogen,Integrin Inhibitor,Neurology
+HCP0064,US-TX-E,51.96,22.43,19.82,3.79,0.01,3,19,2,COMP-NP001,dapagliflozin,Farxiga,AstraZeneca,SGLT2,Nephrology
+HCP0065,US-FL-N,18.39,48.22,50.7,0.92,0.08,9,13,6,COMP-FM002,lisinopril,Prinivil,Merck,ACE Inhibitor,Family Medicine
+HCP0066,US-TX-E,56.44,21.52,25.6,3,0.09,8,12,6,COMP-R001,adalimumab,Humira,AbbVie,TNF Inhibitor,Rheumatology
+HCP0067,US-FL-S,15.1,53.17,56.67,4.8,0.01,6,6,2,COMP-AI001,omalizumab,Xolair,Genentech,Anti-IgE,Allergy and Immunology
+HCP0068,US-CA-N,43.08,11.38,12.86,0.1,0.04,5,8,3,COMP-G002,vedolizumab,Entyvio,Takeda,Integrin Inhibitor,Gastroenterology
+HCP0069,US-FL-N,41.78,26.57,28.64,3.48,0.07,15,18,6,COMP-N002,ocrelizumab,Ocrevus,Roche,CD20 Inhibitor,Neurology
+HCP0070,US-NY-E,48.73,19.3,22.56,4.74,0.03,3,7,2,COMP-D003,sitagliptin,Januvia,Merck,DPP-4,Endocrinology
+HCP0071,US-FL-S,22.19,43.94,45.04,3.03,0,2,2,1,COMP-G002,vedolizumab,Entyvio,Takeda,Integrin Inhibitor,Gastroenterology
+HCP0072,US-PA-E,27.74,26.46,24.26,4.77,0.09,13,10,6,COMP-NP001,dapagliflozin,Farxiga,AstraZeneca,SGLT2,Nephrology
+HCP0073,US-NY-W,14.28,51.6,51.49,6.07,0.07,15,32,5,COMP-DM001,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Dermatology
+HCP0074,US-NY-W,49.65,11.86,9.08,5.53,0.03,6,16,3,COMP-O002,trastuzumab,Herceptin,Roche,HER2 Inhibitor,Oncology
+HCP0075,US-NY-E,31.28,38.65,36.96,5.62,0.03,4,12,0,COMP-NP002,finerenone,Kerendia,Bayer,MRA,Nephrology
+HCP0076,US-NY-E,25.78,38.57,43.08,5.52,0.02,5,13,2,COMP-PL001,tiotropium,Spiriva,Boehringer,LAMA,Pulmonology
+HCP0077,US-PA-W,51.63,15.92,14.53,2.42,0.07,7,18,2,COMP-C001,apixaban,Eliquis,BMS/Pfizer,DOAC,Cardiology
+HCP0078,US-PA-E,37.67,37.44,33.7,6.95,0.05,2,14,3,COMP-R001,adalimumab,Humira,AbbVie,TNF Inhibitor,Rheumatology
+HCP0079,US-NY-W,32.02,24.61,20.12,7.53,0.05,2,17,3,COMP-NP002,finerenone,Kerendia,Bayer,MRA,Nephrology
+HCP0080,US-CA-N,38.85,37.16,33.68,6.49,0.09,6,17,2,COMP-FM001,metformin,Glucophage,Merck,Biguanide,Family Medicine
+HCP0081,US-CA-N,40.32,25.81,23.07,4.18,0.05,5,14,3,COMP-O002,trastuzumab,Herceptin,Roche,HER2 Inhibitor,Oncology
+HCP0082,US-PA-W,38.43,21.51,26.11,0.79,0.08,15,16,4,COMP-C002,atorvastatin,Lipitor,Pfizer,Statin,Cardiology
+HCP0083,US-FL-N,17.85,35.21,30.96,0.02,0.05,6,20,2,COMP-O001,pembrolizumab,Keytruda,Merck,PD-1 Inhibitor,Oncology
+HCP0084,US-FL-S,21.57,51.21,53.24,3.63,0.07,9,35,8,COMP-PD001,montelukast,Singulair,Merck,Leukotriene Inhibitor,Pediatrics
+HCP0085,US-NY-W,31.26,33.61,35.09,7.27,0.08,6,11,3,COMP-FM001,metformin,Glucophage,Merck,Biguanide,Family Medicine
+HCP0086,US-FL-N,39.75,40.61,44.82,3.51,0.05,4,17,2,COMP-O002,trastuzumab,Herceptin,Roche,HER2 Inhibitor,Oncology
+HCP0087,US-TX-W,31.89,34.95,38.84,5.88,0.06,5,12,3,COMP-N002,ocrelizumab,Ocrevus,Roche,CD20 Inhibitor,Neurology
+HCP0088,US-CA-S,59.98,23.45,21.15,0.32,0.08,12,26,7,COMP-OG001,elagolix,Orilissa,AbbVie,GnRH Antagonist,Obstetrics & Gynecology
+HCP0089,US-FL-N,55.8,13.63,14.48,5.08,0.05,2,20,2,COMP-O002,trastuzumab,Herceptin,Roche,HER2 Inhibitor,Oncology
+HCP0090,US-CA-S,26.67,36.75,40.33,2.64,0.07,9,31,5,COMP-AI002,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Allergy and Immunology
+HCP0091,US-TX-E,32.74,27.86,26.09,7.76,0.04,6,5,3,COMP-NP001,dapagliflozin,Farxiga,AstraZeneca,SGLT2,Nephrology
+HCP0092,US-NY-W,12.71,45.55,46.78,3.99,0.04,2,11,2,COMP-D002,empagliflozin,Jardiance,Boehringer,SGLT2,Endocrinology
+HCP0093,US-NY-W,56.38,18.76,20.74,0.97,0.1,14,35,3,COMP-O001,pembrolizumab,Keytruda,Merck,PD-1 Inhibitor,Oncology
+HCP0094,US-NY-E,25.54,20.34,19.42,1.8,0.08,6,24,2,COMP-FM001,metformin,Glucophage,Merck,Biguanide,Family Medicine
+HCP0095,US-NY-E,34.92,37.92,38.01,2.19,0.08,12,17,5,COMP-O001,pembrolizumab,Keytruda,Merck,PD-1 Inhibitor,Oncology
+HCP0096,US-TX-E,17.23,35.72,36.71,5.97,0.01,2,13,3,COMP-C003,sacubitril/valsartan,Entresto,Novartis,ARNI,Cardiology
+HCP0097,US-NY-W,56.71,20.15,23.36,2.26,0.03,6,20,1,COMP-O002,trastuzumab,Herceptin,Roche,HER2 Inhibitor,Oncology
+HCP0098,US-CA-S,36.93,28.63,29.15,4.35,0.05,4,11,1,COMP-NP002,finerenone,Kerendia,Bayer,MRA,Nephrology
+HCP0099,US-TX-E,21.68,53.27,48.71,5.96,0.07,11,22,7,COMP-FM002,lisinopril,Prinivil,Merck,ACE Inhibitor,Family Medicine
+HCP0100,US-PA-E,34.77,20.93,20.95,4.72,0.09,12,13,6,COMP-PL001,tiotropium,Spiriva,Boehringer,LAMA,Pulmonology
+HCP0101,US-TX-E,10.77,34.32,38.03,7.76,0.01,4,15,3,COMP-G002,vedolizumab,Entyvio,Takeda,Integrin Inhibitor,Gastroenterology
+HCP0102,US-TX-W,14.02,39.86,41.6,4.27,0.1,15,32,8,COMP-C003,sacubitril/valsartan,Entresto,Novartis,ARNI,Cardiology
+HCP0103,US-CA-N,53.62,10.72,6.4,5.05,0.09,8,33,2,COMP-N002,ocrelizumab,Ocrevus,Roche,CD20 Inhibitor,Neurology
+HCP0104,US-CA-N,58.92,25.21,27.25,0.8,0.02,4,5,0,COMP-PD002,methylphenidate,Ritalin,Novartis,Stimulant,Pediatrics
+HCP0105,US-FL-S,49.81,15.87,14.62,1.16,0.05,6,10,1,COMP-P002,quetiapine,Seroquel,AstraZeneca,Atypical Antipsychotic,Psychiatry
+HCP0106,US-TX-W,13.95,56.13,57.33,1.93,0.09,7,17,5,COMP-DM001,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Dermatology
+HCP0107,US-PA-W,32.98,36.67,40.66,3.72,0.03,6,10,0,COMP-OG002,ospemifene,Osphena,Duchesnay,SERM,Obstetrics & Gynecology
+HCP0108,US-TX-E,57.26,29.75,27.74,7.7,0.07,12,37,4,COMP-D002,empagliflozin,Jardiance,Boehringer,SGLT2,Endocrinology
+HCP0109,US-FL-N,59.97,27.07,23.14,3.05,0.04,4,14,0,COMP-R001,adalimumab,Humira,AbbVie,TNF Inhibitor,Rheumatology
+HCP0110,US-PA-W,23.72,46.98,48.84,5.96,0,3,4,0,COMP-FM002,lisinopril,Prinivil,Merck,ACE Inhibitor,Family Medicine
+HCP0111,US-NY-E,20.95,35.7,33.21,6.04,0.08,15,36,3,COMP-PD002,methylphenidate,Ritalin,Novartis,Stimulant,Pediatrics
+HCP0112,US-TX-E,55.17,22.93,21.02,3.53,0.06,7,12,4,COMP-P001,aripiprazole,Abilify,Otsuka,Atypical Antipsychotic,Psychiatry
+HCP0113,US-TX-E,47.37,13.51,9.83,4.32,0.1,13,26,4,COMP-OG002,ospemifene,Osphena,Duchesnay,SERM,Obstetrics & Gynecology
+HCP0114,US-PA-W,22.85,54.74,54.56,6.45,0.07,10,35,2,COMP-O001,pembrolizumab,Keytruda,Merck,PD-1 Inhibitor,Oncology
+HCP0115,US-TX-E,58.14,12.82,17.49,6.88,0.07,11,40,8,COMP-PL002,fluticasone/salmeterol,Advair,GSK,ICS/LABA,Pulmonology
+HCP0116,US-PA-E,14.52,41.84,39.48,0.99,0.04,4,17,2,COMP-N002,ocrelizumab,Ocrevus,Roche,CD20 Inhibitor,Neurology
+HCP0117,US-TX-W,43.74,19.43,20.63,7.55,0.03,6,12,0,COMP-PL001,tiotropium,Spiriva,Boehringer,LAMA,Pulmonology
+HCP0118,US-NY-E,55.47,16.04,15.12,1.12,0.09,9,25,2,COMP-FM002,lisinopril,Prinivil,Merck,ACE Inhibitor,Family Medicine
+HCP0119,US-FL-S,21.74,46.13,45.02,2.97,0.09,13,23,6,COMP-R001,adalimumab,Humira,AbbVie,TNF Inhibitor,Rheumatology
+HCP0120,US-FL-N,54.27,23.1,26.44,4.93,0.09,9,11,7,COMP-P001,aripiprazole,Abilify,Otsuka,Atypical Antipsychotic,Psychiatry
+HCP0121,US-TX-W,20.86,43.34,40.7,2.9,0.1,10,27,7,COMP-D002,empagliflozin,Jardiance,Boehringer,SGLT2,Endocrinology
+HCP0122,US-PA-E,13.03,38.28,42.96,7.59,0.08,6,31,3,COMP-G002,vedolizumab,Entyvio,Takeda,Integrin Inhibitor,Gastroenterology
+HCP0123,US-TX-W,12.53,40.01,44.9,6.3,0.02,6,11,1,COMP-R001,adalimumab,Humira,AbbVie,TNF Inhibitor,Rheumatology
+HCP0124,US-PA-W,26.43,23.69,27.7,0.02,0.09,7,14,6,COMP-D001,semaglutide,Ozempic,Novo Nordisk,GLP-1,Endocrinology
+HCP0125,US-TX-E,49.93,12.2,15.86,1.05,0.04,3,15,0,COMP-NP002,finerenone,Kerendia,Bayer,MRA,Nephrology
+HCP0126,US-NY-E,23.27,33.8,33.01,0.91,0.01,5,16,0,COMP-OG001,elagolix,Orilissa,AbbVie,GnRH Antagonist,Obstetrics & Gynecology
+HCP0127,US-NY-E,35.19,43.64,39.07,6.27,0.09,13,19,5,COMP-PD002,methylphenidate,Ritalin,Novartis,Stimulant,Pediatrics
+HCP0128,US-PA-W,13.04,44.37,43.39,5.49,0.05,5,7,0,COMP-G001,adalimumab,Humira,AbbVie,TNF Inhibitor,Gastroenterology
+HCP0129,US-CA-S,40.41,11.31,9.06,5.06,0.05,4,17,2,COMP-R002,upadacitinib,Rinvoq,AbbVie,JAK Inhibitor,Rheumatology
+HCP0130,US-CA-S,35.28,30.75,33.68,0.92,0.07,13,33,8,COMP-FM002,lisinopril,Prinivil,Merck,ACE Inhibitor,Family Medicine
+HCP0131,US-FL-N,31.5,42.2,41.34,6.62,0.04,2,15,3,COMP-P001,aripiprazole,Abilify,Otsuka,Atypical Antipsychotic,Psychiatry
+HCP0132,US-PA-E,43.26,17.49,14.02,7.38,0.01,2,7,3,COMP-AI002,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Allergy and Immunology
+HCP0133,US-PA-E,47.23,17.45,13.75,0.48,0.1,13,20,7,COMP-AI001,omalizumab,Xolair,Genentech,Anti-IgE,Allergy and Immunology
+HCP0134,US-CA-S,30.54,41.84,46.25,3.38,0.09,5,40,4,COMP-DM001,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Dermatology
+HCP0135,US-PA-E,27.58,34.45,31.58,5.25,0.02,2,16,2,COMP-AI002,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Allergy and Immunology
+HCP0136,US-TX-E,48.13,21.48,24.55,6.76,0.1,14,29,7,COMP-DM001,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Dermatology
+HCP0137,US-FL-S,37.84,35.22,36.8,5.55,0,2,4,1,COMP-D003,sitagliptin,Januvia,Merck,DPP-4,Endocrinology
+HCP0138,US-PA-W,10.31,56.1,56.76,3.21,0.01,2,7,1,COMP-P002,quetiapine,Seroquel,AstraZeneca,Atypical Antipsychotic,Psychiatry
+HCP0139,US-NY-W,30.99,28.52,27.22,5.77,0.08,14,29,2,COMP-PL002,fluticasone/salmeterol,Advair,GSK,ICS/LABA,Pulmonology
+HCP0140,US-PA-W,17.78,52.63,48.13,0.65,0.04,5,20,3,COMP-AI001,omalizumab,Xolair,Genentech,Anti-IgE,Allergy and Immunology
+HCP0141,US-CA-N,23.66,52.65,48.79,3.44,0.03,6,20,2,COMP-N002,ocrelizumab,Ocrevus,Roche,CD20 Inhibitor,Neurology
+HCP0142,US-PA-E,21.03,59.53,55.08,1.64,0.09,7,34,4,COMP-O001,pembrolizumab,Keytruda,Merck,PD-1 Inhibitor,Oncology
+HCP0143,US-CA-S,26.41,20.19,22.66,1.41,0.04,3,16,0,COMP-P002,quetiapine,Seroquel,AstraZeneca,Atypical Antipsychotic,Psychiatry
+HCP0144,US-NY-W,53.09,10.85,6.04,7.37,0.09,14,23,6,COMP-D002,empagliflozin,Jardiance,Boehringer,SGLT2,Endocrinology
+HCP0145,US-CA-N,45.47,18.35,14.5,0.17,0.03,6,19,2,COMP-R002,upadacitinib,Rinvoq,AbbVie,JAK Inhibitor,Rheumatology
+HCP0146,US-CA-N,31.84,22.65,22.01,3.2,0.01,4,15,1,COMP-AI001,omalizumab,Xolair,Genentech,Anti-IgE,Allergy and Immunology
+HCP0147,US-NY-W,48.96,11.53,12.86,4.24,0.02,4,16,1,COMP-O002,trastuzumab,Herceptin,Roche,HER2 Inhibitor,Oncology
+HCP0148,US-FL-S,15.14,37.68,34.41,1.22,0.08,6,15,8,COMP-C001,apixaban,Eliquis,BMS/Pfizer,DOAC,Cardiology
+HCP0149,US-TX-E,33.2,34.09,34.88,5.45,0.09,15,30,6,COMP-N002,ocrelizumab,Ocrevus,Roche,CD20 Inhibitor,Neurology
+HCP0150,US-PA-W,53.21,22.54,19.05,0.55,0.04,4,13,0,COMP-C002,atorvastatin,Lipitor,Pfizer,Statin,Cardiology
+HCP0151,US-CA-N,35.37,27.76,27.28,0.46,0.08,6,30,8,COMP-C002,atorvastatin,Lipitor,Pfizer,Statin,Cardiology
+HCP0152,US-CA-N,40.75,20.14,19.77,4.43,0.08,5,24,8,COMP-PD001,montelukast,Singulair,Merck,Leukotriene Inhibitor,Pediatrics
+HCP0153,US-NY-E,26.08,31.89,28.4,0.49,0.01,4,7,1,COMP-G001,adalimumab,Humira,AbbVie,TNF Inhibitor,Gastroenterology
+HCP0154,US-FL-N,22.39,43.13,42.52,4.18,0.02,4,14,3,COMP-PD001,montelukast,Singulair,Merck,Leukotriene Inhibitor,Pediatrics
+HCP0155,US-CA-S,48.72,23.58,19.1,5.05,0.03,4,8,3,COMP-N002,ocrelizumab,Ocrevus,Roche,CD20 Inhibitor,Neurology
+HCP0156,US-FL-S,22.6,55.55,60.19,4.82,0.02,2,9,2,COMP-O002,trastuzumab,Herceptin,Roche,HER2 Inhibitor,Oncology
+HCP0157,US-FL-S,58.38,23.97,22.89,4.76,0.09,9,27,5,COMP-PL002,fluticasone/salmeterol,Advair,GSK,ICS/LABA,Pulmonology
+HCP0158,US-PA-W,50.66,23.4,26.69,5.91,0.07,13,12,7,COMP-R002,upadacitinib,Rinvoq,AbbVie,JAK Inhibitor,Rheumatology
+HCP0159,US-FL-S,35.42,20.46,18.55,7.61,0.03,5,11,1,COMP-DM002,ustekinumab,Stelara,Janssen,IL-12/23 Inhibitor,Dermatology
+HCP0160,US-NY-W,17.75,38.87,41.75,4.06,0.05,6,6,2,COMP-N001,natalizumab,Tysabri,Biogen,Integrin Inhibitor,Neurology
+HCP0161,US-PA-W,16.55,41.3,37.92,6.65,0.08,7,33,5,COMP-C003,sacubitril/valsartan,Entresto,Novartis,ARNI,Cardiology
+HCP0162,US-FL-N,30.54,36.91,34.29,3.55,0.03,5,12,1,COMP-AI001,omalizumab,Xolair,Genentech,Anti-IgE,Allergy and Immunology
+HCP0163,US-PA-W,58.28,25.69,29.73,1.55,0.07,14,24,5,COMP-O002,trastuzumab,Herceptin,Roche,HER2 Inhibitor,Oncology
+HCP0164,US-PA-E,48.91,20.06,19.25,1.3,0.02,6,9,2,COMP-FM002,lisinopril,Prinivil,Merck,ACE Inhibitor,Family Medicine
+HCP0165,US-NY-E,42.06,27.48,28.03,0.82,0.08,6,19,2,COMP-G001,adalimumab,Humira,AbbVie,TNF Inhibitor,Gastroenterology
+HCP0166,US-FL-N,23.64,57.16,53.63,3.5,0.09,8,36,5,COMP-D001,semaglutide,Ozempic,Novo Nordisk,GLP-1,Endocrinology
+HCP0167,US-CA-S,56.52,18.3,17.26,2.99,0.04,2,16,1,COMP-PD002,methylphenidate,Ritalin,Novartis,Stimulant,Pediatrics
+HCP0168,US-FL-S,25.93,22.48,24.63,2.68,0.01,2,14,3,COMP-N001,natalizumab,Tysabri,Biogen,Integrin Inhibitor,Neurology
+HCP0169,US-CA-S,47.94,19.38,20.53,7.25,0,1,2,2,COMP-PD001,montelukast,Singulair,Merck,Leukotriene Inhibitor,Pediatrics
+HCP0170,US-PA-E,15.56,38.64,36.65,0.38,0.04,6,19,0,COMP-OG002,ospemifene,Osphena,Duchesnay,SERM,Obstetrics & Gynecology
+HCP0171,US-CA-N,51.83,20,20.36,5.06,0.06,7,19,5,COMP-OG001,elagolix,Orilissa,AbbVie,GnRH Antagonist,Obstetrics & Gynecology
+HCP0172,US-FL-S,40.74,14.81,13.98,5.31,0.01,4,7,0,COMP-G001,adalimumab,Humira,AbbVie,TNF Inhibitor,Gastroenterology
+HCP0173,US-TX-E,53.67,10.87,9.74,2.99,0.07,10,35,2,COMP-P002,quetiapine,Seroquel,AstraZeneca,Atypical Antipsychotic,Psychiatry
+HCP0174,US-FL-N,22.06,49.71,45.75,4.66,0.08,7,11,4,COMP-AI002,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Allergy and Immunology
+HCP0175,US-PA-W,50.68,13.5,16.29,3.72,0.07,15,15,8,COMP-NP002,finerenone,Kerendia,Bayer,MRA,Nephrology
+HCP0176,US-PA-E,13.16,53.29,52.87,2.35,0,1,0,1,COMP-N001,natalizumab,Tysabri,Biogen,Integrin Inhibitor,Neurology
+HCP0177,US-NY-W,35.77,44.73,45.16,2.03,0.08,8,19,4,COMP-D002,empagliflozin,Jardiance,Boehringer,SGLT2,Endocrinology
+HCP0178,US-TX-E,53.29,16.64,12.88,2.94,0.09,12,38,5,COMP-N001,natalizumab,Tysabri,Biogen,Integrin Inhibitor,Neurology
+HCP0179,US-CA-N,58.69,19.92,19.9,7.39,0.05,2,18,0,COMP-R002,upadacitinib,Rinvoq,AbbVie,JAK Inhibitor,Rheumatology
+HCP0180,US-PA-W,40.12,26.45,26.9,2.57,0.01,4,14,3,COMP-FM002,lisinopril,Prinivil,Merck,ACE Inhibitor,Family Medicine
+HCP0181,US-TX-E,45.88,13.33,12.77,3.58,0.07,10,29,5,COMP-D003,sitagliptin,Januvia,Merck,DPP-4,Endocrinology
+HCP0182,US-CA-S,41.97,25.83,21.4,5.37,0.04,6,10,0,COMP-DM002,ustekinumab,Stelara,Janssen,IL-12/23 Inhibitor,Dermatology
+HCP0183,US-TX-W,52.43,23.56,22.94,1.01,0.02,4,16,3,COMP-OG001,elagolix,Orilissa,AbbVie,GnRH Antagonist,Obstetrics & Gynecology
+HCP0184,US-PA-W,40.25,23.58,28.07,2.98,0.08,14,14,6,COMP-R001,adalimumab,Humira,AbbVie,TNF Inhibitor,Rheumatology
+HCP0185,US-NY-W,29.9,36.24,33.74,0.91,0.07,12,26,5,COMP-R002,upadacitinib,Rinvoq,AbbVie,JAK Inhibitor,Rheumatology
+HCP0186,US-CA-S,23.09,37.81,37.27,7.97,0.03,5,11,0,COMP-PL001,tiotropium,Spiriva,Boehringer,LAMA,Pulmonology
+HCP0187,US-CA-N,52.64,19.04,23.03,3.56,0.01,4,16,0,COMP-FM001,metformin,Glucophage,Merck,Biguanide,Family Medicine
+HCP0188,US-FL-S,54.57,27.03,29.15,7.42,0.06,10,26,3,COMP-NP002,finerenone,Kerendia,Bayer,MRA,Nephrology
+HCP0189,US-CA-S,59.26,25.84,23.21,3.95,0.04,6,16,3,COMP-N001,natalizumab,Tysabri,Biogen,Integrin Inhibitor,Neurology
+HCP0190,US-NY-E,40.6,11.72,9.81,8,0.07,13,23,8,COMP-DM001,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Dermatology
+HCP0191,US-NY-W,51.17,11.48,16.2,5.14,0.04,6,16,1,COMP-C002,atorvastatin,Lipitor,Pfizer,Statin,Cardiology
+HCP0192,US-TX-E,48.39,12.58,12.61,6.95,0.08,13,14,4,COMP-OG001,elagolix,Orilissa,AbbVie,GnRH Antagonist,Obstetrics & Gynecology
+HCP0193,US-TX-W,18.1,58.04,55.29,7.58,0.05,4,7,2,COMP-N001,natalizumab,Tysabri,Biogen,Integrin Inhibitor,Neurology
+HCP0194,US-FL-N,41.75,21.02,17.27,2.42,0.05,6,10,1,COMP-G001,adalimumab,Humira,AbbVie,TNF Inhibitor,Gastroenterology
+HCP0195,US-PA-W,42.94,24.41,25.46,6.74,0.06,5,12,2,COMP-G001,adalimumab,Humira,AbbVie,TNF Inhibitor,Gastroenterology
+HCP0196,US-NY-W,42.56,25.34,24.51,5.11,0.05,6,14,2,COMP-AI002,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Allergy and Immunology
+HCP0197,US-CA-S,22.24,54.22,53.28,3.63,0.07,7,24,5,COMP-N002,ocrelizumab,Ocrevus,Roche,CD20 Inhibitor,Neurology
+HCP0198,US-NY-W,33.22,28.5,24.94,6.89,0.03,4,17,1,COMP-N002,ocrelizumab,Ocrevus,Roche,CD20 Inhibitor,Neurology
+HCP0199,US-TX-E,35.75,22.65,20.07,0.98,0.04,3,8,0,COMP-R002,upadacitinib,Rinvoq,AbbVie,JAK Inhibitor,Rheumatology
+HCP0200,US-TX-E,57.27,27.28,26.46,7.7,0.09,10,39,6,COMP-AI002,dupilumab,Dupixent,Sanofi,IL-4/IL-13 Inhibitor,Allergy and Immunology

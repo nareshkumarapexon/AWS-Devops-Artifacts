@@ -1,0 +1,73 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "DynamoDB tables for chat messages and chat sessions"
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Default: sales-copilot
+    Description: "Name of the Use Case being developed"
+
+
+Resources:
+  ChatMessagesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub ${UseCaseName}_chat_messages
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: message_timestamp
+          AttributeType: N
+        - AttributeName: session_id
+          AttributeType: S          
+      KeySchema:
+        - AttributeName: session_id
+          KeyType: HASH
+        - AttributeName: message_timestamp
+          KeyType: RANGE        
+
+  ChatSessionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub ${UseCaseName}_chat_sessions
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: session_id
+          AttributeType: S
+        - AttributeName: user_id
+          AttributeType: S
+        - AttributeName: updated_at
+          AttributeType: S
+      KeySchema:
+        - AttributeName: session_id
+          KeyType: HASH
+
+      GlobalSecondaryIndexes:
+        - IndexName: user_id-index
+          KeySchema:
+            - AttributeName: user_id
+              KeyType: HASH
+            - AttributeName: updated_at
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+
+Outputs:
+  ChatMessagesTableName:
+    Description: "DynamoDB Table Name"
+    Value: !Ref ChatMessagesTable
+
+  ChatMessagesTableArn:
+    Description: "DynamoDB Table ARN"
+    Value: !GetAtt ChatMessagesTable.Arn
+
+  ChatSessionsTableName:
+    Description: "DynamoDB Table Name"
+    Value: !Ref ChatSessionsTable
+
+  ChatSessionsTableArn:
+    Description: "DynamoDB Table ARN"
+    Value: !GetAtt ChatSessionsTable.Arn
+
+  ChatSessionsUserIdGSIArn:
+    Description: "DynamoDB GSI ARN - user_id-index"
+    Value: !Sub "${ChatSessionsTable.Arn}/index/user_id-index"

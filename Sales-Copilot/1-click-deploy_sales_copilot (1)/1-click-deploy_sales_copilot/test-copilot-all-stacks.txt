@@ -1,0 +1,17 @@
+test-copilot-s3-buckets-infra
+test-copilot-vpc-subnet-infra
+test-copilot-s3-buckets-infra
+test-copilot-vpc-subnet-infra
+test-copilot-s3-buckets-infra
+test-copilot-vpc-subnet-infra
+test-copilot-s3-buckets-infra
+test-copilot-vpc-subnet-infra
+test-copilot-aurora-db-infra
+test-copilot-redshift-serverless-infra
+test-copilot-s3-buckets-infra
+test-copilot-s3-buckets-infra
+test-copilot-s3-buckets-infra
+test-copilot-s3-buckets-infra
+test-copilot-s3-buckets-infra
+test-copilot-s3-buckets-infra
+test-copilot-redshiftsql-lambda-infra

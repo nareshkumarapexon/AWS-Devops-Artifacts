@@ -1,0 +1,186 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Lambda to connect to Neptune Serverless
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Default: control-tower
+    Description: "Name of the Use Case being developed"
+
+  NeptuneClusterEndpoint:
+    Type: String
+    Default: control-tower-neptune-serverless-cluster.cluster-cozcyso4a0ko.us-east-1.neptune.amazonaws.com
+    Description: Neptune Serverless Endpoint
+
+  NeptuneClusterPort:
+    Type: String
+    Default: '8182'
+    Description: Neptune Serverless Port
+
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Default: vpc-0f599a37cd6cce0dc
+    Description: The ID of the VPC where the Neptune cluster resides.
+
+  PrivateSubnet1:
+    Type: String
+    Default: subnet-0dbf3ed8c9a3f7ebe
+    Description: "Private Subnet 1"
+
+  PrivateSubnet2:
+    Type: String
+    Default: subnet-0248dbb584b44f652
+    Description: "Private Subnet 2"
+
+  PrivateSubnet3:
+    Type: String
+    Default: subnet-0b5836cc763b656b7
+    Description: "Private Subnet 3"
+
+  NeptuneSecurityGroupId:
+    Type: String
+    Default: sg-075ec078dab352946
+    Description: "Neptune SecurityGroup ID"
+
+  S3VpcEndpointId:
+    Type: String
+    Default: vpce-05767782adb63c9f4
+    Description: "Existing S3 Gateway VPC Endpoint ID (control-tower-s3-endpoint)"
+
+  PrivateRouteTableId:
+    Type: String
+    Default: rtb-035a952d675bcf6a5
+    Description: "Private Route Table ID to associate with the S3 VPC Endpoint"
+
+Resources:
+  # --------------------------------------------------------------------------
+  # S3 Gateway VPC Endpoint Route Table Association
+  # --------------------------------------------------------------------------
+  S3VpcEndpointRouteTableAssociation:
+    Type: AWS::EC2::VPCEndpointRouteTableAssociation
+    Properties:
+      VpcEndpointId: !Ref S3VpcEndpointId
+      RouteTableId: !Ref PrivateRouteTableId
+
+  # --------------------------------------------------------------------------
+  # Lambda IAM Role
+  # --------------------------------------------------------------------------
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${UseCaseName}LambdaExecutionRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: !Sub ${UseCaseName}LambdaNeptuneDBAccessPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Sid: NeptuneDbPermissions
+                Effect: Allow
+                Action:
+                  - neptune-db:connect
+                  - neptune-db:ReadDataViaQuery
+                  - neptune-db:WriteDataViaQuery
+                Resource: arn:aws:neptune:us-east-1:969385807621:cluster:control-tower-neptune-serverless-cluster
+              - Sid: EC2NetworkPermissions
+                Effect: Allow
+                Action:
+                  - ec2:CreateNetworkInterface
+                  - ec2:DescribeNetworkInterfaces
+                  - ec2:DeleteNetworkInterface
+                Resource: "*"
+              - Sid: S3NeptuneLoadAccess
+                Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:DeleteObject
+                  - s3:ListBucket
+                Resource:
+                  - !Sub "arn:aws:s3:::${UseCaseName}-neptune-load"
+                  - !Sub "arn:aws:s3:::${UseCaseName}-neptune-load/*"
+      Tags:
+        - Key: Name
+          Value: !Sub ${UseCaseName}          
+
+  LambdaSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow Lambda to access Neptune
+      GroupName: !Sub ${UseCaseName}-lambda_sg_access_neptune_db
+      VpcId: !Ref VpcId
+
+  NeptuneSGAllowLambdaSG:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref NeptuneSecurityGroupId
+      IpProtocol: tcp
+      FromPort: !Ref NeptuneClusterPort
+      ToPort: !Ref NeptuneClusterPort
+      SourceSecurityGroupId: !Ref LambdaSecurityGroup
+      Description: Allow Neptune access from Lambda SecurityGroup
+
+  # --------------------------------------------------------------------------
+  # Lambda Function - Redshift Serverless Connector
+  # --------------------------------------------------------------------------
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub ${UseCaseName}-access_neptune_db
+      Handler: index.lambda_handler
+      Runtime: python3.12
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Timeout: 300
+      VpcConfig:
+        SecurityGroupIds:
+          - !Ref LambdaSecurityGroup
+        SubnetIds:
+          - !Ref PrivateSubnet1
+          - !Ref PrivateSubnet2
+          - !Ref PrivateSubnet3                    
+
+      Tags:
+        - Key: Name
+          Value: !Sub ${UseCaseName}    
+      Environment:
+        Variables:
+          NEPTUNE_ENDPOINT: !Sub "https://${NeptuneClusterEndpoint}:${NeptuneClusterPort}"
+      Code:
+        ZipFile: |
+          import json
+          import os
+
+          def lambda_handler(event, context):
+              return {
+                  "statusCode": 200,
+                  "body": json.dumps({
+                      "message": "Hello from Neptune Lambda!",
+                      "neptune_endpoint": os.environ.get("NEPTUNE_ENDPOINT")
+                  })
+              }
+
+
+Outputs:
+  S3VpcEndpoint:
+    Description: S3 Gateway VPC Endpoint ID
+    Value: !Ref S3VpcEndpointId
+
+  LambdaRole:
+    Description: Lambda Neptune Serverless Conector Role
+    Value: !Ref LambdaExecutionRole
+
+  LambdaFunc:
+    Description: Lambda Neptune Serverless Connector
+    Value: !Ref LambdaFunction
+
+  LambdaFuncArn:
+    Description: Lambda Neptune Serverless Connector Arn
+    Value: !GetAtt LambdaFunction.Arn 

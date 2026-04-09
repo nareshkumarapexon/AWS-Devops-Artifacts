@@ -1,0 +1,315 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  lab-processor-test: Provisioned Neptune + Lambda in an existing VPC.
+  Creates: 2 private subnets, private route table, S3 Gateway endpoint (default policy),
+  security groups, IAM roles (restricted), Neptune cluster + instance, and a Lambda to query /status.
+
+Parameters:
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Default: vpc-09d7f90f547347774
+    Description: Existing VPC (e.g., 10.0.0.0/16)
+  
+  Az1:
+    Type: AWS::EC2::AvailabilityZone::Name
+    Default: us-east-1a
+  
+  Az2:
+    Type: AWS::EC2::AvailabilityZone::Name
+    Default: us-east-1b
+  
+  PrivateSubnet1Cidr:
+    Type: String
+    Default: 10.0.21.0/24
+  
+  PrivateSubnet2Cidr:
+    Type: String
+    Default: 10.0.22.0/24
+  
+  NeptuneEngineVersion:
+    Type: String
+    Default: "1.4.6.3"
+  
+  NeptuneClusterParameterGroupName:
+    Type: String
+    Default: default.neptune1.4
+  
+  NeptunePort:
+    Type: Number
+    Default: 8182
+  
+  BackupRetentionDays:
+    Type: Number
+    Default: 7
+    MinValue: 1
+    MaxValue: 35
+  
+  NeptuneInstanceClass:
+    Type: String
+    Default: db.r6g.large
+  
+  NeptuneLoadBucketName:
+    Type: String
+    Default: lab-process-raw-test
+    Description: S3 bucket used for Neptune bulk load (restricts IAM permissions)
+  
+  NeptuneLoadPrefix:
+    Type: String
+    Default: ""
+    Description: Optional prefix for bulk load objects. Leave empty for whole bucket.
+  
+  CreateTestLambda:
+    Type: String
+    Default: "true"
+    AllowedValues: ["true", "false"]
+
+Conditions:
+  HasPrefix: !Not [!Equals [!Ref NeptuneLoadPrefix, ""]]
+  DoCreateLambda: !Equals [!Ref CreateTestLambda, "true"]
+
+Resources:
+  # ----------------------------
+  # Networking (NEW)
+  # ----------------------------
+  LabProcessorTestPrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VpcId
+      AvailabilityZone: !Ref Az1
+      CidrBlock: !Ref PrivateSubnet1Cidr
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: lab-processor-test-private-subnet-1
+
+  LabProcessorTestPrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VpcId
+      AvailabilityZone: !Ref Az2
+      CidrBlock: !Ref PrivateSubnet2Cidr
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: lab-processor-test-private-subnet-2
+
+  LabProcessorTestPrivateRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VpcId
+      Tags:
+        - Key: Name
+          Value: lab-processor-test-private-rt
+
+  AssocSubnet1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref LabProcessorTestPrivateSubnet1
+      RouteTableId: !Ref LabProcessorTestPrivateRouteTable
+
+  AssocSubnet2:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref LabProcessorTestPrivateSubnet2
+      RouteTableId: !Ref LabProcessorTestPrivateRouteTable
+
+  # S3 Gateway Endpoint (default policy to avoid "*" policy blocks)
+  LabProcessorTestS3Endpoint:
+    Type: AWS::EC2::VPCEndpoint
+    Properties:
+      VpcId: !Ref VpcId
+      VpcEndpointType: Gateway
+      ServiceName: !Sub "com.amazonaws.${AWS::Region}.s3"
+      RouteTableIds:
+        - !Ref LabProcessorTestPrivateRouteTable
+
+  # ----------------------------
+  # Security Groups (NEW)
+  # ----------------------------
+  LabProcessorTestLambdaSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Lambda SG for Neptune access
+      VpcId: !Ref VpcId
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: lab-processor-test-lambda-sg
+
+  LabProcessorTestNeptuneSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Neptune SG (allow 8182 only from Lambda SG)
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: !Ref NeptunePort
+          ToPort: !Ref NeptunePort
+          SourceSecurityGroupId: !Ref LabProcessorTestLambdaSG
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: lab-processor-test-neptune-sg
+
+  # ----------------------------
+  # IAM Roles (NEW) - restricted (no Resource "*")
+  # ----------------------------
+  LabProcessorTestNeptuneLoadRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: lab-processor-test-neptune-load-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: rds.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: AllowNeptuneBulkLoadS3ReadRestricted
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Sid: ListBucket
+                Effect: Allow
+                Action: s3:ListBucket
+                Resource: !Sub "arn:aws:s3:::${NeptuneLoadBucketName}"
+              - Sid: GetObjects
+                Effect: Allow
+                Action: s3:GetObject
+                Resource: !If
+                  - HasPrefix
+                  - !Sub "arn:aws:s3:::${NeptuneLoadBucketName}/${NeptuneLoadPrefix}/*"
+                  - !Sub "arn:aws:s3:::${NeptuneLoadBucketName}/*"
+
+  LabProcessorTestLambdaRole:
+    Type: AWS::IAM::Role
+    Condition: DoCreateLambda
+    Properties:
+      RoleName: lab-processor-test-lambda-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
+
+  # ----------------------------
+  # Neptune (NEW) - PROVISIONED
+  # ----------------------------
+  LabProcessorTestNeptuneSubnetGroup:
+    Type: AWS::Neptune::DBSubnetGroup
+    Properties:
+      DBSubnetGroupName: lab-processor-test-neptune-subnet-group
+      DBSubnetGroupDescription: Private subnets for Neptune
+      SubnetIds:
+        - !Ref LabProcessorTestPrivateSubnet1
+        - !Ref LabProcessorTestPrivateSubnet2
+
+  LabProcessorTestNeptuneCluster:
+    Type: AWS::Neptune::DBCluster
+    DeletionPolicy: Snapshot
+    UpdateReplacePolicy: Snapshot
+    Properties:
+      DBClusterIdentifier: lab-processor-test-cluster
+      EngineVersion: !Ref NeptuneEngineVersion
+      DBSubnetGroupName: !Ref LabProcessorTestNeptuneSubnetGroup
+      VpcSecurityGroupIds:
+        - !Ref LabProcessorTestNeptuneSG
+      BackupRetentionPeriod: !Ref BackupRetentionDays
+      DBClusterParameterGroupName: !Ref NeptuneClusterParameterGroupName
+      IamAuthEnabled: false
+      AssociatedRoles:
+        - RoleArn: !GetAtt LabProcessorTestNeptuneLoadRole.Arn
+
+  LabProcessorTestNeptuneInstance:
+    Type: AWS::Neptune::DBInstance
+    Properties:
+      DBClusterIdentifier: !Ref LabProcessorTestNeptuneCluster
+      DBInstanceIdentifier: lab-processor-test-neptune-1
+      DBInstanceClass: !Ref NeptuneInstanceClass
+
+  # ----------------------------
+  # Lambda (NEW)
+  # ----------------------------
+  LabProcessorTestNeptuneQueryLambda:
+    Type: AWS::Lambda::Function
+    Condition: DoCreateLambda
+    Properties:
+      FunctionName: lab-processor-test-neptune-query
+      Runtime: python3.12
+      Handler: index.handler
+      Role: !GetAtt LabProcessorTestLambdaRole.Arn
+      Timeout: 30
+      MemorySize: 256
+      VpcConfig:
+        SubnetIds:
+          - !Ref LabProcessorTestPrivateSubnet1
+          - !Ref LabProcessorTestPrivateSubnet2
+        SecurityGroupIds:
+          - !Ref LabProcessorTestLambdaSG
+      Environment:
+        Variables:
+          NEPTUNE_ENDPOINT: !GetAtt LabProcessorTestNeptuneCluster.Endpoint
+          NEPTUNE_PORT: !Ref NeptunePort
+      Code:
+        ZipFile: |
+          import os, ssl, urllib.request
+          
+          def handler(event, context):
+              host = os.environ["NEPTUNE_ENDPOINT"]
+              port = os.environ.get("NEPTUNE_PORT", "8182")
+              url = f"https://{host}:{port}/status"
+              
+              ctx = ssl.create_default_context()
+              ctx.check_hostname = False
+              ctx.verify_mode = ssl.CERT_NONE
+              
+              try:
+                  with urllib.request.urlopen(url, context=ctx, timeout=10) as r:
+                      body = r.read().decode("utf-8", errors="ignore")
+                      return {
+                          "ok": True,
+                          "url": url,
+                          "statusCode": 200,
+                          "body": body[:2000]
+                      }
+              except Exception as e:
+                  return {
+                      "ok": False,
+                      "url": url,
+                      "error": str(e)
+                  }
+
+Outputs:
+  NeptuneWriterEndpoint:
+    Value: !GetAtt LabProcessorTestNeptuneCluster.Endpoint
+  
+  NeptuneReaderEndpoint:
+    Value: !GetAtt LabProcessorTestNeptuneCluster.ReadEndpoint
+  
+  NeptuneSecurityGroupId:
+    Value: !Ref LabProcessorTestNeptuneSG
+  
+  LambdaSecurityGroupId:
+    Value: !Ref LabProcessorTestLambdaSG
+  
+  NeptuneQueryLambdaName:
+    Condition: DoCreateLambda
+    Value: !Ref LabProcessorTestNeptuneQueryLambda
+
+
+#  command to run it 
+#  aws cloudformation create-stack \
+#   --stack-name lab-processor-test-neptune \
+#   --template-body file://neptune_arch_full.yaml \
+#   --capabilities CAPABILITY_NAMED_IAM \
+#   --region us-east-1

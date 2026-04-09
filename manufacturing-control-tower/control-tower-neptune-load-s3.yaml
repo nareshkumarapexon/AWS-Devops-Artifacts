@@ -1,0 +1,71 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "S3 Bucket for Neptune Load - Manufacturing Control Tower"
+
+Parameters:
+
+  UseCaseName:
+    Type: String
+    Default: control-tower
+    Description: "Prefix for all buckets"
+
+Resources:
+
+  ############################
+  # Neptune Load Bucket
+  ############################
+  ControlTowerNeptuneLoadBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "${UseCaseName}-neptune-load"
+
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        IgnorePublicAcls: true
+        BlockPublicPolicy: true
+        RestrictPublicBuckets: true
+
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+      VersioningConfiguration:
+        Status: Enabled
+
+      Tags:
+        - Key: Project
+          Value: !Ref UseCaseName
+        - Key: BucketPurpose
+          Value: neptune-load
+
+  ############################
+  # S3 Bucket Policy
+  ############################
+  NeptuneLoadBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref ControlTowerNeptuneLoadBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: AllowLambdaNeptuneAccess
+            Effect: Allow
+            Principal:
+              AWS: !Sub "arn:aws:iam::${AWS::AccountId}:role/${UseCaseName}LambdaExecutionRole"
+            Action:
+              - s3:GetObject
+              - s3:PutObject
+              - s3:DeleteObject
+              - s3:ListBucket
+            Resource:
+              - !Sub "arn:aws:s3:::${UseCaseName}-neptune-load"
+              - !Sub "arn:aws:s3:::${UseCaseName}-neptune-load/*"
+Outputs:
+
+  NeptuneLoadBucketName:
+    Description: "Name of the Neptune load bucket"
+    Value: !Ref ControlTowerNeptuneLoadBucket
+
+  NeptuneLoadBucketArn:
+    Description: "ARN of the Neptune load bucket"
+    Value: !GetAtt ControlTowerNeptuneLoadBucket.Arn

@@ -1,0 +1,51 @@
+product_id,product_name,product_category,product_performance
+PRD000001,Dermacalm,Drug,Excellent patient tolerance
+PRD000002,Dermava,Drug,Innovative delivery with good compliance
+PRD000003,Lipostan,Drug,Rapid onset with sustained effect
+PRD000004,Hormonix,Drug,Innovative delivery with good compliance
+PRD000005,Acidrel,Device,Proven long-term safety profile
+PRD000006,Insuvia,Drug,Proven long-term safety profile
+PRD000007,Moodixa,Drug,Targeted mechanism of action
+PRD000008,Skynova,Therapy,Cost-effective with moderate efficacy
+PRD000009,Colovex,Drug,Excellent patient tolerance
+PRD000010,Neurozen,Drug,Rapid onset with sustained effect
+PRD000011,CardioMax,Drug,Proven long-term safety profile
+PRD000012,OncoTarget,Drug,Superior bioavailability
+PRD000013,RheumaFlex,Drug,High efficacy and low side effects
+PRD000014,PulmoVent,Drug,Superior bioavailability
+PRD000015,UroFlow,Device,Once-daily dosing convenience
+PRD000016,NephroGuard,Drug,Rapid onset with sustained effect
+PRD000017,PsychBalance,Drug,Cost-effective with moderate efficacy
+PRD000018,EndoVital,Device,Cost-effective with moderate efficacy
+PRD000019,DermaHeal,Drug,Rapid onset with sustained effect
+PRD000020,ArthriCare,Drug,Superior bioavailability
+PRD000021,NeuroShield,Drug,Targeted mechanism of action
+PRD000022,HeartGuard,Therapy,Minimal drug interactions
+PRD000023,LungClear,Drug,Cost-effective with moderate efficacy
+PRD000024,KidneyShield,Drug,Superior bioavailability
+PRD000025,MoodStable,Drug,Targeted mechanism of action
+PRD000026,SkinRenew,Drug,High efficacy and low side effects
+PRD000027,JointFlex,Drug,Targeted mechanism of action
+PRD000028,BrainBoost,Device,Superior bioavailability
+PRD000029,HeartStrong,Drug,Innovative delivery with good compliance
+PRD000030,BreathEasy,Device,Innovative delivery with good compliance
+PRD000031,RenalCare,Device,Minimal drug interactions
+PRD000032,MindClear,Therapy,Excellent patient tolerance
+PRD000033,SkinPerfect,Drug,Proven long-term safety profile
+PRD000034,BoneStrong,Device,Cost-effective with moderate efficacy
+PRD000035,NeuroFlex,Drug,Proven long-term safety profile
+PRD000036,CardioShield,Drug,Superior bioavailability
+PRD000037,PulmoMax,Drug,Superior bioavailability
+PRD000038,UroShield,Drug,Innovative delivery with good compliance
+PRD000039,NephroMax,Drug,Minimal drug interactions
+PRD000040,PsychoFlex,Therapy,Innovative delivery with good compliance
+PRD000041,EndoMax,Device,Excellent patient tolerance
+PRD000042,DermaShield,Drug,Proven long-term safety profile
+PRD000043,ArthroMax,Drug,Excellent patient tolerance
+PRD000044,NeuroMax,Drug,Innovative delivery with good compliance
+PRD000045,CardioFlex,Drug,Proven long-term safety profile
+PRD000046,PulmoShield,Drug,Rapid onset with sustained effect
+PRD000047,UroMax,Therapy,Proven long-term safety profile
+PRD000048,NephroFlex,Drug,Rapid onset with sustained effect
+PRD000049,PsychoMax,Therapy,Proven long-term safety profile
+PRD000050,EndoShield,Drug,Once-daily dosing convenience

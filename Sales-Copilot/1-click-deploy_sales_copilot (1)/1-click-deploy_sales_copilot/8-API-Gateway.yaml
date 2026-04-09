@@ -1,0 +1,255 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "DynamoDB tables for chat messages and chat sessions"
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Default: sales-copilot
+    Description: "Name of the Use Case being developed"
+
+  DynamoDBTableName:
+    Type: String
+    Default: "sales-copilot_chat_messages"
+
+  DynamoDBTableName1:
+    Type: String
+    Default: "sales-copilot_chat_sessions"
+
+  lambdaHandler:
+    Type: String
+    Description: Name of the lambda handler
+
+  StageName:
+    Type: String
+    Default: v1
+    Description: Name of the API stage
+
+  lambdaS3Artifacts:
+    Type: String
+    Description: lambda source package
+
+  lambdaS3key:
+    Type: String
+    Description: s3 key prefix
+
+
+Resources: 
+  ###############################################################
+  # IAM Role for Lambda
+  ###############################################################
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${UseCaseName}-lambda-write-dynamodb-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: !Sub ${UseCaseName}LambdaDDBWritePolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:GetItem
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                  - dynamodb:DeleteItem
+                  - dynamodb:BatchWriteItem
+                Resource: 
+                  - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${DynamoDBTableName}"
+                  - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${DynamoDBTableName1}"
+                  - !Sub "arn:aws:dynamodb:us-east-1:969385807621:table/sales-copilot*/index/*"
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: "arn:aws:logs:*:*:*"
+              - Effect: Allow
+                Action:
+                  - ssm:GetParameter
+                Resource: "arn:aws:ssm:*:*:parameter/*"
+
+  ###############################################################
+  # Lambda Function
+  ###############################################################
+  SaveMessageFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub ${UseCaseName}-saveMessageFunction
+      Handler: !Ref lambdaHandler
+      Runtime: python3.12
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Timeout: 30
+      Tags:
+        - Key: Name
+          Value: !Sub ${UseCaseName}         
+      Code:
+        S3Bucket: !Ref lambdaS3Artifacts
+        S3Key: !Ref lambdaS3key
+
+
+  SCChatHistoryAPI:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Body:
+        openapi: '3.0.1'
+        info:
+          title: !Sub ${UseCaseName}-chat-history-api
+        paths:
+          /SC_chat_store_execution:
+            x-amazon-apigateway-any-method:
+              responses:
+                default:
+                  description: 'Default response for ANY /SC_chat_store_execution'
+              x-amazon-apigateway-integration:
+                payloadFormatVersion: '1.0'
+                type: 'aws_proxy'
+                httpMethod: 'POST'
+                uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SaveMessageFunction.Arn}/invocations'
+                connectionType: 'INTERNET'
+          /sessions:
+            get:
+              responses:
+                default:
+                  description: 'Default response for GET /sessions'
+              x-amazon-apigateway-integration:
+                payloadFormatVersion: '1.0'
+                type: 'aws_proxy'
+                httpMethod: 'POST'
+                uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SaveMessageFunction.Arn}/invocations'
+                connectionType: 'INTERNET'
+            post:
+              responses:
+                default:
+                  description: 'Default response for POST /sessions'
+              x-amazon-apigateway-integration:
+                payloadFormatVersion: '1.0'
+                type: 'aws_proxy'
+                httpMethod: 'POST'
+                uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SaveMessageFunction.Arn}/invocations'
+                connectionType: 'INTERNET'
+          /sessions/{session_id}:
+            get:
+              responses:
+                default:
+                  description: 'Default response for GET /sessions/{session_id}'
+              x-amazon-apigateway-integration:
+                payloadFormatVersion: '1.0'
+                type: 'aws_proxy'
+                httpMethod: 'POST'
+                uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SaveMessageFunction.Arn}/invocations'
+                connectionType: 'INTERNET'
+            delete:
+              responses:
+                default:
+                  description: 'Default response for DELETE /sessions/{session_id}'
+              x-amazon-apigateway-integration:
+                payloadFormatVersion: '1.0'
+                type: 'aws_proxy'
+                httpMethod: 'POST'
+                uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SaveMessageFunction.Arn}/invocations'
+                connectionType: 'INTERNET'
+            parameters:
+              - name: 'session_id'
+                in: 'path'
+                description: 'Generated path parameter for session_id'
+                required: true
+                schema:
+                  type: 'string'
+          /sessions/{session_id}/messages:
+            post:
+              responses:
+                default:
+                  description: 'Default response for POST /sessions/{session_id}/messages'
+              x-amazon-apigateway-integration:
+                payloadFormatVersion: '1.0'
+                type: 'aws_proxy'
+                httpMethod: 'POST'
+                uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SaveMessageFunction.Arn}/invocations'
+                connectionType: 'INTERNET'
+            parameters:
+              - name: 'session_id'
+                in: 'path'
+                description: 'Generated path parameter for session_id'
+                required: true
+                schema:
+                  type: 'string'
+        components:
+          x-amazon-apigateway-integrations:
+            unusedIntegration_ulhlp69:
+              payloadFormatVersion: '1.0'
+              type: 'aws_proxy'
+              httpMethod: 'POST'
+              uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SaveMessageFunction.Arn}/invocations'
+              connectionType: 'INTERNET'
+            unusedIntegration_ab035hj:
+              payloadFormatVersion: '1.0'
+              type: 'aws_proxy'
+              httpMethod: 'POST'
+              uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SaveMessageFunction.Arn}/invocations'
+              connectionType: 'INTERNET'
+            unusedIntegration_5n8fhrp:
+              payloadFormatVersion: '1.0'
+              type: 'aws_proxy'
+              httpMethod: 'POST'
+              uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${SaveMessageFunction.Arn}/invocations'
+              connectionType: 'INTERNET'
+        x-amazon-apigateway-cors:
+          allowMethods:
+            - 'GET'
+            - 'OPTIONS'
+            - 'POST'
+            - 'DELETE'
+          allowHeaders:
+            - '*'
+          maxAge: 0
+          allowCredentials: false
+          allowOrigins:
+            - '*'
+          exposeHeaders: 
+            - Content-Type
+            - Authorization
+            - X-Amz-Date
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amzn-Trace-Id
+            - X-Requested-With            
+        x-amazon-apigateway-importexport-version: '1.0'
+
+
+  ApiStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref SCChatHistoryAPI
+      StageName: !Ref StageName
+      AutoDeploy: true
+
+  LambdaInvokePermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref SaveMessageFunction
+      Principal: 'apigateway.amazonaws.com'
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${SCChatHistoryAPI}/*/*'
+
+Outputs:
+  RestApiId:
+    Description: 'Rest API ID'
+    Value: !Ref SCChatHistoryAPI
+  ApiUrl:
+    Description: 'API Gateway URL'
+    Value: !Sub 'https://${SCChatHistoryAPI}.execute-api.${AWS::Region}.amazonaws.com/${StageName}'
+  ApiStageName:
+    Description: 'API Stage Name'
+    Value: !Ref ApiStage 
+  LambdaArn:
+    Description: "Lambda Function ARN"
+    Value: !GetAtt SaveMessageFunction.Arn

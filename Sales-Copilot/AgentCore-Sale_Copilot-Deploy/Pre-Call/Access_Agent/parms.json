@@ -1,0 +1,7 @@
+{
+    "Parameters": {
+      "UseCaseName": "sales-copilot",
+      "ServiceName": "Access-Agent",
+      "AgentPath": "Agents/Pre-Call/Access-Agent"
+    }
+}

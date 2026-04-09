@@ -1,0 +1,72 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS CodeBuild Project using CloudFormation
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Default: my-codebuild-project
+
+  GitHubRepo:
+    Type: String
+    Default: https://github.com/your-user/your-repo
+    Description: GitHub repository URL
+
+  BranchName:
+    Type: String
+    Default: main
+
+Resources:
+
+  CodeBuildServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "${UseCaseName}-service-role"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codebuild.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: CodeBuildPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:*
+                  - s3:*
+                  - codebuild:*
+                Resource: "*"
+
+  CodeBuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: !Ref UseCaseName
+      ServiceRole: !GetAtt CodeBuildServiceRole.Arn
+
+      Artifacts:
+        Type: S3
+        Location: !Sub "${UseCaseName}-artifacts-bucket"
+        Packaging: ZIP
+
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:7.0
+        PrivilegedMode: false
+
+      Source:
+        Type: GITHUB
+        Location: !Ref GitHubRepo
+        GitCloneDepth: 1
+        BuildSpec: Sample_buildspec.yml
+
+      SourceVersion: !Ref BranchName
+
+      TimeoutInMinutes: 30
+
+Outputs:
+  UseCaseName:
+    Value: !Ref CodeBuildProject

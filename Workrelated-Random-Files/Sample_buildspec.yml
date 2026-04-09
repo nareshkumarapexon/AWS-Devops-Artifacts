@@ -1,0 +1,41 @@
+version: 0.2
+
+env:
+  variables:
+    USE_CASE_NAME: "my-codebuild-project"
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - echo Installing dependencies...
+      - pip install -r requirements.txt
+
+  pre_build:
+    commands:
+      - echo Pre-build started on `date`
+      - echo Logging into AWS...
+      - aws --version
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Running build for $USE_CASE_NAME
+      - python app.py
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Uploading artifacts to S3...
+
+artifacts:
+  files:
+    - "**/*"
+  discard-paths: no
+  name: $USE_CASE_NAME-artifacts
+
+logs:
+  cloudwatch:
+    group-name: /aws/codebuild/my-codebuild-project
+    stream-name: build-log

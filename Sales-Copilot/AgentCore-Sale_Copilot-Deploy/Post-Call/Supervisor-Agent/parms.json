@@ -1,0 +1,7 @@
+{
+    "Parameters": {
+      "UseCaseName": "sales-copilot",
+      "ServiceName": "Supervisor-Agent",
+      "AgentPath": "Agents/Post-Call/Supervisor-Agent"
+    }
+}

@@ -1,0 +1,284 @@
+-- Create a view
+CREATE OR REPLACE VIEW master_hcp_kpi_view AS
+WITH 
+-- Get most recent interaction per HCP from history_mart
+recent_interactions AS (
+    SELECT 
+        hcp_id,
+        call_date AS scheduled_call_next_n_days,
+        interaction_type,
+        topic_discussed,
+        objection_raised,
+        materials_shared,
+        outcome,
+        followup_flag,
+        opened_moa_email_flag,
+        clicked_kol_video_flag,
+        formulary_update_30d_flag,
+        formulary_update_summary,
+        sentiment_score,
+        relationship_trajectory,
+        call_success_indicator,
+        samples_distributed_qty,
+        samples_product_name,
+        material_type,
+        material_target_objection,
+        ROW_NUMBER() OVER (PARTITION BY hcp_id ORDER BY call_date DESC) AS rn
+    FROM history_mart
+),
+
+-- Get most recent action items per HCP
+recent_actions AS (
+    SELECT 
+        hcp_id,
+        action_items_json,
+        primary_action_type,
+        task_due_date,
+        task_owner_role,
+        sample_request_qty,
+        hub_referral_flag,
+        calendar_block_minutes,
+        priority_score,
+        ROW_NUMBER() OVER (PARTITION BY hcp_id ORDER BY task_due_date DESC) AS rn
+    FROM call_action_items
+),
+
+-- Get most recent follow-up per HCP
+recent_followups AS (
+    SELECT 
+        hcp_id,
+        followup_email_subject AS followup_email_subject_and_body,
+        mi_request_flag,
+        compliance_approval_status,
+        compliance_rule_ids,
+        redaction_required,
+        redaction_segments,
+        automated_send_allowed,
+        human_review_required,
+        escalation_team,
+        escalated_at,
+        resolved_by,
+        resolution_notes,
+        provenance_key,
+        created_by,
+        followup_sent_datetime,
+        send_status,
+        sla_met_flag,
+        region,
+        scheduled_followup_call_date,
+        ROW_NUMBER() OVER (PARTITION BY hcp_id ORDER BY followup_sent_datetime DESC) AS rn
+    FROM followup_events
+),
+
+-- Get most recent voice call per HCP
+recent_voice AS (
+    SELECT 
+        hcp_id,
+        call_datetime_local,
+        call_duration_minutes,
+        transcript_text,
+        structured_call_summary,
+        key_topics_tags,
+        objection_categories,
+        compliance_redaction_flag,
+        ROW_NUMBER() OVER (PARTITION BY hcp_id ORDER BY call_datetime_local DESC) AS rn
+    FROM voice_to_crm
+),
+
+-- Calculate opportunity score
+interaction_counts AS (
+    SELECT 
+        h.hcp_id,
+        h.rep_id,
+        m.user_id,
+        COUNT(*) AS interaction_count
+    FROM history_mart h
+    INNER JOIN hcp_user_mapping m ON h.hcp_id = m.hcp_id
+    WHERE h.rep_id = m.user_id
+    GROUP BY h.hcp_id, h.rep_id, m.user_id
+),
+
+opportunity_calc AS (
+    SELECT 
+        hcp_id,
+        user_id,
+        interaction_count,
+        ROUND(CAST(interaction_count AS DECIMAL(10,2)) / MAX(interaction_count) OVER (), 2) AS opportunity_score
+    FROM interaction_counts
+)
+
+-- Main SELECT statement
+SELECT 
+    -- HCP Identity & Territory
+    hd.hcp_id,
+    ('Dr. ' || hd.doctor_first_name || ' ' || hd.doctor_last_name) AS hcp_name,
+    hd.territory_id,
+    hd.specialty_primary,
+    hd.subspecialty,
+    hd.years_in_practice,
+    hd.hco_type,
+    hd.hospital_affiliation_flag,
+    hd.kol_flag,
+    hd.scheduled_calls_next_7d_cnt,
+    
+    -- Clinical Priorities & Engagement
+    hd.clinical_priority_1,
+    hd.clinical_priority_2,
+    hd.clinical_priority_3,
+    hd.preferred_contact_time,
+    hd.peer_influence_score,
+    hd.peer_network_hcp_ids,
+    hd.recent_publications_topics,
+    hd.digital_engagement_score,
+    hd.last_interaction_date,
+    hd.last_interaction_type,
+    hd.last_interaction_outcome,
+    
+    -- Prescribing Metrics
+    p.trx_7d,
+    p.trx_28d,
+    p.trx_90d,
+    p.nrx_7d,
+    p.nrx_28d,
+    p.nrx_90d,
+    p.nbrx_28d,
+    p.trx_28d_wow_pct,
+    p.trx_90d_qoq_pct,
+    p.nbrx_28d_rate,
+    p.adoption_stage_ordinal,
+    p.churn_risk_score,
+    p.receptivity_score,
+    
+    -- Interaction Details (from history_mart)
+    ri.scheduled_call_next_n_days,
+    ri.interaction_type,
+    ri.topic_discussed,
+    ri.objection_raised,
+    ri.materials_shared,
+    ri.outcome,
+    ri.followup_flag,
+    ri.opened_moa_email_flag,
+    ri.clicked_kol_video_flag,
+    ri.formulary_update_30d_flag,
+    ri.formulary_update_summary,
+    ri.sentiment_score,
+    ri.relationship_trajectory,
+    ri.call_success_indicator,
+    ri.samples_distributed_qty,
+    ri.samples_product_name,
+    ri.material_type,
+    ri.material_target_objection,
+    
+    -- Access & Formulary
+    f.access_snapshot_datetime,
+    f.recent_formulary_change_30d,
+    f.current_coverage_tier_overall,
+    f.prior_auth_requirement,
+    f.step_therapy_requirement,
+    f.copay_status_median_usd,
+    f.patient_mix_top3_summary,
+    f.access_alert_severity,
+    f.prior_auth_required_flag,
+    f.step_therapy_required_flag,
+    f.patient_copay_median_90d,
+    f.access_change_14d_flag,
+    f.access_policy_change_7d_flag,
+    f.payer_contract_change_30d_flag,
+    f.formulary_tier_score,
+    f.payer_top1_share_pct,
+    f.payer_top3_share_pct,
+    f.insurance_plan,
+    f.is_covered,
+    
+    -- Action Items
+    ra.action_items_json,
+    ra.primary_action_type,
+    ra.task_due_date,
+    ra.task_owner_role,
+    ra.sample_request_qty,
+    ra.hub_referral_flag,
+    ra.calendar_block_minutes,
+    ra.priority_score,
+    
+    -- NEW Calculated Columns for Samples
+    CASE 
+        WHEN ra.sample_request_qty > 0 THEN CAST(FLOOR(RANDOM() * 150 + 50) AS INTEGER)
+        ELSE NULL 
+    END AS sample_inventory_available,
+    CASE 
+        WHEN ra.sample_request_qty > 0 THEN 
+            CASE CAST(FLOOR(RANDOM() * 3) AS INTEGER)
+                WHEN 0 THEN 'Yes'
+                WHEN 1 THEN 'No'
+                ELSE 'Partial'
+            END
+        ELSE 'N/A'
+    END AS sample_commitment_fulfilled,
+    
+    -- Follow-up & Compliance
+    rf.followup_email_subject_and_body,
+    rf.mi_request_flag,
+    rf.compliance_approval_status,
+    rf.compliance_rule_ids,
+    rf.redaction_required,
+    rf.redaction_segments,
+    rf.automated_send_allowed,
+    rf.human_review_required,
+    rf.escalation_team,
+    rf.escalated_at,
+    rf.resolved_by,
+    rf.resolution_notes,
+    rf.provenance_key,
+    rf.created_by,
+    rf.followup_sent_datetime,
+    rf.send_status,
+    rf.sla_met_flag,
+    rf.region,
+    
+    -- Voice/Call Data
+    rv.call_datetime_local,
+    rv.call_duration_minutes,
+    rv.transcript_text,
+    rv.structured_call_summary,
+    rv.key_topics_tags,
+    rv.objection_categories,
+    rv.compliance_redaction_flag,
+    rf.scheduled_followup_call_date,
+    
+    -- User & Opportunity
+    m.user_id,
+    COALESCE(oc.opportunity_score, 0.00) AS opportunity_score,
+    CASE 
+        WHEN COALESCE(oc.opportunity_score, 0.00) >= 0.70 THEN 'High'
+        WHEN COALESCE(oc.opportunity_score, 0.00) >= 0.40 THEN 'Medium'
+        ELSE 'Low'
+    END AS opportunity_level
+
+FROM healthcare_data hd
+
+-- Join prescribing data
+LEFT JOIN prescribing_trends p ON hd.hcp_id = p.hcp_id
+
+-- Join formulary data
+LEFT JOIN formulary_mart f ON hd.hcp_id = f.hcp_id
+
+-- Join most recent interaction
+LEFT JOIN recent_interactions ri ON hd.hcp_id = ri.hcp_id AND ri.rn = 1
+
+-- Join most recent action items
+LEFT JOIN recent_actions ra ON hd.hcp_id = ra.hcp_id AND ra.rn = 1
+
+-- Join most recent follow-up
+LEFT JOIN recent_followups rf ON hd.hcp_id = rf.hcp_id AND rf.rn = 1
+
+-- Join most recent voice call
+LEFT JOIN recent_voice rv ON hd.hcp_id = rv.hcp_id AND rv.rn = 1
+
+-- Join user mapping
+LEFT JOIN hcp_user_mapping m ON hd.hcp_id = m.hcp_id
+
+-- Join opportunity calculation
+LEFT JOIN opportunity_calc oc ON hd.hcp_id = oc.hcp_id
+
+ORDER BY hd.hcp_id;
+ 

@@ -1,0 +1,501 @@
+hcp_id,interaction_date,interaction_type,interaction_channel,last_interaction_channel,opened_moa_email_flag,clicked_kol_video_flag,clicked_campaign_link_flag,preferred_meeting_time_window,top_recent_objection,last_call_notes_summary,engaged_interactions
+HCP000451,2023-03-14,Downloaded,Digital Display,Physical,Yes,No,No,Fri 09-11,Efficacy,Positive feedback; discussed implementation; next steps planned,4.79
+HCP000204,2023-04-26,Clicked,Email,Digital,Yes,No,No,Mon 09-11,Efficacy,Positive feedback; discussed implementation; next steps planned,2.29
+HCP000390,2025-11-29,Delivered,Webinar,Digital,Yes,No,No,Thu 14-16,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,1.35
+HCP000090,2024-03-11,Opened,Rep Visit,Digital,Yes,Yes,Yes,Fri 09-11,Access,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,2.4
+HCP000172,2025-04-23,Clicked,Webinar,Physical,No,Yes,No,Thu 14-16,Access,Declined; objection on cost shared KOL clip; plan follow-up,1.27
+HCP000480,2025-05-25,Downloaded,Rep Visit,Physical,Yes,No,No,Thu 14-16,Access,Declined; objection on cost shared KOL clip; plan follow-up,1.71
+HCP000086,2025-10-19,Attended,Rep Visit,Physical,Yes,No,Yes,Mon 09-11,Safety,Positive feedback; discussed implementation; next steps planned,3.5
+HCP000234,2023-02-21,Opened,Digital Display,Physical,No,No,No,Wed 13-15,Access,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,3.21
+HCP000487,2023-10-06,Attended,Webinar,Digital,No,No,No,Tue 10-12,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,3.75
+HCP000446,2024-05-03,Viewed,Rep Visit,Digital,Yes,No,Yes,Thu 14-16,Efficacy,Interested; requested more safety data; scheduled follow-up,3.94
+HCP000024,2023-01-25,Opened,Digital Display,Digital,No,No,No,Fri 09-11,Access,Questions about dosing; shared clinical guidelines,3.91
+HCP000473,2023-11-18,Downloaded,Rep Visit,Digital,No,Yes,No,Tue 10-12,Access,Concerns about access; provided coverage information,4.19
+HCP000365,2025-06-30,Clicked,Email,Physical,Yes,No,No,Wed 13-15,Efficacy,Concerns about access; provided coverage information,2.07
+HCP000090,2023-08-12,Attended,Digital Display,Digital,Yes,No,No,Fri 09-11,Access,Declined; objection on cost shared KOL clip; plan follow-up,1.56
+HCP000449,2024-09-10,Downloaded,Rep Visit,Physical,Yes,No,No,Wed 13-15,Cost,Declined; objection on cost shared KOL clip; plan follow-up,3.39
+HCP000262,2023-04-30,Clicked,Webinar,Physical,No,No,No,Fri 09-11,Efficacy,Questions about dosing; shared clinical guidelines,2.42
+HCP000405,2024-04-09,Clicked,Webinar,Digital,No,No,No,Fri 09-11,Efficacy,Questions about dosing; shared clinical guidelines,2.89
+HCP000217,2023-09-10,Clicked,Email,Digital,Yes,No,No,Thu 14-16,Access,Questions about dosing; shared clinical guidelines,3.66
+HCP000311,2025-05-26,Viewed,Rep Visit,Physical,Yes,No,No,Fri 09-11,Cost,Positive feedback; discussed implementation; next steps planned,3.36
+HCP000247,2024-01-09,Clicked,Email,Physical,Yes,No,No,Tue 10-12,Cost,Declined; objection on cost shared KOL clip; plan follow-up,1.3
+HCP000276,2025-05-30,Attended,Email,Digital,Yes,Yes,No,Tue 10-12,Access,Positive feedback; discussed implementation; next steps planned,3.56
+HCP000150,2024-08-27,Downloaded,Email,Digital,No,No,Yes,Mon 09-11,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.61
+HCP000054,2025-11-17,Delivered,Webinar,Digital,Yes,Yes,No,Wed 13-15,Safety,Questions about dosing; shared clinical guidelines,0.35
+HCP000490,2025-04-19,Delivered,Digital Display,Digital,No,Yes,Yes,Fri 09-11,Safety,Declined; objection on cost shared KOL clip; plan follow-up,0.8
+HCP000361,2024-05-30,Opened,Rep Visit,Physical,No,Yes,No,Tue 10-12,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,0.16
+HCP000192,2024-08-19,Downloaded,Email,Physical,No,No,Yes,Mon 09-11,Cost,Questions about dosing; shared clinical guidelines,0.24
+HCP000291,2023-08-06,Delivered,Webinar,Digital,No,No,Yes,Tue 10-12,Cost,Declined; objection on cost shared KOL clip; plan follow-up,0.97
+HCP000351,2025-12-06,Clicked,Rep Visit,Digital,No,Yes,No,Thu 14-16,Access,Positive feedback; discussed implementation; next steps planned,2.52
+HCP000283,2023-05-02,Clicked,Digital Display,Digital,No,No,No,Tue 10-12,Efficacy,Positive feedback; discussed implementation; next steps planned,1.44
+HCP000179,2025-02-16,Clicked,Digital Display,Digital,Yes,Yes,No,Tue 10-12,Access,Declined; objection on cost shared KOL clip; plan follow-up,2.2
+HCP000495,2024-06-21,Clicked,Webinar,Physical,Yes,No,No,Mon 09-11,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,4.62
+HCP000050,2023-03-25,Attended,Webinar,Digital,No,Yes,No,Wed 13-15,Efficacy,Positive feedback; discussed implementation; next steps planned,1.22
+HCP000044,2023-06-01,Opened,Webinar,Physical,No,No,No,Fri 09-11,Efficacy,Concerns about access; provided coverage information,0.32
+HCP000484,2024-11-09,Attended,Rep Visit,Physical,No,Yes,Yes,Fri 09-11,Efficacy,Questions about dosing; shared clinical guidelines,3.96
+HCP000244,2023-12-27,Opened,Rep Visit,Physical,No,No,Yes,Tue 10-12,Efficacy,Questions about dosing; shared clinical guidelines,0.36
+HCP000143,2023-04-29,Downloaded,Webinar,Physical,No,No,No,Tue 10-12,Cost,Declined; objection on cost shared KOL clip; plan follow-up,2.14
+HCP000024,2024-06-13,Attended,Email,Physical,No,No,No,Wed 13-15,Access,Declined; objection on cost shared KOL clip; plan follow-up,1.53
+HCP000259,2025-07-29,Downloaded,Webinar,Physical,No,No,No,Mon 09-11,Efficacy,Positive feedback; discussed implementation; next steps planned,3.45
+HCP000413,2025-08-11,Downloaded,Webinar,Digital,No,No,Yes,Mon 09-11,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,2.59
+HCP000335,2025-07-14,Opened,Digital Display,Digital,No,Yes,Yes,Fri 09-11,Cost,Interested; requested more safety data; scheduled follow-up,3.2
+HCP000344,2024-09-08,Clicked,Email,Physical,No,Yes,No,Fri 09-11,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,2.06
+HCP000232,2024-05-22,Attended,Digital Display,Digital,No,No,No,Mon 09-11,Safety,Positive feedback; discussed implementation; next steps planned,1.66
+HCP000032,2023-02-16,Delivered,Digital Display,Digital,No,No,No,Tue 10-12,Safety,Questions about dosing; shared clinical guidelines,4.3
+HCP000116,2025-09-12,Clicked,Digital Display,Physical,No,No,Yes,Fri 09-11,Efficacy,Positive feedback; discussed implementation; next steps planned,1.64
+HCP000465,2024-02-29,Viewed,Digital Display,Physical,No,No,Yes,Wed 13-15,Cost,Positive feedback; discussed implementation; next steps planned,1.32
+HCP000222,2024-11-30,Downloaded,Digital Display,Physical,No,No,No,Fri 09-11,Safety,Interested; requested more safety data; scheduled follow-up,2.78
+HCP000332,2025-02-01,Attended,Email,Physical,No,No,No,Mon 09-11,Efficacy,Interested; requested more safety data; scheduled follow-up,1.69
+HCP000143,2023-12-21,Viewed,Rep Visit,Digital,No,Yes,No,Tue 10-12,Efficacy,Interested; requested more safety data; scheduled follow-up,1.74
+HCP000171,2024-07-06,Opened,Webinar,Digital,No,No,Yes,Wed 13-15,Access,Positive feedback; discussed implementation; next steps planned,4.02
+HCP000421,2025-05-09,Delivered,Webinar,Digital,No,No,No,Tue 10-12,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,3.81
+HCP000232,2024-08-06,Clicked,Digital Display,Digital,No,No,No,Thu 14-16,Cost,Concerns about access; provided coverage information,0.72
+HCP000224,2024-11-01,Clicked,Webinar,Digital,No,No,No,Tue 10-12,Efficacy,Positive feedback; discussed implementation; next steps planned,0.6
+HCP000186,2023-10-16,Viewed,Email,Digital,No,No,No,Tue 10-12,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,4.08
+HCP000270,2025-11-21,Delivered,Rep Visit,Physical,No,No,Yes,Fri 09-11,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.34
+HCP000314,2025-06-29,Attended,Webinar,Digital,Yes,No,No,Fri 09-11,Cost,Declined; objection on cost shared KOL clip; plan follow-up,2.65
+HCP000209,2025-10-23,Clicked,Rep Visit,Digital,No,Yes,No,Tue 10-12,Cost,Positive feedback; discussed implementation; next steps planned,1.6
+HCP000419,2024-08-13,Viewed,Webinar,Digital,Yes,No,No,Tue 10-12,Access,Positive feedback; discussed implementation; next steps planned,1.74
+HCP000292,2023-05-14,Clicked,Digital Display,Digital,No,No,No,Mon 09-11,Efficacy,Positive feedback; discussed implementation; next steps planned,3.82
+HCP000075,2025-08-18,Opened,Webinar,Physical,No,No,No,Mon 09-11,Access,Interested; requested more safety data; scheduled follow-up,4.05
+HCP000269,2024-04-03,Viewed,Rep Visit,Physical,No,Yes,Yes,Fri 09-11,Access,Questions about dosing; shared clinical guidelines,4.29
+HCP000426,2024-01-18,Downloaded,Webinar,Physical,No,No,No,Tue 10-12,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.44
+HCP000420,2023-04-25,Opened,Rep Visit,Digital,Yes,No,No,Thu 14-16,Safety,Declined; objection on cost shared KOL clip; plan follow-up,1.48
+HCP000464,2023-05-08,Clicked,Webinar,Physical,Yes,No,No,Thu 14-16,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,2.06
+HCP000032,2024-02-21,Attended,Digital Display,Digital,No,No,Yes,Tue 10-12,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,0.18
+HCP000379,2023-08-28,Delivered,Webinar,Physical,No,Yes,Yes,Thu 14-16,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,0.37
+HCP000081,2024-08-13,Opened,Rep Visit,Physical,No,No,No,Thu 14-16,Access,Declined; objection on cost shared KOL clip; plan follow-up,4.0
+HCP000301,2025-09-11,Viewed,Webinar,Digital,No,No,No,Fri 09-11,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,4.43
+HCP000219,2023-08-28,Delivered,Email,Physical,No,No,Yes,Wed 13-15,Efficacy,Interested; requested more safety data; scheduled follow-up,2.72
+HCP000089,2024-08-28,Downloaded,Webinar,Digital,Yes,No,No,Fri 09-11,Access,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,0.68
+HCP000172,2024-05-06,Delivered,Email,Physical,No,No,Yes,Fri 09-11,Safety,Declined; objection on cost shared KOL clip; plan follow-up,4.44
+HCP000471,2024-07-14,Downloaded,Rep Visit,Physical,No,No,Yes,Thu 14-16,Access,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,4.92
+HCP000330,2023-06-15,Attended,Webinar,Physical,No,No,No,Tue 10-12,Cost,Positive feedback; discussed implementation; next steps planned,0.18
+HCP000156,2023-05-23,Attended,Webinar,Digital,No,No,No,Tue 10-12,Cost,Concerns about access; provided coverage information,1.34
+HCP000452,2023-01-09,Viewed,Webinar,Digital,No,No,No,Tue 10-12,Efficacy,Concerns about access; provided coverage information,1.04
+HCP000287,2024-04-23,Clicked,Webinar,Physical,Yes,No,Yes,Fri 09-11,Efficacy,Concerns about access; provided coverage information,4.53
+HCP000275,2024-11-21,Viewed,Email,Digital,No,No,No,Wed 13-15,Safety,Interested; requested more safety data; scheduled follow-up,3.0
+HCP000422,2024-07-13,Clicked,Digital Display,Physical,Yes,Yes,No,Mon 09-11,Safety,Positive feedback; discussed implementation; next steps planned,4.3
+HCP000388,2024-02-24,Downloaded,Email,Physical,No,No,No,Tue 10-12,Efficacy,Positive feedback; discussed implementation; next steps planned,3.5
+HCP000246,2023-06-08,Clicked,Email,Physical,Yes,No,No,Mon 09-11,Cost,Positive feedback; discussed implementation; next steps planned,4.48
+HCP000337,2023-07-25,Clicked,Email,Digital,Yes,No,Yes,Tue 10-12,Cost,Concerns about access; provided coverage information,0.31
+HCP000373,2023-05-16,Opened,Webinar,Digital,Yes,No,No,Thu 14-16,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,0.56
+HCP000108,2023-10-19,Delivered,Digital Display,Digital,No,No,No,Mon 09-11,Efficacy,Positive feedback; discussed implementation; next steps planned,4.96
+HCP000071,2024-10-31,Clicked,Rep Visit,Physical,No,No,No,Tue 10-12,Efficacy,Positive feedback; discussed implementation; next steps planned,3.92
+HCP000220,2024-11-28,Attended,Digital Display,Physical,No,No,No,Fri 09-11,Access,Interested; requested more safety data; scheduled follow-up,0.35
+HCP000484,2025-05-15,Clicked,Digital Display,Digital,No,No,Yes,Thu 14-16,Safety,Declined; objection on cost shared KOL clip; plan follow-up,1.19
+HCP000249,2025-05-11,Downloaded,Rep Visit,Digital,No,Yes,No,Wed 13-15,Safety,Concerns about access; provided coverage information,4.05
+HCP000303,2025-03-07,Opened,Digital Display,Physical,Yes,No,Yes,Tue 10-12,Cost,Declined; objection on cost shared KOL clip; plan follow-up,5.0
+HCP000330,2024-09-25,Attended,Webinar,Physical,No,No,Yes,Mon 09-11,Safety,Declined; objection on cost shared KOL clip; plan follow-up,3.01
+HCP000102,2023-06-10,Delivered,Digital Display,Physical,Yes,No,No,Mon 09-11,Access,Concerns about access; provided coverage information,3.81
+HCP000463,2023-02-10,Opened,Email,Digital,No,No,No,Mon 09-11,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,0.17
+HCP000382,2023-05-20,Downloaded,Email,Digital,No,No,No,Fri 09-11,Cost,Concerns about access; provided coverage information,3.19
+HCP000148,2024-07-03,Clicked,Email,Physical,No,Yes,Yes,Wed 13-15,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,2.19
+HCP000337,2025-05-10,Opened,Email,Digital,No,No,Yes,Wed 13-15,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.29
+HCP000388,2023-05-25,Delivered,Webinar,Digital,No,No,Yes,Mon 09-11,Access,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.75
+HCP000188,2025-07-16,Downloaded,Rep Visit,Digital,No,No,Yes,Wed 13-15,Cost,Concerns about access; provided coverage information,3.44
+HCP000172,2025-07-18,Opened,Rep Visit,Physical,No,No,No,Fri 09-11,Safety,Questions about dosing; shared clinical guidelines,2.13
+HCP000477,2024-05-18,Downloaded,Rep Visit,Digital,No,No,Yes,Wed 13-15,Access,Concerns about access; provided coverage information,4.99
+HCP000268,2024-08-21,Opened,Webinar,Physical,No,No,Yes,Fri 09-11,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.69
+HCP000175,2023-01-20,Opened,Rep Visit,Physical,No,Yes,Yes,Wed 13-15,Safety,Concerns about access; provided coverage information,3.98
+HCP000042,2024-03-29,Downloaded,Rep Visit,Digital,No,Yes,Yes,Mon 09-11,Efficacy,Concerns about access; provided coverage information,3.78
+HCP000404,2024-10-04,Delivered,Digital Display,Physical,Yes,No,No,Tue 10-12,Safety,Concerns about access; provided coverage information,0.2
+HCP000110,2024-08-25,Clicked,Email,Digital,No,No,Yes,Fri 09-11,Safety,Declined; objection on cost shared KOL clip; plan follow-up,0.32
+HCP000325,2023-05-12,Downloaded,Rep Visit,Physical,No,No,No,Thu 14-16,Access,Positive feedback; discussed implementation; next steps planned,0.59
+HCP000177,2025-05-19,Downloaded,Webinar,Physical,Yes,No,No,Thu 14-16,Access,Interested; requested more safety data; scheduled follow-up,2.21
+HCP000450,2024-01-13,Attended,Email,Physical,No,No,No,Thu 14-16,Access,Questions about dosing; shared clinical guidelines,2.02
+HCP000412,2025-06-07,Attended,Rep Visit,Physical,No,Yes,Yes,Wed 13-15,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,0.29
+HCP000240,2025-03-20,Attended,Digital Display,Digital,No,No,No,Thu 14-16,Access,Interested; requested more safety data; scheduled follow-up,1.29
+HCP000399,2023-09-21,Opened,Rep Visit,Digital,No,No,No,Fri 09-11,Access,Interested; requested more safety data; scheduled follow-up,0.66
+HCP000001,2025-11-30,Attended,Webinar,Physical,Yes,No,No,Mon 09-11,Safety,Interested; requested more safety data; scheduled follow-up,4.56
+HCP000130,2024-08-14,Attended,Webinar,Digital,No,No,No,Thu 14-16,Access,Questions about dosing; shared clinical guidelines,0.4
+HCP000066,2023-09-21,Clicked,Webinar,Physical,Yes,No,Yes,Thu 14-16,Access,Concerns about access; provided coverage information,4.4
+HCP000432,2023-08-04,Clicked,Digital Display,Digital,No,No,Yes,Tue 10-12,Safety,Concerns about access; provided coverage information,2.34
+HCP000427,2024-02-22,Clicked,Webinar,Physical,No,No,No,Wed 13-15,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,0.88
+HCP000367,2024-04-12,Opened,Rep Visit,Physical,No,No,No,Wed 13-15,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.21
+HCP000411,2024-02-21,Attended,Webinar,Digital,Yes,No,Yes,Wed 13-15,Access,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,2.2
+HCP000268,2025-02-05,Clicked,Webinar,Digital,No,No,No,Wed 13-15,Access,Interested; requested more safety data; scheduled follow-up,2.44
+HCP000151,2023-08-15,Viewed,Digital Display,Digital,No,No,No,Tue 10-12,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,0.35
+HCP000434,2023-04-09,Opened,Rep Visit,Physical,Yes,Yes,No,Fri 09-11,Cost,Concerns about access; provided coverage information,1.44
+HCP000262,2023-09-17,Clicked,Email,Digital,No,No,Yes,Mon 09-11,Access,Declined; objection on cost shared KOL clip; plan follow-up,4.51
+HCP000474,2024-11-06,Downloaded,Webinar,Digital,Yes,Yes,No,Thu 14-16,Cost,Positive feedback; discussed implementation; next steps planned,4.26
+HCP000499,2024-03-04,Downloaded,Webinar,Physical,No,No,No,Mon 09-11,Cost,Concerns about access; provided coverage information,1.79
+HCP000072,2024-10-16,Clicked,Webinar,Digital,No,No,No,Fri 09-11,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,4.87
+HCP000344,2024-04-10,Opened,Rep Visit,Digital,Yes,No,No,Tue 10-12,Cost,Positive feedback; discussed implementation; next steps planned,1.66
+HCP000066,2025-01-22,Delivered,Rep Visit,Digital,No,No,No,Mon 09-11,Cost,Interested; requested more safety data; scheduled follow-up,0.59
+HCP000362,2023-04-30,Opened,Digital Display,Digital,No,No,No,Mon 09-11,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,3.92
+HCP000329,2024-07-14,Attended,Email,Digital,No,Yes,No,Wed 13-15,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.69
+HCP000194,2024-01-27,Opened,Webinar,Digital,No,No,No,Thu 14-16,Cost,Concerns about access; provided coverage information,3.1
+HCP000272,2024-01-19,Attended,Email,Digital,No,No,No,Mon 09-11,Cost,Interested; requested more safety data; scheduled follow-up,3.44
+HCP000499,2025-08-28,Opened,Rep Visit,Physical,No,Yes,No,Wed 13-15,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,2.24
+HCP000067,2025-02-09,Clicked,Email,Physical,No,No,Yes,Fri 09-11,Access,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.24
+HCP000177,2025-07-11,Attended,Email,Physical,No,No,No,Fri 09-11,Safety,Concerns about access; provided coverage information,3.43
+HCP000136,2025-08-15,Delivered,Email,Physical,No,No,No,Fri 09-11,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,4.48
+HCP000307,2023-10-31,Viewed,Email,Physical,Yes,No,No,Mon 09-11,Cost,Concerns about access; provided coverage information,0.73
+HCP000122,2024-12-12,Opened,Email,Digital,No,Yes,Yes,Tue 10-12,Efficacy,Questions about dosing; shared clinical guidelines,1.75
+HCP000017,2023-06-16,Viewed,Email,Digital,No,No,No,Mon 09-11,Access,Positive feedback; discussed implementation; next steps planned,1.68
+HCP000345,2023-07-30,Downloaded,Rep Visit,Digital,No,No,No,Tue 10-12,Safety,Positive feedback; discussed implementation; next steps planned,0.6
+HCP000484,2024-04-18,Attended,Digital Display,Physical,Yes,No,No,Mon 09-11,Access,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,0.14
+HCP000447,2023-01-11,Delivered,Rep Visit,Physical,Yes,No,Yes,Mon 09-11,Safety,Questions about dosing; shared clinical guidelines,1.64
+HCP000366,2024-09-06,Viewed,Rep Visit,Physical,No,No,No,Tue 10-12,Access,Positive feedback; discussed implementation; next steps planned,3.91
+HCP000460,2024-05-31,Delivered,Email,Digital,No,No,Yes,Tue 10-12,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,4.66
+HCP000244,2025-08-21,Clicked,Webinar,Digital,No,No,No,Wed 13-15,Cost,Interested; requested more safety data; scheduled follow-up,1.15
+HCP000374,2024-08-13,Viewed,Rep Visit,Digital,No,No,No,Wed 13-15,Efficacy,Interested; requested more safety data; scheduled follow-up,2.08
+HCP000117,2024-05-26,Opened,Webinar,Physical,No,No,No,Wed 13-15,Access,Positive feedback; discussed implementation; next steps planned,1.98
+HCP000152,2024-11-14,Clicked,Digital Display,Digital,No,No,No,Tue 10-12,Access,Positive feedback; discussed implementation; next steps planned,1.71
+HCP000352,2024-06-03,Viewed,Email,Physical,Yes,No,No,Fri 09-11,Safety,Concerns about access; provided coverage information,2.16
+HCP000189,2024-10-30,Opened,Email,Physical,No,No,No,Tue 10-12,Cost,Positive feedback; discussed implementation; next steps planned,1.44
+HCP000019,2025-10-08,Opened,Webinar,Physical,Yes,Yes,Yes,Thu 14-16,Efficacy,Interested; requested more safety data; scheduled follow-up,0.62
+HCP000063,2025-07-12,Opened,Rep Visit,Physical,Yes,No,No,Wed 13-15,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,4.34
+HCP000114,2023-07-31,Delivered,Digital Display,Physical,No,Yes,Yes,Wed 13-15,Efficacy,Interested; requested more safety data; scheduled follow-up,1.34
+HCP000042,2024-04-11,Opened,Rep Visit,Physical,Yes,No,No,Mon 09-11,Safety,Declined; objection on cost shared KOL clip; plan follow-up,3.9
+HCP000105,2024-05-13,Viewed,Digital Display,Digital,Yes,No,Yes,Mon 09-11,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.48
+HCP000488,2025-07-26,Clicked,Email,Physical,No,No,No,Mon 09-11,Access,Declined; objection on cost shared KOL clip; plan follow-up,0.41
+HCP000419,2025-12-16,Attended,Email,Physical,No,No,No,Thu 14-16,Access,Questions about dosing; shared clinical guidelines,2.8
+HCP000312,2023-11-09,Delivered,Digital Display,Physical,No,No,No,Mon 09-11,Cost,Interested; requested more safety data; scheduled follow-up,4.71
+HCP000409,2025-01-14,Opened,Digital Display,Physical,No,No,No,Mon 09-11,Efficacy,Questions about dosing; shared clinical guidelines,1.23
+HCP000317,2024-05-03,Delivered,Rep Visit,Physical,No,No,No,Thu 14-16,Access,Interested; requested more safety data; scheduled follow-up,2.93
+HCP000403,2023-10-03,Clicked,Rep Visit,Physical,Yes,No,No,Thu 14-16,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,0.6
+HCP000299,2024-09-10,Opened,Digital Display,Physical,No,No,No,Fri 09-11,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,3.36
+HCP000448,2024-05-10,Clicked,Webinar,Physical,No,No,No,Wed 13-15,Safety,Declined; objection on cost shared KOL clip; plan follow-up,0.41
+HCP000245,2024-03-28,Opened,Email,Physical,No,No,No,Tue 10-12,Cost,Questions about dosing; shared clinical guidelines,1.4
+HCP000460,2025-12-15,Opened,Digital Display,Physical,Yes,No,Yes,Thu 14-16,Efficacy,Positive feedback; discussed implementation; next steps planned,0.31
+HCP000440,2025-09-10,Opened,Digital Display,Digital,No,No,No,Tue 10-12,Safety,Interested; requested more safety data; scheduled follow-up,0.83
+HCP000382,2025-02-01,Delivered,Rep Visit,Digital,No,No,Yes,Fri 09-11,Access,Questions about dosing; shared clinical guidelines,3.93
+HCP000455,2025-06-13,Attended,Webinar,Digital,No,No,No,Mon 09-11,Cost,Interested; requested more safety data; scheduled follow-up,1.09
+HCP000095,2024-01-12,Opened,Email,Physical,No,No,No,Tue 10-12,Access,Questions about dosing; shared clinical guidelines,1.98
+HCP000130,2024-05-21,Viewed,Digital Display,Digital,Yes,No,No,Tue 10-12,Efficacy,Concerns about access; provided coverage information,3.99
+HCP000243,2024-08-07,Viewed,Webinar,Digital,Yes,No,No,Mon 09-11,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,2.76
+HCP000444,2024-03-11,Viewed,Rep Visit,Physical,No,No,No,Tue 10-12,Cost,Questions about dosing; shared clinical guidelines,3.36
+HCP000445,2024-09-02,Attended,Email,Digital,No,No,No,Mon 09-11,Access,Concerns about access; provided coverage information,1.87
+HCP000139,2024-07-21,Attended,Rep Visit,Physical,Yes,No,No,Mon 09-11,Cost,Concerns about access; provided coverage information,4.23
+HCP000339,2023-06-26,Clicked,Email,Digital,Yes,No,Yes,Fri 09-11,Access,Questions about dosing; shared clinical guidelines,1.03
+HCP000196,2025-05-25,Downloaded,Email,Physical,Yes,No,Yes,Fri 09-11,Efficacy,Concerns about access; provided coverage information,2.73
+HCP000173,2023-11-07,Viewed,Digital Display,Physical,Yes,No,No,Tue 10-12,Efficacy,Concerns about access; provided coverage information,3.07
+HCP000025,2025-07-08,Downloaded,Digital Display,Physical,No,No,Yes,Wed 13-15,Access,Concerns about access; provided coverage information,4.96
+HCP000026,2025-04-27,Attended,Webinar,Physical,No,No,No,Wed 13-15,Cost,Questions about dosing; shared clinical guidelines,1.32
+HCP000437,2023-10-07,Delivered,Rep Visit,Physical,No,No,No,Fri 09-11,Efficacy,Questions about dosing; shared clinical guidelines,0.74
+HCP000185,2025-11-25,Clicked,Email,Digital,Yes,Yes,No,Mon 09-11,Access,Concerns about access; provided coverage information,0.58
+HCP000275,2025-05-04,Opened,Email,Physical,No,No,No,Thu 14-16,Cost,Interested; requested more safety data; scheduled follow-up,0.45
+HCP000197,2023-02-11,Attended,Digital Display,Physical,No,No,No,Tue 10-12,Access,Concerns about access; provided coverage information,0.54
+HCP000402,2024-12-18,Opened,Webinar,Physical,Yes,No,No,Thu 14-16,Efficacy,Interested; requested more safety data; scheduled follow-up,2.43
+HCP000486,2023-11-22,Viewed,Digital Display,Digital,No,No,No,Mon 09-11,Safety,Questions about dosing; shared clinical guidelines,3.91
+HCP000027,2024-11-12,Clicked,Rep Visit,Digital,Yes,No,No,Mon 09-11,Efficacy,Questions about dosing; shared clinical guidelines,4.15
+HCP000021,2024-03-28,Delivered,Digital Display,Digital,No,No,No,Thu 14-16,Cost,Positive feedback; discussed implementation; next steps planned,1.28
+HCP000073,2025-12-12,Attended,Email,Physical,No,No,No,Wed 13-15,Safety,Concerns about access; provided coverage information,1.46
+HCP000299,2023-04-18,Viewed,Email,Digital,Yes,No,No,Fri 09-11,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,2.08
+HCP000258,2024-09-27,Viewed,Digital Display,Digital,No,No,No,Tue 10-12,Cost,Concerns about access; provided coverage information,3.5
+HCP000488,2025-11-11,Opened,Digital Display,Digital,Yes,No,No,Tue 10-12,Access,Positive feedback; discussed implementation; next steps planned,3.71
+HCP000493,2025-02-14,Opened,Rep Visit,Digital,No,No,No,Fri 09-11,Safety,Interested; requested more safety data; scheduled follow-up,2.28
+HCP000468,2023-08-05,Attended,Email,Physical,No,No,Yes,Fri 09-11,Cost,Questions about dosing; shared clinical guidelines,1.96
+HCP000388,2025-09-10,Attended,Webinar,Digital,No,Yes,No,Fri 09-11,Cost,Questions about dosing; shared clinical guidelines,3.67
+HCP000048,2024-04-15,Downloaded,Webinar,Physical,No,No,No,Wed 13-15,Cost,Positive feedback; discussed implementation; next steps planned,3.61
+HCP000470,2024-01-11,Viewed,Webinar,Digital,No,No,Yes,Fri 09-11,Safety,Declined; objection on cost shared KOL clip; plan follow-up,1.49
+HCP000275,2024-01-28,Delivered,Digital Display,Physical,No,Yes,Yes,Wed 13-15,Cost,Interested; requested more safety data; scheduled follow-up,0.99
+HCP000232,2025-10-20,Clicked,Rep Visit,Digital,No,Yes,Yes,Tue 10-12,Access,Concerns about access; provided coverage information,0.7
+HCP000081,2023-08-28,Clicked,Rep Visit,Physical,No,No,Yes,Mon 09-11,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,0.95
+HCP000492,2024-10-19,Delivered,Email,Physical,No,No,No,Thu 14-16,Cost,Declined; objection on cost shared KOL clip; plan follow-up,1.17
+HCP000024,2024-08-08,Clicked,Rep Visit,Digital,No,No,No,Wed 13-15,Cost,Concerns about access; provided coverage information,4.62
+HCP000235,2023-04-25,Clicked,Digital Display,Physical,No,No,Yes,Mon 09-11,Cost,Declined; objection on cost shared KOL clip; plan follow-up,2.63
+HCP000424,2024-11-28,Attended,Rep Visit,Digital,Yes,Yes,No,Mon 09-11,Safety,Interested; requested more safety data; scheduled follow-up,0.37
+HCP000389,2025-07-17,Viewed,Email,Physical,No,No,Yes,Mon 09-11,Efficacy,Positive feedback; discussed implementation; next steps planned,3.14
+HCP000221,2025-01-14,Downloaded,Email,Digital,No,No,No,Mon 09-11,Access,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,0.89
+HCP000427,2025-06-23,Delivered,Rep Visit,Physical,Yes,No,No,Tue 10-12,Cost,Questions about dosing; shared clinical guidelines,3.69
+HCP000158,2024-09-14,Downloaded,Digital Display,Digital,Yes,No,Yes,Fri 09-11,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,4.02
+HCP000051,2025-04-10,Attended,Rep Visit,Physical,No,No,No,Fri 09-11,Cost,Concerns about access; provided coverage information,2.51
+HCP000461,2025-02-25,Clicked,Webinar,Physical,Yes,No,No,Tue 10-12,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,0.38
+HCP000173,2025-12-10,Attended,Email,Digital,No,No,Yes,Wed 13-15,Cost,Interested; requested more safety data; scheduled follow-up,3.02
+HCP000104,2024-10-11,Downloaded,Webinar,Physical,Yes,Yes,Yes,Thu 14-16,Access,Concerns about access; provided coverage information,4.91
+HCP000052,2025-04-24,Delivered,Webinar,Physical,No,No,Yes,Thu 14-16,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,5.0
+HCP000494,2023-02-27,Opened,Webinar,Digital,No,No,Yes,Thu 14-16,Efficacy,Interested; requested more safety data; scheduled follow-up,1.93
+HCP000095,2024-07-12,Viewed,Digital Display,Physical,Yes,No,No,Fri 09-11,Safety,Questions about dosing; shared clinical guidelines,4.28
+HCP000271,2025-12-25,Clicked,Email,Digital,Yes,No,No,Mon 09-11,Access,Concerns about access; provided coverage information,2.44
+HCP000268,2025-04-14,Attended,Email,Physical,No,No,No,Wed 13-15,Cost,Interested; requested more safety data; scheduled follow-up,3.3
+HCP000146,2025-07-11,Attended,Email,Digital,No,No,Yes,Thu 14-16,Safety,Concerns about access; provided coverage information,3.68
+HCP000021,2025-09-18,Clicked,Rep Visit,Physical,No,Yes,No,Mon 09-11,Cost,Positive feedback; discussed implementation; next steps planned,4.8
+HCP000287,2023-05-13,Downloaded,Email,Digital,No,No,Yes,Thu 14-16,Safety,Declined; objection on cost shared KOL clip; plan follow-up,4.35
+HCP000463,2023-06-19,Viewed,Email,Digital,Yes,No,Yes,Tue 10-12,Safety,Questions about dosing; shared clinical guidelines,3.94
+HCP000107,2024-01-21,Delivered,Webinar,Digital,Yes,No,No,Tue 10-12,Safety,Declined; objection on cost shared KOL clip; plan follow-up,4.37
+HCP000003,2025-10-18,Viewed,Webinar,Physical,No,No,Yes,Mon 09-11,Safety,Concerns about access; provided coverage information,4.51
+HCP000234,2025-10-29,Delivered,Webinar,Digital,No,No,No,Mon 09-11,Cost,Declined; objection on cost shared KOL clip; plan follow-up,3.85
+HCP000346,2024-07-05,Clicked,Rep Visit,Digital,No,No,No,Fri 09-11,Access,Concerns about access; provided coverage information,1.15
+HCP000334,2023-09-16,Downloaded,Webinar,Digital,No,No,No,Thu 14-16,Access,Interested; requested more safety data; scheduled follow-up,1.69
+HCP000145,2025-10-02,Delivered,Webinar,Digital,No,No,Yes,Thu 14-16,Cost,Interested; requested more safety data; scheduled follow-up,3.15
+HCP000428,2025-08-09,Opened,Digital Display,Physical,No,No,No,Mon 09-11,Cost,Positive feedback; discussed implementation; next steps planned,1.4
+HCP000361,2023-03-10,Clicked,Email,Digital,Yes,No,Yes,Thu 14-16,Cost,Questions about dosing; shared clinical guidelines,0.68
+HCP000108,2025-05-24,Viewed,Email,Physical,Yes,Yes,No,Thu 14-16,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,2.32
+HCP000181,2025-09-29,Downloaded,Webinar,Digital,Yes,No,No,Wed 13-15,Cost,Concerns about access; provided coverage information,4.43
+HCP000177,2025-11-18,Delivered,Email,Digital,No,Yes,No,Mon 09-11,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,0.36
+HCP000113,2025-10-01,Attended,Rep Visit,Digital,Yes,Yes,No,Mon 09-11,Access,Questions about dosing; shared clinical guidelines,1.84
+HCP000194,2024-09-12,Delivered,Email,Physical,No,No,No,Wed 13-15,Efficacy,Positive feedback; discussed implementation; next steps planned,4.68
+HCP000019,2024-05-30,Opened,Digital Display,Digital,No,Yes,No,Tue 10-12,Access,Positive feedback; discussed implementation; next steps planned,4.08
+HCP000376,2024-10-30,Opened,Webinar,Digital,No,No,No,Mon 09-11,Access,Concerns about access; provided coverage information,4.25
+HCP000286,2023-06-14,Downloaded,Digital Display,Physical,No,No,No,Thu 14-16,Safety,Concerns about access; provided coverage information,2.95
+HCP000330,2023-01-17,Opened,Rep Visit,Physical,No,No,Yes,Thu 14-16,Cost,Declined; objection on cost shared KOL clip; plan follow-up,1.01
+HCP000321,2023-06-03,Opened,Email,Physical,No,No,No,Mon 09-11,Access,Concerns about access; provided coverage information,2.28
+HCP000447,2024-02-06,Delivered,Digital Display,Physical,No,No,No,Fri 09-11,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,0.97
+HCP000466,2023-12-11,Attended,Webinar,Digital,No,No,No,Wed 13-15,Access,Questions about dosing; shared clinical guidelines,0.79
+HCP000083,2025-03-04,Viewed,Digital Display,Physical,No,No,No,Tue 10-12,Access,Concerns about access; provided coverage information,1.05
+HCP000384,2025-03-16,Delivered,Webinar,Physical,No,No,No,Thu 14-16,Safety,Concerns about access; provided coverage information,1.42
+HCP000376,2025-05-16,Delivered,Email,Digital,No,Yes,No,Tue 10-12,Cost,Declined; objection on cost shared KOL clip; plan follow-up,3.49
+HCP000328,2025-06-20,Viewed,Rep Visit,Digital,Yes,No,No,Fri 09-11,Access,Questions about dosing; shared clinical guidelines,1.78
+HCP000093,2025-12-04,Viewed,Webinar,Digital,No,Yes,No,Fri 09-11,Access,Positive feedback; discussed implementation; next steps planned,4.07
+HCP000189,2025-06-12,Opened,Email,Physical,Yes,No,No,Thu 14-16,Cost,Declined; objection on cost shared KOL clip; plan follow-up,4.14
+HCP000437,2023-12-10,Delivered,Digital Display,Physical,No,No,No,Fri 09-11,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.19
+HCP000349,2024-11-23,Opened,Rep Visit,Digital,No,No,No,Mon 09-11,Cost,Positive feedback; discussed implementation; next steps planned,3.31
+HCP000407,2024-08-04,Clicked,Rep Visit,Physical,Yes,No,No,Mon 09-11,Cost,Positive feedback; discussed implementation; next steps planned,0.94
+HCP000146,2024-08-30,Viewed,Rep Visit,Physical,No,Yes,No,Tue 10-12,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,4.98
+HCP000454,2024-12-20,Downloaded,Rep Visit,Digital,Yes,No,No,Wed 13-15,Access,Positive feedback; discussed implementation; next steps planned,3.66
+HCP000250,2025-11-21,Delivered,Digital Display,Physical,No,No,No,Thu 14-16,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.82
+HCP000394,2025-07-03,Attended,Webinar,Physical,Yes,Yes,No,Thu 14-16,Efficacy,Questions about dosing; shared clinical guidelines,3.01
+HCP000007,2025-12-08,Clicked,Webinar,Physical,No,Yes,No,Tue 10-12,Safety,Declined; objection on cost shared KOL clip; plan follow-up,3.49
+HCP000478,2025-02-16,Clicked,Email,Physical,No,No,No,Fri 09-11,Access,Interested; requested more safety data; scheduled follow-up,2.81
+HCP000325,2023-08-23,Viewed,Webinar,Digital,No,No,No,Fri 09-11,Efficacy,Concerns about access; provided coverage information,4.26
+HCP000086,2024-06-19,Delivered,Rep Visit,Digital,No,No,No,Mon 09-11,Cost,Positive feedback; discussed implementation; next steps planned,4.13
+HCP000065,2023-02-08,Delivered,Digital Display,Digital,No,Yes,No,Mon 09-11,Access,Concerns about access; provided coverage information,2.59
+HCP000166,2025-01-19,Delivered,Rep Visit,Digital,Yes,No,Yes,Wed 13-15,Access,Questions about dosing; shared clinical guidelines,4.29
+HCP000090,2023-06-12,Clicked,Email,Physical,Yes,No,Yes,Tue 10-12,Access,Positive feedback; discussed implementation; next steps planned,1.08
+HCP000006,2024-04-03,Opened,Rep Visit,Physical,No,No,Yes,Tue 10-12,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,2.25
+HCP000275,2024-10-08,Delivered,Digital Display,Digital,No,Yes,No,Fri 09-11,Cost,Declined; objection on cost shared KOL clip; plan follow-up,4.15
+HCP000009,2023-05-14,Clicked,Webinar,Digital,No,No,No,Tue 10-12,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.25
+HCP000467,2023-06-30,Attended,Webinar,Digital,No,No,No,Fri 09-11,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.44
+HCP000391,2023-08-09,Viewed,Digital Display,Digital,No,No,No,Thu 14-16,Access,Positive feedback; discussed implementation; next steps planned,0.33
+HCP000434,2024-06-25,Viewed,Email,Digital,No,Yes,Yes,Thu 14-16,Access,Questions about dosing; shared clinical guidelines,4.8
+HCP000339,2024-04-29,Clicked,Email,Digital,No,No,Yes,Mon 09-11,Access,Declined; objection on cost shared KOL clip; plan follow-up,4.27
+HCP000459,2024-06-16,Opened,Webinar,Digital,Yes,No,Yes,Fri 09-11,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,3.14
+HCP000389,2024-12-08,Viewed,Webinar,Physical,No,No,No,Wed 13-15,Efficacy,Questions about dosing; shared clinical guidelines,2.28
+HCP000051,2023-11-18,Clicked,Digital Display,Physical,Yes,No,Yes,Mon 09-11,Access,Declined; objection on cost shared KOL clip; plan follow-up,0.55
+HCP000313,2025-03-20,Delivered,Digital Display,Digital,No,No,No,Thu 14-16,Safety,Questions about dosing; shared clinical guidelines,4.64
+HCP000171,2025-01-20,Attended,Digital Display,Physical,No,No,Yes,Thu 14-16,Efficacy,Questions about dosing; shared clinical guidelines,0.58
+HCP000243,2024-06-25,Opened,Email,Physical,No,No,No,Tue 10-12,Efficacy,Interested; requested more safety data; scheduled follow-up,2.9
+HCP000442,2025-01-09,Viewed,Webinar,Physical,No,No,No,Fri 09-11,Access,Interested; requested more safety data; scheduled follow-up,2.6
+HCP000401,2023-06-01,Delivered,Email,Physical,No,No,No,Tue 10-12,Cost,Concerns about access; provided coverage information,1.31
+HCP000329,2024-11-11,Attended,Digital Display,Physical,No,No,No,Fri 09-11,Access,Declined; objection on cost shared KOL clip; plan follow-up,1.07
+HCP000464,2025-12-18,Viewed,Webinar,Digital,No,No,No,Thu 14-16,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,3.41
+HCP000261,2024-12-03,Opened,Digital Display,Physical,Yes,No,No,Thu 14-16,Cost,Declined; objection on cost shared KOL clip; plan follow-up,0.26
+HCP000128,2024-05-10,Downloaded,Digital Display,Physical,No,Yes,No,Fri 09-11,Cost,Positive feedback; discussed implementation; next steps planned,3.95
+HCP000361,2023-04-15,Opened,Email,Digital,Yes,No,Yes,Fri 09-11,Access,Concerns about access; provided coverage information,1.74
+HCP000290,2024-04-11,Opened,Digital Display,Digital,Yes,No,No,Fri 09-11,Safety,Positive feedback; discussed implementation; next steps planned,1.01
+HCP000475,2023-03-11,Downloaded,Webinar,Digital,No,No,No,Thu 14-16,Efficacy,Positive feedback; discussed implementation; next steps planned,0.97
+HCP000330,2023-06-28,Delivered,Webinar,Digital,Yes,Yes,No,Thu 14-16,Safety,Positive feedback; discussed implementation; next steps planned,2.41
+HCP000250,2023-02-05,Viewed,Email,Digital,No,No,Yes,Mon 09-11,Safety,Concerns about access; provided coverage information,3.22
+HCP000164,2024-06-16,Downloaded,Email,Physical,Yes,Yes,No,Wed 13-15,Access,Concerns about access; provided coverage information,4.41
+HCP000435,2025-10-03,Downloaded,Rep Visit,Physical,Yes,No,No,Wed 13-15,Cost,Concerns about access; provided coverage information,3.88
+HCP000236,2023-06-19,Opened,Webinar,Physical,No,No,Yes,Fri 09-11,Safety,Concerns about access; provided coverage information,2.16
+HCP000110,2025-11-17,Delivered,Email,Physical,No,No,No,Fri 09-11,Access,Declined; objection on cost shared KOL clip; plan follow-up,3.76
+HCP000283,2023-09-13,Delivered,Webinar,Digital,Yes,No,No,Tue 10-12,Cost,Concerns about access; provided coverage information,3.27
+HCP000231,2024-01-14,Viewed,Digital Display,Physical,No,No,Yes,Wed 13-15,Safety,Positive feedback; discussed implementation; next steps planned,1.53
+HCP000392,2025-03-12,Clicked,Rep Visit,Physical,Yes,No,No,Mon 09-11,Cost,Declined; objection on cost shared KOL clip; plan follow-up,2.28
+HCP000260,2023-09-29,Delivered,Webinar,Digital,No,No,No,Mon 09-11,Access,Declined; objection on cost shared KOL clip; plan follow-up,2.41
+HCP000117,2025-05-07,Delivered,Digital Display,Digital,No,Yes,No,Wed 13-15,Cost,Questions about dosing; shared clinical guidelines,0.56
+HCP000176,2023-09-06,Delivered,Digital Display,Digital,No,No,Yes,Wed 13-15,Efficacy,Questions about dosing; shared clinical guidelines,0.92
+HCP000063,2024-05-29,Delivered,Email,Physical,No,No,No,Tue 10-12,Safety,Concerns about access; provided coverage information,4.64
+HCP000195,2025-05-19,Opened,Digital Display,Physical,No,Yes,No,Fri 09-11,Cost,Declined; objection on cost shared KOL clip; plan follow-up,4.66
+HCP000060,2024-10-24,Attended,Rep Visit,Digital,Yes,No,Yes,Thu 14-16,Efficacy,Questions about dosing; shared clinical guidelines,2.59
+HCP000411,2024-12-18,Opened,Digital Display,Physical,No,No,Yes,Wed 13-15,Cost,Questions about dosing; shared clinical guidelines,4.72
+HCP000237,2023-12-27,Delivered,Rep Visit,Digital,Yes,No,Yes,Wed 13-15,Safety,Questions about dosing; shared clinical guidelines,4.58
+HCP000228,2024-09-21,Delivered,Digital Display,Physical,No,No,No,Tue 10-12,Access,Concerns about access; provided coverage information,4.19
+HCP000306,2025-09-05,Opened,Email,Digital,No,Yes,No,Tue 10-12,Access,Positive feedback; discussed implementation; next steps planned,2.95
+HCP000087,2023-10-14,Delivered,Rep Visit,Digital,Yes,No,No,Tue 10-12,Efficacy,Questions about dosing; shared clinical guidelines,4.03
+HCP000311,2023-10-17,Downloaded,Digital Display,Digital,No,Yes,No,Thu 14-16,Efficacy,Concerns about access; provided coverage information,3.72
+HCP000117,2025-09-21,Opened,Digital Display,Physical,No,No,Yes,Thu 14-16,Cost,Interested; requested more safety data; scheduled follow-up,2.04
+HCP000272,2025-10-18,Clicked,Rep Visit,Physical,Yes,No,No,Thu 14-16,Access,Interested; requested more safety data; scheduled follow-up,4.98
+HCP000358,2024-11-02,Viewed,Digital Display,Physical,Yes,No,No,Tue 10-12,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,2.09
+HCP000297,2024-09-06,Delivered,Digital Display,Physical,Yes,No,No,Thu 14-16,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,2.34
+HCP000118,2023-02-15,Attended,Rep Visit,Physical,Yes,Yes,No,Mon 09-11,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,4.55
+HCP000083,2025-08-11,Delivered,Rep Visit,Physical,No,No,Yes,Mon 09-11,Access,Concerns about access; provided coverage information,3.76
+HCP000434,2023-11-03,Downloaded,Digital Display,Digital,No,No,No,Fri 09-11,Safety,Positive feedback; discussed implementation; next steps planned,0.26
+HCP000233,2024-11-29,Delivered,Rep Visit,Digital,No,No,No,Tue 10-12,Safety,Positive feedback; discussed implementation; next steps planned,4.99
+HCP000182,2025-07-08,Delivered,Rep Visit,Digital,Yes,No,No,Thu 14-16,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,1.4
+HCP000093,2024-10-29,Downloaded,Rep Visit,Physical,Yes,No,No,Thu 14-16,Cost,Positive feedback; discussed implementation; next steps planned,3.1
+HCP000002,2024-08-27,Viewed,Digital Display,Physical,No,No,No,Fri 09-11,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,2.84
+HCP000073,2023-01-07,Viewed,Digital Display,Physical,No,No,No,Wed 13-15,Access,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,0.98
+HCP000324,2025-12-30,Attended,Webinar,Digital,No,No,No,Mon 09-11,Efficacy,Concerns about access; provided coverage information,4.32
+HCP000398,2023-11-30,Delivered,Rep Visit,Digital,Yes,No,No,Tue 10-12,Safety,Concerns about access; provided coverage information,0.37
+HCP000115,2023-11-16,Opened,Webinar,Physical,No,Yes,No,Fri 09-11,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,0.98
+HCP000376,2024-03-08,Downloaded,Digital Display,Physical,No,No,No,Mon 09-11,Cost,Questions about dosing; shared clinical guidelines,2.9
+HCP000482,2025-12-29,Clicked,Rep Visit,Digital,No,No,No,Thu 14-16,Access,Concerns about access; provided coverage information,4.34
+HCP000395,2023-04-08,Clicked,Webinar,Physical,No,No,No,Mon 09-11,Access,Questions about dosing; shared clinical guidelines,2.12
+HCP000238,2025-06-15,Viewed,Webinar,Physical,No,No,No,Wed 13-15,Access,Positive feedback; discussed implementation; next steps planned,1.64
+HCP000466,2023-06-08,Opened,Email,Digital,No,No,Yes,Fri 09-11,Cost,Concerns about access; provided coverage information,4.06
+HCP000126,2025-04-14,Attended,Webinar,Physical,No,No,No,Wed 13-15,Efficacy,Questions about dosing; shared clinical guidelines,0.77
+HCP000374,2023-10-18,Viewed,Rep Visit,Physical,No,Yes,No,Fri 09-11,Access,Concerns about access; provided coverage information,3.43
+HCP000199,2024-07-22,Opened,Webinar,Digital,No,No,Yes,Wed 13-15,Cost,Declined; objection on cost shared KOL clip; plan follow-up,1.46
+HCP000499,2024-05-21,Attended,Email,Physical,Yes,No,No,Mon 09-11,Access,Declined; objection on cost shared KOL clip; plan follow-up,2.38
+HCP000125,2023-11-03,Delivered,Rep Visit,Physical,Yes,No,No,Fri 09-11,Safety,Questions about dosing; shared clinical guidelines,3.82
+HCP000135,2024-12-11,Downloaded,Email,Physical,No,No,No,Wed 13-15,Access,Declined; objection on cost shared KOL clip; plan follow-up,1.76
+HCP000200,2023-06-27,Viewed,Rep Visit,Physical,No,No,Yes,Tue 10-12,Cost,Questions about dosing; shared clinical guidelines,1.39
+HCP000033,2024-02-12,Delivered,Rep Visit,Physical,Yes,No,No,Tue 10-12,Access,Positive feedback; discussed implementation; next steps planned,4.7
+HCP000057,2025-11-07,Opened,Rep Visit,Digital,No,Yes,No,Tue 10-12,Cost,Declined; objection on cost shared KOL clip; plan follow-up,4.48
+HCP000025,2025-01-30,Attended,Rep Visit,Physical,No,No,No,Fri 09-11,Efficacy,Interested; requested more safety data; scheduled follow-up,2.69
+HCP000380,2025-03-30,Clicked,Webinar,Digital,No,No,No,Tue 10-12,Safety,Positive feedback; discussed implementation; next steps planned,2.49
+HCP000237,2025-09-19,Opened,Rep Visit,Digital,Yes,No,No,Thu 14-16,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,2.5
+HCP000366,2024-05-01,Clicked,Webinar,Digital,No,No,Yes,Thu 14-16,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,3.39
+HCP000449,2025-07-16,Opened,Rep Visit,Digital,Yes,No,Yes,Wed 13-15,Safety,Positive feedback; discussed implementation; next steps planned,2.61
+HCP000145,2024-08-26,Opened,Digital Display,Physical,No,Yes,No,Fri 09-11,Safety,Interested; requested more safety data; scheduled follow-up,0.82
+HCP000327,2025-08-07,Downloaded,Rep Visit,Physical,No,Yes,No,Mon 09-11,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.49
+HCP000034,2024-09-01,Attended,Digital Display,Physical,No,No,No,Tue 10-12,Safety,Interested; requested more safety data; scheduled follow-up,3.65
+HCP000397,2025-06-30,Downloaded,Email,Digital,Yes,No,No,Fri 09-11,Efficacy,Questions about dosing; shared clinical guidelines,4.42
+HCP000363,2023-06-27,Downloaded,Email,Digital,No,No,No,Wed 13-15,Safety,Interested; requested more safety data; scheduled follow-up,2.38
+HCP000156,2024-06-24,Downloaded,Webinar,Digital,Yes,No,Yes,Thu 14-16,Cost,Questions about dosing; shared clinical guidelines,3.85
+HCP000369,2024-06-30,Attended,Rep Visit,Physical,No,No,No,Wed 13-15,Safety,Declined; objection on cost shared KOL clip; plan follow-up,4.82
+HCP000047,2024-12-12,Delivered,Digital Display,Physical,No,No,No,Thu 14-16,Cost,Interested; requested more safety data; scheduled follow-up,4.62
+HCP000256,2025-08-17,Clicked,Digital Display,Digital,Yes,No,Yes,Thu 14-16,Efficacy,Interested; requested more safety data; scheduled follow-up,2.67
+HCP000422,2023-09-26,Viewed,Email,Digital,No,No,Yes,Wed 13-15,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,3.76
+HCP000138,2025-11-12,Attended,Digital Display,Physical,Yes,Yes,No,Tue 10-12,Access,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,0.44
+HCP000294,2024-04-07,Delivered,Rep Visit,Digital,Yes,No,No,Mon 09-11,Cost,Concerns about access; provided coverage information,0.84
+HCP000091,2025-08-12,Opened,Rep Visit,Physical,Yes,No,No,Tue 10-12,Access,Positive feedback; discussed implementation; next steps planned,4.5
+HCP000235,2025-07-05,Clicked,Rep Visit,Digital,Yes,No,Yes,Mon 09-11,Access,Concerns about access; provided coverage information,1.74
+HCP000089,2023-05-12,Opened,Digital Display,Physical,No,No,No,Thu 14-16,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.19
+HCP000399,2025-11-10,Clicked,Webinar,Physical,No,Yes,No,Tue 10-12,Access,Positive feedback; discussed implementation; next steps planned,3.82
+HCP000371,2023-07-28,Opened,Webinar,Digital,No,Yes,No,Tue 10-12,Access,Concerns about access; provided coverage information,1.37
+HCP000352,2024-05-01,Opened,Rep Visit,Physical,No,No,Yes,Mon 09-11,Efficacy,Concerns about access; provided coverage information,0.48
+HCP000092,2023-07-03,Attended,Rep Visit,Physical,No,No,No,Fri 09-11,Cost,Declined; objection on cost shared KOL clip; plan follow-up,1.14
+HCP000264,2024-01-06,Viewed,Digital Display,Digital,No,No,No,Tue 10-12,Efficacy,Questions about dosing; shared clinical guidelines,0.2
+HCP000087,2024-04-19,Downloaded,Email,Digital,No,No,No,Mon 09-11,Efficacy,Questions about dosing; shared clinical guidelines,1.75
+HCP000495,2023-07-01,Delivered,Rep Visit,Digital,No,No,No,Tue 10-12,Cost,Questions about dosing; shared clinical guidelines,1.45
+HCP000189,2023-10-12,Clicked,Rep Visit,Digital,No,No,No,Mon 09-11,Cost,Interested; requested more safety data; scheduled follow-up,3.07
+HCP000234,2024-08-02,Clicked,Email,Physical,Yes,Yes,No,Mon 09-11,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.52
+HCP000315,2025-12-13,Attended,Webinar,Digital,Yes,Yes,Yes,Mon 09-11,Cost,Interested; requested more safety data; scheduled follow-up,4.03
+HCP000451,2023-08-08,Viewed,Email,Digital,Yes,No,Yes,Mon 09-11,Efficacy,Concerns about access; provided coverage information,2.79
+HCP000135,2025-03-04,Attended,Email,Digital,No,No,No,Tue 10-12,Access,Questions about dosing; shared clinical guidelines,0.82
+HCP000060,2024-08-26,Downloaded,Rep Visit,Digital,No,No,No,Wed 13-15,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.13
+HCP000168,2024-10-11,Downloaded,Digital Display,Physical,No,No,Yes,Thu 14-16,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,0.69
+HCP000211,2025-07-15,Opened,Digital Display,Digital,Yes,No,No,Tue 10-12,Cost,Positive feedback; discussed implementation; next steps planned,2.33
+HCP000413,2023-08-03,Downloaded,Digital Display,Physical,Yes,No,No,Mon 09-11,Cost,Positive feedback; discussed implementation; next steps planned,2.47
+HCP000267,2025-06-11,Viewed,Email,Digital,No,No,No,Fri 09-11,Safety,Declined; objection on cost shared KOL clip; plan follow-up,1.52
+HCP000432,2024-08-19,Opened,Rep Visit,Digital,Yes,No,Yes,Wed 13-15,Access,Questions about dosing; shared clinical guidelines,1.58
+HCP000299,2024-10-19,Viewed,Email,Digital,Yes,No,Yes,Fri 09-11,Cost,Declined; objection on cost shared KOL clip; plan follow-up,0.41
+HCP000061,2023-10-16,Attended,Webinar,Physical,No,No,No,Thu 14-16,Access,Positive feedback; discussed implementation; next steps planned,3.67
+HCP000218,2025-01-26,Delivered,Email,Physical,No,No,Yes,Mon 09-11,Cost,Questions about dosing; shared clinical guidelines,1.32
+HCP000098,2025-09-14,Opened,Email,Digital,No,Yes,No,Thu 14-16,Access,Questions about dosing; shared clinical guidelines,3.69
+HCP000390,2025-04-14,Opened,Email,Physical,No,No,No,Wed 13-15,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,2.38
+HCP000440,2025-12-13,Clicked,Email,Physical,No,Yes,No,Mon 09-11,Access,Interested; requested more safety data; scheduled follow-up,3.37
+HCP000319,2025-09-29,Clicked,Email,Physical,No,No,No,Tue 10-12,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,2.42
+HCP000043,2023-09-27,Delivered,Webinar,Physical,Yes,No,No,Thu 14-16,Access,Questions about dosing; shared clinical guidelines,4.1
+HCP000236,2025-05-12,Opened,Rep Visit,Digital,No,No,Yes,Mon 09-11,Access,Positive feedback; discussed implementation; next steps planned,3.05
+HCP000040,2023-09-17,Attended,Email,Digital,No,No,No,Thu 14-16,Efficacy,Positive feedback; discussed implementation; next steps planned,3.17
+HCP000059,2025-01-30,Delivered,Webinar,Digital,No,No,Yes,Thu 14-16,Efficacy,Positive feedback; discussed implementation; next steps planned,3.85
+HCP000238,2024-03-24,Downloaded,Email,Digital,No,No,No,Tue 10-12,Cost,Positive feedback; discussed implementation; next steps planned,1.36
+HCP000366,2023-08-06,Clicked,Email,Physical,Yes,Yes,No,Mon 09-11,Safety,Interested; requested more safety data; scheduled follow-up,2.01
+HCP000363,2023-10-18,Attended,Webinar,Physical,Yes,No,No,Mon 09-11,Efficacy,Positive feedback; discussed implementation; next steps planned,4.21
+HCP000055,2024-05-03,Clicked,Webinar,Physical,No,No,No,Mon 09-11,Efficacy,Questions about dosing; shared clinical guidelines,0.58
+HCP000283,2024-12-01,Downloaded,Email,Physical,Yes,No,No,Wed 13-15,Cost,Positive feedback; discussed implementation; next steps planned,1.43
+HCP000040,2025-08-20,Attended,Email,Physical,No,No,No,Thu 14-16,Efficacy,Interested; requested more safety data; scheduled follow-up,0.57
+HCP000196,2023-03-25,Opened,Email,Physical,Yes,No,No,Wed 13-15,Access,Declined; objection on cost shared KOL clip; plan follow-up,2.45
+HCP000376,2024-07-11,Viewed,Rep Visit,Physical,No,No,No,Tue 10-12,Safety,Concerns about access; provided coverage information,0.57
+HCP000488,2023-01-15,Clicked,Webinar,Digital,No,No,Yes,Wed 13-15,Efficacy,Interested; requested more safety data; scheduled follow-up,2.33
+HCP000154,2025-01-22,Delivered,Digital Display,Digital,No,No,No,Thu 14-16,Access,Questions about dosing; shared clinical guidelines,1.02
+HCP000064,2023-08-01,Clicked,Digital Display,Digital,No,No,No,Mon 09-11,Efficacy,Concerns about access; provided coverage information,2.89
+HCP000098,2023-10-31,Clicked,Webinar,Physical,No,No,Yes,Wed 13-15,Access,Questions about dosing; shared clinical guidelines,1.26
+HCP000343,2024-08-19,Opened,Email,Digital,Yes,No,No,Wed 13-15,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,3.55
+HCP000091,2025-05-22,Clicked,Webinar,Physical,Yes,Yes,No,Fri 09-11,Safety,Interested; requested more safety data; scheduled follow-up,1.01
+HCP000202,2025-02-24,Delivered,Rep Visit,Digital,No,No,No,Wed 13-15,Cost,Positive feedback; discussed implementation; next steps planned,4.68
+HCP000116,2025-10-11,Opened,Webinar,Digital,No,No,No,Fri 09-11,Safety,Interested; requested more safety data; scheduled follow-up,4.33
+HCP000145,2025-02-07,Downloaded,Digital Display,Digital,Yes,Yes,Yes,Fri 09-11,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,4.45
+HCP000451,2024-09-27,Attended,Webinar,Physical,No,Yes,No,Thu 14-16,Access,Interested; requested more safety data; scheduled follow-up,4.73
+HCP000481,2025-11-29,Viewed,Digital Display,Digital,Yes,No,Yes,Thu 14-16,Safety,Declined; objection on cost shared KOL clip; plan follow-up,2.34
+HCP000342,2025-02-02,Clicked,Rep Visit,Digital,No,No,No,Thu 14-16,Efficacy,Interested; requested more safety data; scheduled follow-up,4.23
+HCP000447,2024-10-07,Delivered,Rep Visit,Physical,No,No,Yes,Mon 09-11,Access,Interested; requested more safety data; scheduled follow-up,3.9
+HCP000437,2024-11-20,Attended,Email,Digital,Yes,Yes,No,Tue 10-12,Safety,Concerns about access; provided coverage information,4.24
+HCP000267,2025-01-29,Clicked,Digital Display,Physical,Yes,No,No,Fri 09-11,Access,Declined; objection on cost shared KOL clip; plan follow-up,4.16
+HCP000489,2023-09-17,Clicked,Email,Physical,Yes,No,No,Thu 14-16,Safety,Positive feedback; discussed implementation; next steps planned,3.19
+HCP000089,2023-05-09,Downloaded,Rep Visit,Digital,No,Yes,No,Thu 14-16,Efficacy,Positive feedback; discussed implementation; next steps planned,1.59
+HCP000062,2025-05-28,Delivered,Webinar,Digital,Yes,No,No,Mon 09-11,Access,Positive feedback; discussed implementation; next steps planned,3.43
+HCP000063,2023-02-17,Viewed,Email,Digital,No,No,Yes,Mon 09-11,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,4.16
+HCP000243,2023-12-09,Opened,Rep Visit,Physical,Yes,No,No,Tue 10-12,Efficacy,Concerns about access; provided coverage information,0.14
+HCP000061,2024-03-29,Clicked,Webinar,Digital,Yes,No,No,Thu 14-16,Access,Interested; requested more safety data; scheduled follow-up,3.18
+HCP000105,2023-02-20,Opened,Rep Visit,Digital,No,No,No,Thu 14-16,Cost,Interested; requested more safety data; scheduled follow-up,2.18
+HCP000447,2024-03-02,Attended,Webinar,Physical,Yes,No,No,Wed 13-15,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,0.93
+HCP000198,2023-12-16,Clicked,Rep Visit,Physical,No,No,Yes,Mon 09-11,Safety,Questions about dosing; shared clinical guidelines,0.31
+HCP000319,2025-04-15,Attended,Digital Display,Digital,Yes,No,No,Fri 09-11,Efficacy,Concerns about access; provided coverage information,4.54
+HCP000363,2024-03-24,Attended,Webinar,Digital,No,No,Yes,Thu 14-16,Cost,Interested; requested more safety data; scheduled follow-up,2.67
+HCP000306,2023-09-19,Opened,Rep Visit,Physical,Yes,No,Yes,Tue 10-12,Safety,Declined; objection on cost shared KOL clip; plan follow-up,0.34
+HCP000023,2024-12-11,Clicked,Email,Physical,No,No,Yes,Fri 09-11,Safety,Concerns about access; provided coverage information,4.36
+HCP000240,2025-05-28,Attended,Digital Display,Digital,Yes,No,No,Tue 10-12,Access,Questions about dosing; shared clinical guidelines,3.23
+HCP000112,2025-02-08,Opened,Digital Display,Physical,Yes,No,Yes,Mon 09-11,Cost,Interested; requested more safety data; scheduled follow-up,4.95
+HCP000367,2025-05-03,Delivered,Email,Physical,Yes,Yes,No,Thu 14-16,Cost,Positive feedback; discussed implementation; next steps planned,2.53
+HCP000323,2025-03-04,Downloaded,Digital Display,Digital,Yes,No,No,Thu 14-16,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,2.53
+HCP000374,2023-06-25,Viewed,Email,Physical,No,No,No,Thu 14-16,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,0.39
+HCP000191,2025-06-08,Delivered,Rep Visit,Physical,No,No,No,Mon 09-11,Efficacy,Concerns about access; provided coverage information,3.3
+HCP000135,2023-06-27,Attended,Webinar,Digital,No,No,No,Thu 14-16,Cost,Interested; requested more safety data; scheduled follow-up,2.88
+HCP000280,2024-02-21,Clicked,Digital Display,Digital,Yes,No,No,Tue 10-12,Cost,Declined; objection on cost shared KOL clip; plan follow-up,2.27
+HCP000432,2025-04-23,Attended,Digital Display,Physical,No,No,No,Tue 10-12,Efficacy,Questions about dosing; shared clinical guidelines,1.02
+HCP000210,2024-07-23,Viewed,Rep Visit,Physical,Yes,No,No,Thu 14-16,Safety,Positive feedback; discussed implementation; next steps planned,3.53
+HCP000239,2025-04-22,Viewed,Digital Display,Digital,Yes,Yes,Yes,Wed 13-15,Cost,Declined; objection on cost shared KOL clip; plan follow-up,2.46
+HCP000446,2023-03-06,Attended,Rep Visit,Physical,No,No,No,Tue 10-12,Efficacy,Concerns about access; provided coverage information,0.76
+HCP000441,2024-11-16,Viewed,Rep Visit,Physical,No,No,No,Thu 14-16,Cost,Interested; requested more safety data; scheduled follow-up,4.95
+HCP000093,2025-04-28,Attended,Digital Display,Physical,No,No,Yes,Mon 09-11,Access,Questions about dosing; shared clinical guidelines,4.82
+HCP000007,2023-12-06,Opened,Webinar,Physical,No,No,No,Fri 09-11,Access,Interested; requested more safety data; scheduled follow-up,4.89
+HCP000397,2024-10-22,Attended,Email,Physical,No,No,Yes,Wed 13-15,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,2.63
+HCP000190,2023-06-09,Delivered,Email,Physical,No,Yes,No,Thu 14-16,Access,Concerns about access; provided coverage information,1.64
+HCP000332,2025-10-12,Downloaded,Rep Visit,Physical,No,No,No,Fri 09-11,Cost,Declined; objection on cost shared KOL clip; plan follow-up,1.94
+HCP000214,2024-01-20,Opened,Webinar,Digital,No,No,No,Fri 09-11,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.92
+HCP000428,2024-04-07,Downloaded,Email,Digital,No,No,Yes,Thu 14-16,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,3.97
+HCP000044,2023-02-20,Viewed,Email,Physical,Yes,No,Yes,Thu 14-16,Cost,Interested; requested more safety data; scheduled follow-up,2.01
+HCP000274,2024-11-29,Opened,Digital Display,Digital,Yes,No,Yes,Fri 09-11,Cost,Declined; objection on cost shared KOL clip; plan follow-up,3.92
+HCP000385,2024-02-13,Opened,Rep Visit,Digital,No,No,No,Wed 13-15,Cost,Positive feedback; discussed implementation; next steps planned,3.41
+HCP000440,2024-06-25,Opened,Rep Visit,Physical,Yes,No,No,Fri 09-11,Safety,Questions about dosing; shared clinical guidelines,0.75
+HCP000071,2023-05-16,Opened,Webinar,Digital,Yes,No,No,Mon 09-11,Cost,Questions about dosing; shared clinical guidelines,4.58
+HCP000193,2024-11-13,Delivered,Webinar,Digital,No,No,Yes,Wed 13-15,Efficacy,Concerns about access; provided coverage information,2.8
+HCP000477,2023-07-02,Opened,Webinar,Digital,Yes,No,No,Tue 10-12,Safety,Concerns about access; provided coverage information,3.11
+HCP000048,2024-01-04,Opened,Webinar,Digital,No,No,No,Mon 09-11,Cost,Declined; objection on cost shared KOL clip; plan follow-up,2.72
+HCP000370,2023-11-23,Downloaded,Webinar,Digital,No,No,Yes,Fri 09-11,Safety,Questions about dosing; shared clinical guidelines,4.36
+HCP000366,2025-07-02,Opened,Email,Physical,No,No,No,Thu 14-16,Access,Concerns about access; provided coverage information,4.52
+HCP000275,2025-12-06,Clicked,Email,Digital,No,No,No,Thu 14-16,Cost,Questions about dosing; shared clinical guidelines,4.15
+HCP000474,2024-06-28,Delivered,Email,Physical,Yes,No,Yes,Wed 13-15,Safety,Questions about dosing; shared clinical guidelines,4.64
+HCP000423,2025-08-06,Clicked,Email,Digital,No,Yes,Yes,Fri 09-11,Cost,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,2.41
+HCP000199,2025-09-09,Viewed,Webinar,Physical,No,No,Yes,Wed 13-15,Safety,Positive feedback; discussed implementation; next steps planned,4.8
+HCP000387,2024-10-27,Clicked,Email,Physical,No,Yes,No,Thu 14-16,Cost,Concerns about access; provided coverage information,2.74
+HCP000062,2023-09-15,Clicked,Email,Physical,No,No,No,Wed 13-15,Access,Positive feedback; discussed implementation; next steps planned,1.2
+HCP000201,2025-08-15,Opened,Rep Visit,Physical,No,No,No,Thu 14-16,Cost,Concerns about access; provided coverage information,0.29
+HCP000263,2023-08-05,Downloaded,Digital Display,Physical,No,No,Yes,Wed 13-15,Access,Declined; objection on cost shared KOL clip; plan follow-up,4.98
+HCP000141,2023-11-17,Viewed,Digital Display,Digital,No,Yes,No,Thu 14-16,Efficacy,Positive feedback; discussed implementation; next steps planned,4.1
+HCP000309,2023-11-18,Attended,Email,Digital,Yes,No,No,Mon 09-11,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,2.31
+HCP000002,2023-04-03,Downloaded,Rep Visit,Physical,No,No,No,Wed 13-15,Access,Declined; objection on cost shared KOL clip; plan follow-up,3.71
+HCP000450,2025-06-04,Clicked,Digital Display,Physical,No,No,No,Tue 10-12,Efficacy,Questions about dosing; shared clinical guidelines,4.47
+HCP000016,2024-06-28,Downloaded,Rep Visit,Physical,No,Yes,No,Tue 10-12,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,4.47
+HCP000371,2025-04-06,Attended,Email,Physical,Yes,No,No,Mon 09-11,Access,Questions about dosing; shared clinical guidelines,1.66
+HCP000053,2024-03-12,Downloaded,Webinar,Digital,Yes,No,No,Wed 13-15,Access,Positive feedback; discussed implementation; next steps planned,0.21
+HCP000209,2025-07-16,Downloaded,Webinar,Physical,Yes,No,Yes,Fri 09-11,Safety,Positive feedback; discussed implementation; next steps planned,4.66
+HCP000396,2025-04-16,Delivered,Digital Display,Physical,Yes,No,No,Tue 10-12,Access,Declined; objection on cost shared KOL clip; plan follow-up,2.24
+HCP000160,2023-09-19,Viewed,Rep Visit,Digital,No,No,No,Thu 14-16,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,4.49
+HCP000414,2024-05-17,Viewed,Webinar,Digital,Yes,Yes,No,Thu 14-16,Safety,Concerns about access; provided coverage information,1.8
+HCP000001,2025-12-29,Clicked,Rep Visit,Digital,Yes,No,No,Fri 09-11,Safety,Questions about dosing; shared clinical guidelines,1.36
+HCP000335,2024-03-30,Opened,Email,Physical,No,Yes,No,Thu 14-16,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,2.61
+HCP000216,2024-03-25,Attended,Rep Visit,Digital,No,No,No,Fri 09-11,Efficacy,Questions about dosing; shared clinical guidelines,1.33
+HCP000094,2025-06-08,Attended,Digital Display,Digital,No,No,No,Tue 10-12,Cost,Concerns about access; provided coverage information,3.29
+HCP000146,2024-02-20,Attended,Digital Display,Physical,No,No,Yes,Mon 09-11,Safety,Questions about dosing; shared clinical guidelines,4.43
+HCP000289,2025-03-10,Delivered,Email,Digital,No,No,No,Mon 09-11,Safety,Concerns about access; provided coverage information,1.73
+HCP000085,2025-11-21,Attended,Digital Display,Physical,No,No,No,Tue 10-12,Safety,Positive feedback; discussed implementation; next steps planned,3.87
+HCP000271,2023-05-28,Clicked,Digital Display,Digital,No,No,No,Fri 09-11,Efficacy,Interested; requested more safety data; scheduled follow-up,4.23
+HCP000340,2023-07-30,Delivered,Rep Visit,Physical,No,No,No,Thu 14-16,Cost,Declined; objection on cost shared KOL clip; plan follow-up,2.77
+HCP000485,2024-10-01,Downloaded,Webinar,Physical,No,No,No,Wed 13-15,Safety,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,4.22
+HCP000329,2023-04-03,Clicked,Email,Digital,No,No,No,Thu 14-16,Access,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,2.05
+HCP000166,2024-03-06,Downloaded,Rep Visit,Digital,Yes,Yes,No,Thu 14-16,Cost,Concerns about access; provided coverage information,1.07
+HCP000356,2025-10-15,Viewed,Webinar,Physical,No,No,No,Mon 09-11,Efficacy,Concerns about access; provided coverage information,3.87
+HCP000115,2023-07-17,Clicked,Digital Display,Physical,Yes,Yes,Yes,Wed 13-15,Efficacy,Interested; requested more safety data; scheduled follow-up,3.21
+HCP000161,2025-12-25,Delivered,Webinar,Physical,No,Yes,No,Tue 10-12,Cost,Positive feedback; discussed implementation; next steps planned,4.42
+HCP000239,2023-07-26,Opened,Webinar,Digital,No,No,No,Fri 09-11,Access,Interested; requested more safety data; scheduled follow-up,3.67
+HCP000074,2024-01-23,Delivered,Rep Visit,Digital,No,No,No,Wed 13-15,Access,Declined; objection on cost shared KOL clip; plan follow-up,1.58
+HCP000227,2023-08-16,Delivered,Webinar,Physical,Yes,No,Yes,Tue 10-12,Efficacy,Positive feedback; discussed implementation; next steps planned,3.85
+HCP000390,2024-05-15,Viewed,Rep Visit,Digital,Yes,No,No,Tue 10-12,Safety,Interested; requested more safety data; scheduled follow-up,2.31
+HCP000199,2024-01-20,Opened,Email,Digital,Yes,Yes,Yes,Fri 09-11,Safety,Declined; objection on cost shared KOL clip; plan follow-up,4.03
+HCP000160,2025-11-16,Downloaded,Email,Digital,No,No,No,Thu 14-16,Access,Concerns about access; provided coverage information,3.11
+HCP000336,2024-09-02,Attended,Rep Visit,Digital,No,Yes,No,Mon 09-11,Efficacy,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,3.38
+HCP000126,2025-01-30,Viewed,Digital Display,Digital,Yes,Yes,No,Wed 13-15,Cost,Declined; objection on cost shared KOL clip; plan follow-up,1.21
+HCP000035,2023-08-09,Attended,Webinar,Digital,No,No,No,Thu 14-16,Safety,Concerns about access; provided coverage information,3.38
+HCP000256,2025-06-15,Attended,Rep Visit,Physical,Yes,Yes,No,Fri 09-11,Cost,Interested; requested more safety data; scheduled follow-up,2.68
+HCP000320,2025-09-09,Viewed,Rep Visit,Digital,No,No,Yes,Mon 09-11,Access,Positive feedback; discussed implementation; next steps planned,0.14
+HCP000086,2024-02-22,Downloaded,Digital Display,Digital,No,No,Yes,Fri 09-11,Efficacy,Declined; objection on cost shared KOL clip; plan follow-up,0.27
+HCP000196,2025-09-02,Opened,Webinar,Digital,Yes,No,No,Wed 13-15,Access,Rescheduled; objection on efficacy shared payer sheet; plan follow-up,1.78
+HCP000183,2024-10-05,Delivered,Digital Display,Digital,No,Yes,No,Fri 09-11,Cost,Concerns about access; provided coverage information,2.08
+HCP000075,2024-08-05,Opened,Webinar,Physical,No,Yes,Yes,Mon 09-11,Safety,Interested; requested more safety data; scheduled follow-up,3.47
+HCP000017,2024-12-03,Downloaded,Digital Display,Digital,Yes,No,Yes,Mon 09-11,Access,Declined; objection on cost shared KOL clip; plan follow-up,4.78
+HCP000346,2023-04-28,Clicked,Digital Display,Physical,No,No,No,Fri 09-11,Efficacy,Questions about dosing; shared clinical guidelines,3.44
+HCP000446,2025-09-11,Attended,Email,Digital,No,No,Yes,Fri 09-11,Access,Positive feedback; discussed implementation; next steps planned,4.36
+HCP000281,2023-05-25,Attended,Rep Visit,Physical,No,No,No,Tue 10-12,Access,Declined; objection on cost shared KOL clip; plan follow-up,1.7
+HCP000304,2024-09-17,Downloaded,Rep Visit,Physical,Yes,Yes,Yes,Wed 13-15,Access,Positive feedback; discussed implementation; next steps planned,1.46
+HCP000465,2025-03-11,Opened,Digital Display,Physical,Yes,No,No,Wed 13-15,Access,Concerns about access; provided coverage information,0.46
+HCP000414,2024-03-08,Clicked,Webinar,Physical,Yes,No,No,Fri 09-11,Safety,Questions about dosing; shared clinical guidelines,0.54
+HCP000182,2025-12-15,Viewed,Webinar,Physical,No,No,Yes,Mon 09-11,Efficacy,Concerns about access; provided coverage information,0.97

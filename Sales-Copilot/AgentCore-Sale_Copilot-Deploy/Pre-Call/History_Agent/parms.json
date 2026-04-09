@@ -1,0 +1,7 @@
+{
+    "Parameters": {
+      "UseCaseName": "sales-copilot",
+      "ServiceName": "History-Agent",
+      "AgentPath": "Sales Copilot\Common\codebuild-standard.yaml"
+    }
+}

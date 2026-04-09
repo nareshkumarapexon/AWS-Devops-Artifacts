@@ -1,0 +1,130 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "DynamoDB tables for chat messages and chat sessions"
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Default: sales-copilot
+    Description: "Name of the Use Case being developed"
+
+  LambdaARN:
+    Type: String
+    Default: "arn:aws:lambda:us-east-1:969385807621:function:sales-copilot-KPI-API"
+
+  KPIAPIFunction:
+    Type: String
+    Default: "sales-copilot-KPI-API"
+
+  StageName:
+    Type: String
+    Default: v1
+    Description: Name of the API stage
+
+
+Resources: 
+  SalesCopilotKPIAPI:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Body:
+        openapi: '3.0.1'
+        info:
+          title: !Sub ${UseCaseName}-kpi-api
+        paths:
+          /health:
+            get:
+              responses:
+                default:
+                  description: 'Default response for GET /sessions'
+              x-amazon-apigateway-integration:
+                payloadFormatVersion: '1.0'
+                type: 'aws_proxy'
+                httpMethod: 'POST'
+                uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaARN}/invocations'
+                connectionType: 'INTERNET'
+
+          /kpi/overview:
+            get:
+              responses:
+                default:
+                  description: 'Default response for GET /kpi_overview'
+              x-amazon-apigateway-integration:
+                payloadFormatVersion: '1.0'
+                type: 'aws_proxy'
+                httpMethod: 'POST'
+                uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaARN}/invocations'
+                connectionType: 'INTERNET'
+            parameters:
+              - name: 'user_id'
+                in: 'path'
+                description: 'Generated path parameter for user_id'
+                required: true
+                schema:
+                  type: 'string'
+        components:
+          x-amazon-apigateway-integrations:
+            unusedIntegration_ulhlp69:
+              payloadFormatVersion: '1.0'
+              type: 'aws_proxy'
+              httpMethod: 'POST'
+              uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaARN}/invocations'
+              connectionType: 'INTERNET'
+            unusedIntegration_ab035hj:
+              payloadFormatVersion: '1.0'
+              type: 'aws_proxy'
+              httpMethod: 'POST'
+              uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaARN}/invocations'
+              connectionType: 'INTERNET'
+            unusedIntegration_5n8fhrp:
+              payloadFormatVersion: '1.0'
+              type: 'aws_proxy'
+              httpMethod: 'POST'
+              uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaARN}/invocations'
+              connectionType: 'INTERNET'
+        x-amazon-apigateway-cors:
+          allowMethods:
+            - 'GET'
+            - 'OPTIONS'
+            - 'POST'
+          allowHeaders:
+            - '*'
+          maxAge: 0
+          allowCredentials: false
+          allowOrigins:
+            - '*'
+          exposeHeaders: 
+            - Content-Type
+            - Authorization
+            - X-Amz-Date
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amzn-Trace-Id
+            - X-Requested-With            
+        x-amazon-apigateway-importexport-version: '1.0'
+
+
+  ApiStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref SalesCopilotKPIAPI
+      StageName: !Ref StageName
+      AutoDeploy: true
+
+  LambdaInvokePermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref KPIAPIFunction
+      Principal: 'apigateway.amazonaws.com'
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${SalesCopilotKPIAPI}/*/*'
+
+Outputs:
+  RestApiId:
+    Description: 'Rest API ID'
+    Value: !Ref SalesCopilotKPIAPI
+  ApiUrl:
+    Description: 'API Gateway URL'
+    Value: !Sub 'https://${SalesCopilotKPIAPI}.execute-api.${AWS::Region}.amazonaws.com/${StageName}'
+  ApiStageName:
+    Description: 'API Stage Name'
+    Value: !Ref ApiStage 
+  

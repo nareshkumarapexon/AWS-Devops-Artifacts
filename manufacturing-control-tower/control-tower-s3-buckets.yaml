@@ -1,0 +1,97 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "S3 Buckets for Manufacturing Control Tower"
+
+Parameters:
+
+  UseCaseName:
+    Type: String
+    Default: control-tower
+    Description: "Prefix for all buckets"
+
+Resources:
+
+  ############################
+  # Main Data Bucket
+  ############################
+  ControlTowerBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "${UseCaseName}-bucket-s3"
+
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        IgnorePublicAcls: true
+        BlockPublicPolicy: true
+        RestrictPublicBuckets: true
+
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+      VersioningConfiguration:
+        Status: Enabled
+
+      Tags:
+        - Key: Project
+          Value: !Ref UseCaseName
+        - Key: BucketPurpose
+          Value: main-data
+
+  ############################
+  # Athena Query Results Bucket
+  ############################
+  ControlTowerAthenaBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "${UseCaseName}-athena-query-bucket-s3"
+
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        IgnorePublicAcls: true
+        BlockPublicPolicy: true
+        RestrictPublicBuckets: true
+
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+      VersioningConfiguration:
+        Status: Enabled
+
+      Tags:
+        - Key: Project
+          Value: !Ref UseCaseName
+        - Key: BucketPurpose
+          Value: athena-query-results
+
+  ############################
+  # S3 Table Bucket
+  ############################
+  ControlTowerS3TableBucket:
+    Type: AWS::S3Tables::TableBucket
+    Properties:
+      TableBucketName: !Sub "${UseCaseName}-table-s3-bucket"
+
+Outputs:
+
+  MainBucketName:
+    Description: "Name of the main data bucket"
+    Value: !Ref ControlTowerBucket
+
+  MainBucketArn:
+    Description: "ARN of the main data bucket"
+    Value: !GetAtt ControlTowerBucket.Arn
+
+  AthenaBucketName:
+    Description: "Name of the Athena query results bucket"
+    Value: !Ref ControlTowerAthenaBucket
+
+  AthenaBucketArn:
+    Description: "ARN of the Athena query results bucket"
+    Value: !GetAtt ControlTowerAthenaBucket.Arn
+
+  S3TableBucketName:
+    Description: "Name of the S3 table bucket"
+    Value: !Ref ControlTowerS3TableBucket

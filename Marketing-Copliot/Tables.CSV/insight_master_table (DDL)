@@ -1,0 +1,18 @@
+CREATE TABLE insight_master_table (
+    insight_id        BIGINT IDENTITY(1,1),
+    category          VARCHAR(20) NOT NULL,
+    title             VARCHAR(100) NOT NULL,
+    description       VARCHAR(500) NOT NULL,
+    severity          VARCHAR(20) NOT NULL,
+    confidence_score  NUMERIC(6,4) NOT NULL,
+    chart_type        VARCHAR(10) NOT NULL,
+    x_axis            VARCHAR(50) NOT NULL,
+    y_axis            VARCHAR(50) NOT NULL,
+    filters           VARCHAR(20),
+    x                 VARCHAR(20) NOT NULL,
+    y                 NUMERIC(10,4) NOT NULL,
+    z                 VARCHAR(20),
+    created_at        TIMESTAMP DEFAULT GETDATE(),
+    updated_at        TIMESTAMP DEFAULT GETDATE(),
+    PRIMARY KEY (insight_id)
+);

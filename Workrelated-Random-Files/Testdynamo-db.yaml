@@ -1,0 +1,114 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: DynamoDB tables for MLR with IAM role
+
+Parameters:
+  UserDocumentHistoryTableName:
+    Type: String
+    Default: mlr_user_document_history
+
+  AgentFindingsTableName:
+    Type: String
+    Default: mlr_agent_findings
+
+  BillingMode:
+    Type: String
+    Default: PAY_PER_REQUEST
+    AllowedValues:
+      - PAY_PER_REQUEST
+      - PROVISIONED
+
+Resources:
+
+  ############################
+  # Table: mlr_user_document_history
+  ############################
+  UserDocumentHistoryTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref UserDocumentHistoryTableName
+      BillingMode: !Ref BillingMode
+      AttributeDefinitions:
+        - AttributeName: user_id
+          AttributeType: S
+        - AttributeName: timestamp
+          AttributeType: S
+        - AttributeName: doc_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: user_id
+          KeyType: HASH
+        - AttributeName: timestamp
+          KeyType: RANGE
+      GlobalSecondaryIndexes:
+        - IndexName: doc_id-index
+          KeySchema:
+            - AttributeName: doc_id
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      Tags:
+        - Key: Application
+          Value: MLR
+
+  ############################
+  # Table: mlr_agent_findings
+  ############################
+  AgentFindingsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref AgentFindingsTableName
+      BillingMode: !Ref BillingMode
+      AttributeDefinitions:
+        - AttributeName: doc_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: doc_id
+          KeyType: HASH
+      Tags:
+        - Key: Application
+          Value: MLR
+
+  ############################
+  # IAM Role
+  ############################
+  DynamoDBAccessRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: mlr-dynamodb-access-role
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+                - ec2.amazonaws.com
+                - ecs-tasks.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: mlr-dynamodb-policy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:GetItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                Resource:
+                  - !GetAtt UserDocumentHistoryTable.Arn
+                  - !Sub "${UserDocumentHistoryTable.Arn}/index/*"
+                  - !GetAtt AgentFindingsTable.Arn
+
+Outputs:
+  UserDocumentHistoryTableName:
+    Value: !Ref UserDocumentHistoryTable
+
+  AgentFindingsTableName:
+    Value: !Ref AgentFindingsTable
+
+  DynamoDBRoleArn:
+    Value: !GetAtt DynamoDBAccessRole.Arn

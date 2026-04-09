@@ -1,0 +1,249 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: HTTP API Gateway with MLR User Documents KPI endpoints integrated to Lambda
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Default: mlr
+    Description: "Name of the Use Case being developed"
+
+  ApiName:
+    Type: String
+    Default: user-documents-api
+    Description: Name of the HTTP API
+
+  StageName:
+    Type: String
+    Default: v1
+    Description: Deployment stage name
+
+  LambdaFunctionName:
+    Type: String
+    Default: mlr_kpi_api_lambda
+    Description: Name of the Lambda function for KPI API
+
+  LambdaRuntime:
+    Type: String
+    Default: python3.12
+    Description: Lambda runtime version
+
+Resources:
+
+  # IAM Role for Lambda
+  MlrKpiLambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${UseCaseName}-kpi-lambda-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: DynamoDBAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                Resource: '*'
+
+  # Lambda Function
+  MlrKpiApiLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Ref LambdaFunctionName
+      Runtime: !Ref LambdaRuntime
+      Handler: index.lambda_handler
+      Role: !GetAtt MlrKpiLambdaExecutionRole.Arn
+      Timeout: 30
+      MemorySize: 256
+      Code:
+        ZipFile: |
+          import json
+          
+          def lambda_handler(event, context):
+              print(f"Event: {json.dumps(event)}")
+              
+              # Extract route and path parameters
+              route_key = event.get('routeKey', '')
+              path_params = event.get('pathParameters', {})
+              
+              # Route handling
+              if 'dashboard' in route_key:
+                  return {
+                      'statusCode': 200,
+                      'headers': {
+                          'Content-Type': 'application/json',
+                          'Access-Control-Allow-Origin': '*'
+                      },
+                      'body': json.dumps({
+                          'message': 'Dashboard KPI data',
+                          'data': {
+                              'total_documents': 0,
+                              'pending_reviews': 0,
+                              'approved_documents': 0
+                          }
+                      })
+                  }
+              
+              elif 'run' in route_key:
+                  run_id = path_params.get('run_id', 'unknown')
+                  return {
+                      'statusCode': 200,
+                      'headers': {
+                          'Content-Type': 'application/json',
+                          'Access-Control-Allow-Origin': '*'
+                      },
+                      'body': json.dumps({
+                          'message': f'User documents for run_id: {run_id}',
+                          'run_id': run_id,
+                          'documents': []
+                      })
+                  }
+              
+              elif 'user_id' in path_params:
+                  user_id = path_params.get('user_id', 'unknown')
+                  return {
+                      'statusCode': 200,
+                      'headers': {
+                          'Content-Type': 'application/json',
+                          'Access-Control-Allow-Origin': '*'
+                      },
+                      'body': json.dumps({
+                          'message': f'Documents for user_id: {user_id}',
+                          'user_id': user_id,
+                          'documents': []
+                      })
+                  }
+              
+              return {
+                  'statusCode': 404,
+                  'headers': {
+                      'Content-Type': 'application/json',
+                      'Access-Control-Allow-Origin': '*'
+                  },
+                  'body': json.dumps({'error': 'Route not found'})
+              }
+
+  # HTTP API
+  MlrUserDocumentsHttpApi:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: !Sub ${UseCaseName}-${ApiName}
+      ProtocolType: HTTP
+      CorsConfiguration:
+        AllowOrigins:
+          - "http://localhost:5173"
+        AllowMethods:
+          - GET
+          - OPTIONS
+        AllowHeaders:
+          - Content-Type
+          - Authorization
+        MaxAge: 86400
+
+  # Lambda Integration
+  MlrUserDocumentsLambdaIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref MlrUserDocumentsHttpApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !GetAtt MlrKpiApiLambda.Arn
+      PayloadFormatVersion: "2.0"
+
+  # Route 1: GET /user-documents/run/{run_id}
+  UserDocumentsRunRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref MlrUserDocumentsHttpApi
+      RouteKey: "GET /user-documents/run/{run_id}"
+      Target: !Join ['/', ['integrations', !Ref MlrUserDocumentsLambdaIntegration]]
+
+  # Route 2: GET /user-documents/{user_id}
+  UserDocumentsRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref MlrUserDocumentsHttpApi
+      RouteKey: "GET /user-documents/{user_id}"
+      Target: !Join ['/', ['integrations', !Ref MlrUserDocumentsLambdaIntegration]]
+
+  # Route 3: GET /dashboard
+  DashboardRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref MlrUserDocumentsHttpApi
+      RouteKey: "GET /dashboard"
+      Target: !Join ['/', ['integrations', !Ref MlrUserDocumentsLambdaIntegration]]
+
+  # Stage (v1 default)
+  MlrUserDocumentsStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref MlrUserDocumentsHttpApi
+      StageName: !Ref StageName
+      AutoDeploy: true
+
+  # Permission for API Gateway to invoke Lambda - user-documents/run/{run_id}
+  LambdaInvokePermissionRunId:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref MlrKpiApiLambda
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${MlrUserDocumentsHttpApi}/*/GET/user-documents/run/*
+
+  # Permission for API Gateway to invoke Lambda - user-documents/{user_id}
+  LambdaInvokePermissionUserId:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref MlrKpiApiLambda
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${MlrUserDocumentsHttpApi}/*/GET/user-documents/*
+
+  # Permission for API Gateway to invoke Lambda - dashboard
+  LambdaInvokePermissionDashboard:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref MlrKpiApiLambda
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${MlrUserDocumentsHttpApi}/*/GET/dashboard
+
+Outputs:
+
+  LambdaFunctionArn:
+    Description: ARN of the Lambda function
+    Value: !GetAtt MlrKpiApiLambda.Arn
+
+  LambdaFunctionName:
+    Description: Name of the Lambda function
+    Value: !Ref MlrKpiApiLambda
+
+  ApiId:
+    Description: HTTP API ID
+    Value: !Ref MlrUserDocumentsHttpApi
+
+  ApiEndpoint:
+    Description: Base endpoint URL
+    Value: !GetAtt MlrUserDocumentsHttpApi.ApiEndpoint
+
+  UserDocumentsRunInvokeURL:
+    Description: Full invoke URL for GET /user-documents/run/{run_id}
+    Value: !Sub ${MlrUserDocumentsHttpApi.ApiEndpoint}/${StageName}/user-documents/run/{run_id}
+
+  UserDocumentsInvokeURL:
+    Description: Full invoke URL for GET /user-documents/{user_id}
+    Value: !Sub ${MlrUserDocumentsHttpApi.ApiEndpoint}/${StageName}/user-documents/{user_id}
+
+  DashboardInvokeURL:
+    Description: Full invoke URL for GET /dashboard
+    Value: !Sub ${MlrUserDocumentsHttpApi.ApiEndpoint}/${StageName}/dashboard

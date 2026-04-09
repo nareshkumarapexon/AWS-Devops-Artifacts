@@ -1,0 +1,58 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: CloudFormation template with YAML - CodeBuild
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Description: "Name of the Use Case being developed"
+
+  ServiceName:
+    Type: String
+    Description: "Name of the Use Case being developed"
+
+  AgentPath:
+    Type: String
+    Description: "Relative path to the CodeBuild buildspec file"
+    Default: "./Sales-Copilot/Common/codebuild-standard.yaml"
+
+Resources:
+  CodebuildResource:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: !Sub ${UseCaseName}-${ServiceName}-Agentcore
+      Source:
+        Type: GITHUB
+        Location: https://github.com/vivekapexon/sales-copilot.git
+        GitCloneDepth: 1
+        BuildSpec: !Ref AgentPath
+        Auth:
+          Type: CODECONNECTIONS
+          Resource: arn:aws:codeconnections:us-east-1:969385807621:connection/f36d0700-9e6f-46b3-a6e6-3978e6adfcf5
+#      Triggers:
+#        Webhook: true
+#        FilterGroups:
+#          - - Type: EVENT
+#              Pattern: PUSH
+#            - Type: HEAD_REF
+#              Pattern: ^refs/heads/feature/.*
+#              Pattern: ^refs/heads/main
+      Environment:
+        Type: LINUX_CONTAINER
+        Image: aws/codebuild/standard:7.0
+        ComputeType: BUILD_GENERAL1_SMALL
+      ServiceRole: arn:aws:iam::969385807621:role/sales-copilot-codebuild-service-role
+#      VpcConfig:
+#        VpcId:
+#          Fn::ImportValue: !Sub ${StackName}-VPCID
+#        Subnets:
+#          - Fn::ImportValue: !Sub ${StackName}-PrivateSubnet1
+#          - Fn::ImportValue: !Sub ${StackName}-PrivateSubnet2
+#        SecurityGroupIds:
+#          - Fn::ImportValue: !Sub ${StackName}-SecurityGroupCodeBuild
+      Artifacts:
+        Type: NO_ARTIFACTS
+      LogsConfig:
+        CloudWatchLogs:
+          Status: ENABLED
+          GroupName: !Sub ${UseCaseName}-${ServiceName}-logs

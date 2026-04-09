@@ -1,0 +1,166 @@
+CREATE TABLE hcp_marketing_copilot(
+
+    hcp_id                    VARCHAR(20)   NOT NULL,
+    hcp_name                  VARCHAR(200),
+    hcp_specialty             VARCHAR(100),
+    hcp_sub_specialty         VARCHAR(100),
+    hcp_region                VARCHAR(50),
+    hcp_state                 VARCHAR(100),
+    hcp_city                  VARCHAR(100),
+    territory_id              VARCHAR(20),
+    hcp_segment               VARCHAR(50),
+    years_in_practice         INT,
+    preferred_channel         VARCHAR(50),
+    tenant_id                 VARCHAR(50),
+
+    content_id                VARCHAR(20),
+    content_title             VARCHAR(300),
+    content_type              VARCHAR(50),
+    content_format            VARCHAR(50),
+    content_theme             VARCHAR(100),
+    channel                   VARCHAR(100),
+
+    campaign_id               VARCHAR(20),
+    campaign_name             VARCHAR(200),
+    campaign_objective        VARCHAR(100),
+    campaign_type             VARCHAR(50),
+    campaign_status           VARCHAR(50),
+    campaign_start_date       DATE,
+    campaign_end_date         DATE,
+
+    product_id                VARCHAR(20),
+    product_name              VARCHAR(200),
+    therapeutic_area          VARCHAR(100),
+    product_category          VARCHAR(100),
+    brand_tier                VARCHAR(50),
+
+
+    interaction_date          DATE,
+    week_start_date           DATE,
+    month_key                 INT,
+    quarter_key               VARCHAR(2),
+    year_key                  INT,
+
+
+    reached_hcp_count         INT,
+    engaged_interactions      INT,
+    total_interactions        INT,
+    conversion_count          INT,
+    cost_usd                  DECIMAL(12,2),
+
+
+    impressions               INT,
+    opens                     INT,
+    clicks                    INT,
+    downloads                 INT,
+    time_spent_seconds        INT,
+
+    reached_flag              BOOLEAN,
+    engaged_flag              BOOLEAN,
+    converted_flag            BOOLEAN,
+    engagement_flag           BOOLEAN,
+
+    engagement_rate           DECIMAL(5,2),
+    conversion_rate           DECIMAL(5,2),
+    roi_value                 DECIMAL(10,4),
+
+    hcp_sentiment_score       DECIMAL(5,2),
+    content_effectiveness_score DECIMAL(5,2),
+    key_prescribing_driver    VARCHAR(200),
+
+
+    data_source               VARCHAR(100),
+    load_timestamp            TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- =====================================================
+--  MARKET COPILOT TABLE
+-- =====================================================
+
+CREATE TABLE market_copilot (
+    -- =========================
+    -- HCP DIMENSIONS
+    -- =========================
+    hcp_id                     VARCHAR(50),
+    hcp_name                   VARCHAR(255),
+    hcp_specialty              VARCHAR(100),
+    hcp_sub_specialty          VARCHAR(100),
+    hcp_segment                VARCHAR(50),
+    hcp_region                 VARCHAR(50),
+    hcp_state                  VARCHAR(50),
+    hcp_city                   VARCHAR(100),
+
+    -- =========================
+    -- CAMPAIGN DIMENSIONS
+    -- =========================
+    campaign_id                VARCHAR(50),
+    campaign_name              VARCHAR(255),
+    campaign_type              VARCHAR(50),
+    campaign_status            VARCHAR(30),
+    campaign_start_date        DATE,
+    campaign_end_date          DATE,
+
+    -- =========================
+    -- PRODUCT DIMENSIONS
+    -- =========================
+    product_id                 VARCHAR(50),
+    product_name               VARCHAR(255),
+    therapeutic_area            VARCHAR(100),
+    product_category            VARCHAR(100),
+
+    -- =========================
+    -- CONTENT & MATERIAL
+    -- =========================
+    content_id                 VARCHAR(50),
+    content_title              VARCHAR(255),
+    content_type               VARCHAR(50),
+    content_format             VARCHAR(50),
+
+    -- =========================
+    -- CHANNEL & TIME
+    -- =========================
+    channel                    VARCHAR(50),
+    interaction_date           DATE,
+    week_start_date            DATE,
+    month_key                  VARCHAR(7),
+    quarter_key                VARCHAR(7),
+    year_key                   INT,
+
+    -- =========================
+    -- RAW ENGAGEMENT METRICS
+    -- =========================
+    impressions                INT,
+    opens                      INT,
+    clicks                     INT,
+    downloads                  INT,
+    time_spent_seconds         INT,
+
+    -- =========================
+    -- BEHAVIOR FLAGS
+    -- =========================
+    reached_flag               BOOLEAN,
+    engaged_flag               BOOLEAN,
+    converted_flag             BOOLEAN,
+
+    -- =========================
+    -- DERIVED KPIs
+    -- =========================
+    engagement_rate            DECIMAL(6,4),
+    conversion_rate            DECIMAL(6,4),
+    roi_value                  DECIMAL(12,2),
+
+    -- =========================
+    -- FEEDBACK & PERCEPTION
+    -- =========================
+    hcp_sentiment_score        DECIMAL(4,2),
+    content_effectiveness_score INT,
+    key_prescribing_driver     VARCHAR(100),
+
+    -- =========================
+    -- GOVERNANCE & AUDIT
+    -- =========================
+    data_source                VARCHAR(50),
+    load_timestamp             TIMESTAMP DEFAULT GETDATE()
+);
+
+

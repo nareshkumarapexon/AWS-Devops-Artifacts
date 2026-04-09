@@ -1,0 +1,73 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation template to create an Amazon Neptune Graph (Neptune Analytics) cluster
+
+Parameters:
+  GraphName:
+    Type: String
+    Default: my-neptune-graph
+    Description: Name for the Neptune Graph
+  
+  VectorSearchDimension:
+    Type: Number
+    Default: 1536
+    MinValue: 1
+    MaxValue: 65535
+    Description: Vector dimension size (1536 is typical for embeddings)
+  
+  GraphPublicAccess:
+    Type: String
+    Default: 'false'
+    AllowedValues:
+      - 'true'
+      - 'false'
+    Description: Public accessibility setting for the graph endpoint
+  
+  ProvisionedMemory:
+    Type: Number
+    Default: 128
+    MinValue: 128
+    MaxValue: 24576
+    Description: Provisioned memory in GB (128-24576)
+  
+  ReplicaCount:
+    Type: Number
+    Default: 0
+    MinValue: 0
+    MaxValue: 2
+    Description: Number of read replicas (0-2)
+
+Resources:
+  MyNeptuneGraph:
+    Type: AWS::NeptuneGraph::Graph
+    Properties:
+      GraphName: !Ref GraphName
+      PublicConnectivity: !Ref GraphPublicAccess
+      VectorSearchConfiguration:
+        VectorSearchDimension: !Ref VectorSearchDimension
+      ProvisionedMemory: !Ref ProvisionedMemory
+      ReplicaCount: !Ref ReplicaCount
+      Tags:
+        - Key: Name
+          Value: !Ref GraphName
+        - Key: Environment
+          Value: Development
+
+Outputs:
+  NeptuneGraphId:
+    Description: Neptune Graph ID
+    Value: !Ref MyNeptuneGraph
+    Export:
+      Name: !Sub '${AWS::StackName}-GraphId'
+  
+  NeptuneGraphArn:
+    Description: Neptune Graph ARN (constructed)
+    Value: !Sub 'arn:aws:neptune-graph:${AWS::Region}:${AWS::AccountId}:graph/${MyNeptuneGraph}'
+    Export:
+      Name: !Sub '${AWS::StackName}-GraphArn'
+  
+  NeptuneGraphEndpoint:
+    Description: Neptune Graph endpoint (use this for queries)
+    Value: !GetAtt MyNeptuneGraph.Endpoint
+    Export:
+      Name: !Sub '${AWS::StackName}-GraphEndpoint'
+ 
