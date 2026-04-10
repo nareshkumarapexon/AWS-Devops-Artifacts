@@ -1,0 +1,155 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Data Harmonisation - Run All Glue Jobs Lambda Function
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Default: data-harmonization
+    Description: "Name of the Use Case being developed"
+
+Resources:
+
+  ########################################
+  # IAM Role
+  ########################################
+
+  RunAllGlueJobsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${UseCaseName}-run-all-glue-jobs-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: RunAllGlueJobsPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - glue:StartJobRun
+                  - glue:GetJobRun
+                  - glue:GetJobRuns
+                  - glue:BatchStopJobRun
+                  - glue:GetJob
+                  - glue:ListJobs
+                Resource: !Sub 'arn:aws:glue:${AWS::Region}:${AWS::AccountId}:job/${UseCaseName}*'
+              - Effect: Allow
+                Action:
+                  - ssm:GetParameter
+                Resource:
+                  - !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${UseCaseName}*'
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                Resource: !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*'
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                Resource: !Sub 'arn:aws:s3:::${UseCaseName}*/*'
+              - Effect: Allow
+                Action:
+                  - cloudwatch:PutMetricData
+                Resource: '*'
+
+  ########################################
+  # Lambda Function
+  ########################################
+
+  RunAllGlueJobs:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub '${UseCaseName}-run-all-glue-jobs'
+      Runtime: python3.12
+      Handler: index.lambda_handler
+      Role: !GetAtt RunAllGlueJobsRole.Arn
+      Timeout: 300
+      MemorySize: 512
+
+      Code:
+        ZipFile: |
+            import boto3
+            import time
+
+            glue = boto3.client("glue")
+
+            jobs= [
+                "care_site",
+                "condition_occurrence",
+                "cost",
+                "death",
+                "device_exposure",
+                "drug_exposure",
+                "location",
+                "measurement",
+                "observation",
+                "observation_period",
+                "payer_plan_period",
+                "person",
+                "procedure_occurrence",
+                "provider",
+                "visit_detail",
+                "visit_occurrence"
+              ],
+
+
+            results = []
+
+            def handler(event, context):
+
+                query_params = event.get("queryStringParameters") or {}
+
+                prefix = query_params.get("prefix")
+                for job in jobs:
+                    try:
+
+                        # job = f"data-harmonisation-etl-codegen-test-etl-{job}"
+                        job = f"{prefix}{job}"
+                        job = job.replace("_","-")
+                        print("modified_job_name: ", job)
+
+
+                        response = glue.start_job_run(JobName=job)
+                        run_id = response["JobRunId"]
+                        print(f"Started {job}: {run_id}")
+
+                        # Wait for job completion
+                        while True:
+                            run = glue.get_job_run(JobName=job, RunId=run_id)
+                            status = run["JobRun"]["JobRunState"]
+
+                            if status in ["SUCCEEDED", "FAILED", "STOPPED", "TIMEOUT"]:
+                                results.append({
+                                    "job": job,
+                                    "run_id": run_id,
+                                    "status": status
+                                })
+                                print(f"{job} finished with status: {status}")
+                                break
+
+                            time.sleep(10)
+
+
+                    except Exception as e:
+                        results.append({
+                            "job": job,
+                            "status": "ERROR",
+                            "error": str(e)
+                        })
+
+                return results
+
+                
+
+Outputs:
+  RunAllGlueJobsArn:
+    Value: !GetAtt RunAllGlueJobs.Arn
+  RunAllGlueJobsRoleArn:
+    Value: !GetAtt RunAllGlueJobsRole.Arn

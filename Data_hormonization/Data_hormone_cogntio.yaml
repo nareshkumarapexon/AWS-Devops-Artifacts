@@ -1,0 +1,474 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Cognito User Pool + OAuth2 Clients (M2M + App) + Hosted Domain +
+  IDs/URLs/Scopes stored in SSM + Gateway Role + Policies
+  (Defaults set for data-harmonisation)
+
+Parameters:
+  # --------------------------
+  # Common / Use case
+  # --------------------------
+  ProjectName:
+    Type: String
+    Default: data-harmonisation
+
+  EnvironmentName:
+    Type: String
+    Default: dev
+
+  # --------------------------
+  # Cognito User Pool
+  # --------------------------
+  UserPoolName:
+    Type: String
+    Default: data-harmonisation-dev-user-pool
+
+  UsernameAttributes:
+    Type: CommaDelimitedList
+    Default: "email"
+
+  AutoVerifiedAttributes:
+    Type: CommaDelimitedList
+    Default: "email"
+
+  PasswordMinimumLength:
+    Type: Number
+    Default: 8
+
+  # FIXED: Changed these to BOOLEAN (this removes your error)
+  PasswordRequireLowercase:
+    Type: String
+    Default: true
+
+  PasswordRequireUppercase:
+    Type: String
+    Default: true
+
+  PasswordRequireNumbers:
+    Type: String
+    Default: true
+
+  PasswordRequireSymbols:
+    Type: String
+    Default: false
+
+  # --------------------------
+  # App Clients
+  # --------------------------
+  M2MClientName:
+    Type: String
+    Default: data-harmonisation-dev-m2m-client
+
+  AppClientName:
+    Type: String
+    Default: data-harmonisation-dev-app-client
+
+  AppClientCallbackURLs:
+    Type: CommaDelimitedList
+    Default: "http://localhost:3000/callback"
+
+  AppClientLogoutURLs:
+    Type: CommaDelimitedList
+    Default: "http://localhost:3000/logout"
+
+  AppClientOAuthFlows:
+    Type: CommaDelimitedList
+    Default: "code"
+
+  AppClientOAuthScopes:
+    Type: CommaDelimitedList
+    Default: "openid,email,profile"
+
+  # --------------------------
+  # OAuth / Resource Server (Custom scopes)
+  # --------------------------
+  ResourceServerIdentifier:
+    Type: String
+    Default: data-harmonisation-m2m-scope
+
+  ScopeInvokeName:
+    Type: String
+    Default: invoke
+
+  ScopeReadName:
+    Type: String
+    Default: read
+
+  # IMPORTANT: must be globally unique ? change if already taken
+  CognitoDomainPrefix:
+    Type: String
+    Default: dh-auth-001
+
+  # --------------------------
+  # SSM Naming
+  # --------------------------
+  SsmParamPrefix:
+    Type: String
+    Default: data-harmonisation-dev
+
+  UserPoolIdParamName:
+    Type: String
+    Default: user-pool-id
+
+  M2MClientIdParamName:
+    Type: String
+    Default: m2m-client-id
+
+  NormalClientIdParamName:
+    Type: String
+    Default: app-client-id
+
+  DiscoveryUrlParamName:
+    Type: String
+    Default: discovery-url
+
+  M2MScopesParamName:
+    Type: String
+    Default: m2m-scopes
+
+  AppScopesParamName:
+    Type: String
+    Default: app-scopes
+
+  GatewayRoleArnParamName:
+    Type: String
+    Default: gateway-role-arn
+
+  # --------------------------
+  # Secrets Manager
+  # --------------------------
+  M2MClientSecretName:
+    Type: String
+    Default: data-harmonisation-dev/cognito-m2m-client-secret
+
+  TagService:
+    Type: String
+    Default: cognito
+
+  TagComponent:
+    Type: String
+    Default: data-harmonisation
+
+  # --------------------------
+  # Gateway IAM Role
+  # --------------------------
+  GatewayRoleName:
+    Type: String
+    Default: data-harmonisation-dev-gateway-role
+
+  GatewayTrustedServices:
+    Type: CommaDelimitedList
+    Default: "bedrock.amazonaws.com,lambda.amazonaws.com"
+
+  # --------------------------
+  # Policies naming
+  # --------------------------
+  BedrockAgentCorePolicyName:
+    Type: String
+    Default: data-harmonisation-dev-agentcore-policy
+
+  LambdaInvocationPolicyName:
+    Type: String
+    Default: data-harmonisation-dev-lambda-invocation-policy
+
+  SecretsManagerPolicyName:
+    Type: String
+    Default: data-harmonisation-dev-secretsmanager-policy
+
+  S3ReadOnlyPolicyName:
+    Type: String
+    Default: data-harmonisation-dev-s3-readonly-policy
+
+Resources:
+
+  # ========================================================
+  # Cognito User Pool
+  # ========================================================
+  MyCognitoUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: !Ref UserPoolName
+      UsernameAttributes: !Ref UsernameAttributes
+      AutoVerifiedAttributes: !Ref AutoVerifiedAttributes
+      UsernameConfiguration:
+        CaseSensitive: false
+      Policies:
+        PasswordPolicy:
+          MinimumLength: !Ref PasswordMinimumLength
+          RequireLowercase: !Ref PasswordRequireLowercase
+          RequireUppercase: !Ref PasswordRequireUppercase
+          RequireNumbers: !Ref PasswordRequireNumbers
+          RequireSymbols: !Ref PasswordRequireSymbols
+
+  # ========================================================
+  # Cognito Resource Server
+  # ========================================================
+  DataHarmonisationResourceServer:
+    Type: AWS::Cognito::UserPoolResourceServer
+    Properties:
+      UserPoolId: !Ref MyCognitoUserPool
+      Identifier: !Ref ResourceServerIdentifier
+      Name: !Ref ResourceServerIdentifier
+      Scopes:
+        - ScopeName: !Ref ScopeInvokeName
+          ScopeDescription: "Invoke scope for M2M calls"
+        - ScopeName: !Ref ScopeReadName
+          ScopeDescription: "Read scope for M2M calls"
+
+  # ========================================================
+  # M2M App Client
+  # ========================================================
+  M2MUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    DependsOn:
+      - DataHarmonisationResourceServer
+    Properties:
+      ClientName: !Ref M2MClientName
+      UserPoolId: !Ref MyCognitoUserPool
+      GenerateSecret: true
+      AllowedOAuthFlowsUserPoolClient: true
+      AllowedOAuthFlows:
+        - client_credentials
+      AllowedOAuthScopes:
+        - !Sub "${ResourceServerIdentifier}/${ScopeInvokeName}"
+        - !Sub "${ResourceServerIdentifier}/${ScopeReadName}"
+      SupportedIdentityProviders:
+        - COGNITO
+
+  # ========================================================
+  # Normal App Client
+  # ========================================================
+  NormalAppUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: !Ref AppClientName
+      UserPoolId: !Ref MyCognitoUserPool
+      GenerateSecret: false
+      AllowedOAuthFlowsUserPoolClient: true
+      AllowedOAuthFlows: !Ref AppClientOAuthFlows
+      AllowedOAuthScopes: !Ref AppClientOAuthScopes
+      CallbackURLs: !Ref AppClientCallbackURLs
+      LogoutURLs: !Ref AppClientLogoutURLs
+      SupportedIdentityProviders:
+        - COGNITO
+
+  # ========================================================
+  # Cognito Hosted Domain
+  # ========================================================
+  CognitoHostedDomain:
+    Type: AWS::Cognito::UserPoolDomain
+    Properties:
+      Domain: !Ref CognitoDomainPrefix
+      UserPoolId: !Ref MyCognitoUserPool
+
+  # ========================================================
+  # Secrets Manager - Store M2M App Client Secret
+  # ========================================================
+  CognitoM2MClientSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Name: !Ref M2MClientSecretName
+      Description: !Sub "${ProjectName} Cognito M2M App Client Secret (${EnvironmentName})"
+      SecretString: !GetAtt M2MUserPoolClient.ClientSecret
+      Tags:
+        - Key: Service
+          Value: !Ref TagService
+        - Key: Component
+          Value: !Ref TagComponent
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref EnvironmentName
+
+  # ========================================================
+  # SSM Parameters
+  # ========================================================
+  CognitoUserPoolIdSSMParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub "/${SsmParamPrefix}/${UserPoolIdParamName}"
+      Type: String
+      Tier: Standard
+      Value: !Ref MyCognitoUserPool
+
+  CognitoM2MClientIdSSMParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub "/${SsmParamPrefix}/${M2MClientIdParamName}"
+      Type: String
+      Tier: Standard
+      Value: !Ref M2MUserPoolClient
+
+  CognitoNormalClientIdSSMParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub "/${SsmParamPrefix}/${NormalClientIdParamName}"
+      Type: String
+      Tier: Standard
+      Value: !Ref NormalAppUserPoolClient
+
+  DiscoveryUrlSSMParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub "/${SsmParamPrefix}/${DiscoveryUrlParamName}"
+      Type: String
+      Tier: Standard
+      Value: !Sub "https://cognito-idp.${AWS::Region}.amazonaws.com/${MyCognitoUserPool}/.well-known/openid-configuration"
+
+  M2MScopesSSMParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub "/${SsmParamPrefix}/${M2MScopesParamName}"
+      Type: String
+      Tier: Standard
+      Value: !Sub "${ResourceServerIdentifier}/${ScopeInvokeName},${ResourceServerIdentifier}/${ScopeReadName}"
+
+  AppScopesSSMParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub "/${SsmParamPrefix}/${AppScopesParamName}"
+      Type: String
+      Tier: Standard
+      Value: !Join [ ",", !Ref AppClientOAuthScopes ]
+
+  # ========================================================
+  # Gateway IAM Role
+  # ========================================================
+  DataHarGatewayRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Ref GatewayRoleName
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: !Ref GatewayTrustedServices
+            Action: sts:AssumeRole
+      Tags:
+        - Key: Service
+          Value: bedrock-gateway
+        - Key: Component
+          Value: !Ref TagComponent
+        - Key: Project
+          Value: !Ref ProjectName
+        - Key: Environment
+          Value: !Ref EnvironmentName
+
+  # ========================================================
+  # Bedrock AgentCore Policy
+  # ========================================================
+  BedrockAgentCorePolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: !Ref BedrockAgentCorePolicyName
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - bedrock-agentcore:*
+              - bedrock:*
+            Resource: '*'
+      Roles:
+        - !Ref DataHarGatewayRole
+
+  # ========================================================
+  # Lambda Invocation Policy
+  # ========================================================
+  LambdaInvocationPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: !Ref LambdaInvocationPolicyName
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - lambda:InvokeFunction
+              - lambda:GetFunction
+              - lambda:ListFunctions
+            Resource: arn:aws:lambda:*:*:function:*
+      Roles:
+        - !Ref DataHarGatewayRole
+
+  # ========================================================
+  # Secrets Manager Access Policy
+  # ========================================================
+  SecretsManagerPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: !Ref SecretsManagerPolicyName
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - secretsmanager:GetSecretValue
+              - secretsmanager:DescribeSecret
+            Resource: '*'
+      Roles:
+        - !Ref DataHarGatewayRole
+
+  # ========================================================
+  # S3 Read Only Policy
+  # ========================================================
+  S3ReadOnlyPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: !Ref S3ReadOnlyPolicyName
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - s3:GetObject
+              - s3:ListBucket
+            Resource: '*'
+      Roles:
+        - !Ref DataHarGatewayRole
+
+  # ========================================================
+  # Store Gateway Role ARN
+  # ========================================================
+  GatewayRoleArnSSMParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub "/${SsmParamPrefix}/${GatewayRoleArnParamName}"
+      Type: String
+      Tier: Standard
+      Value: !GetAtt DataHarGatewayRole.Arn
+
+Outputs:
+  UserPoolId:
+    Value: !Ref MyCognitoUserPool
+
+  M2MClientId:
+    Value: !Ref M2MUserPoolClient
+
+  NormalAppClientId:
+    Value: !Ref NormalAppUserPoolClient
+
+  GatewayRoleArn:
+    Value: !GetAtt DataHarGatewayRole.Arn
+
+  CognitoDomainURL:
+    Value: !Sub "https://${CognitoDomainPrefix}.auth.${AWS::Region}.amazoncognito.com"
+
+  OAuthTokenEndpoint:
+    Value: !Sub "https://${CognitoDomainPrefix}.auth.${AWS::Region}.amazoncognito.com/oauth2/token"
+
+  M2MScopes:
+    Value: !Sub "${ResourceServerIdentifier}/${ScopeInvokeName}, ${ResourceServerIdentifier}/${ScopeReadName}"
+
+  NormalAppScopes:
+    Value: !Join [ ",", !Ref AppClientOAuthScopes ]
+
+  CognitoM2MClientSecretName:
+    Value: !Ref CognitoM2MClientSecret
+
+  M2MScopesSSMParameterName:
+    Value: !Ref M2MScopesSSMParam
+
+  AppScopesSSMParameterName:
+    Value: !Ref AppScopesSSMParam

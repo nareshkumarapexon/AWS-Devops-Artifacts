@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Step Function state machine for data-harmonization
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Default: data-harmonization
+
+Resources:
+
+  WorkflowStateMachine:
+    Type: AWS::StepFunctions::StateMachine
+    Properties:
+      StateMachineName: !Sub ${UseCaseName}-deployment-WorkflowStateMachine
+      RoleArn: !Sub arn:aws:iam::${AWS::AccountId}:role/${UseCaseName}StepFunctionExecutionRole
+      StateMachineType: STANDARD
+      DefinitionString: !Sub |
+         {
+          "Comment": "Data Harmonization Deployment Workflow",
+          "StartAt": "Start",
+          "States": {
+            "Start": {
+              "Type": "Pass",
+              "End": true
+            }
+          }
+         }
+ 
+
+Outputs:
+  StateMachineArn:
+    Value: !Ref WorkflowStateMachine

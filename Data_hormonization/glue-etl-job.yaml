@@ -1,0 +1,89 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Data Profiling Glue ETL Job
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Default: data-harmon
+    Description: "Name of the Use Case being developed"
+
+  ScriptBucket:
+    Type: String
+    Default: data-harmonisation-lambda-bucket
+    Description: S3 bucket where ETL script is stored
+
+  ScriptKey:
+    Type: String
+    Default: glueetl/data-profiler.py
+    Description: S3 key for the ETL script
+
+Resources:
+
+  ############################################
+  # IAM ROLE FOR GLUE
+  ############################################
+  GlueExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${UseCaseName}DataProfilingGlueExecutionRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: glue.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole
+      Policies:
+        - PolicyName: !Sub ${UseCaseName}GlueCustomS3Access
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: S3Access
+                Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:ListBucket
+                Resource:
+                  - arn:aws:s3:::data-harmonisation-*
+                  - arn:aws:s3:::data-harmonisation-*/*
+              - Sid: CloudWatchLogs
+                Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: "*"
+
+  ############################################
+  # GLUE JOB
+  ############################################
+  DataProfilingJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub ${UseCaseName}-data-profiling-job
+      Role: !GetAtt GlueExecutionRole.Arn
+      GlueVersion: "4.0"
+      Command:
+        Name: glueetl
+        ScriptLocation: !Sub s3://${ScriptBucket}/${ScriptKey}
+        PythonVersion: "3"
+      DefaultArguments:
+        "--job-language": "python"
+        "--enable-continuous-cloudwatch-log": "true"
+        "--enable-metrics": "true"
+        "--TempDir": "s3://data-harmonisation-bucket/temp/"
+      ExecutionProperty:
+        MaxConcurrentRuns: 2
+      MaxRetries: 1
+      Timeout: 60
+      WorkerType: G.1X
+      NumberOfWorkers: 2
+
+Outputs:
+  GlueJobName:
+    Value: !Ref DataProfilingJob
+  GlueRoleArn:
+    Value: !GetAtt GlueExecutionRole.Arn

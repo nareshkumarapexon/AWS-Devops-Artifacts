@@ -1,0 +1,636 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >-
+  Data Harmonization ETL Pipeline — Glue Jobs with Direct S3 Reads (Generated)
+  No crawlers needed - jobs read directly from S3
+
+Parameters:
+  ArtifactsBucket:
+    Type: String
+    Default: data-harmonisation-bucket
+  SourceBucket:
+    Type: String
+    Default: data-harmonisation-bucket
+  ArtifactsPrefix:
+    Type: String
+    Default: artifacts/etl-codegen/runs/5247a6a8-d8ea-4d5b-998d-4b530b8ea5e0/
+    Description: >-
+      S3 key prefix where generated ETL code was uploaded
+      (e.g. artifacts/etl-codegen/runs/5247a6a8-d8ea-4d5b-998d-4b530b8ea5e0/)
+  SourceS3Path:
+    Type: String
+    Default: s3://data-harmonisation-bucket/synthea_sample_data_test/
+    Description: >-
+      Full S3 path where source tables are stored as subfolders.
+      This should point to the output location from schema-normalizer agent.
+      Jobs will read from <SourceS3Path>/<table_name>/
+      (e.g. s3://data-harmonisation-bucket/artifacts/schema-normalizer/runs/<run_id>/normalized/)
+  TargetBucket:
+    Type: String
+    Default: data-harmonisation-bucket
+    Description: S3 bucket for target output
+  TargetPrefix:
+    Type: String
+    Default: glue-runtime/
+    Description: Key prefix under TargetBucket for target tables
+  TargetDatabase:
+    Type: String
+    Default: ehr_normalized_db
+    Description: Glue database name for target OMOP tables (for catalog registration)
+  TargetS3Path:
+    Type: String
+    Default: s3://data-harmonisation-bucket/glue-runtime/
+    Description: >-
+      Full s3:// path for target writes (passed to Glue jobs via --target_s3_path)
+  ProcessingMode:
+    Type: String
+    Default: batch
+    AllowedValues: [batch, incremental]
+  CreateDatabase:
+    Type: String
+    Default: 'false'
+    AllowedValues: ['true', 'false']
+    Description: >-
+      Set to true to create target Glue database. Default is true for easy deployment.
+      Set to false if database already exists.
+  GlueVersion:
+    Type: String
+    Default: '4.0'
+  WorkerType:
+    Type: String
+    Default: G.2X
+    AllowedValues: [G.1X, G.2X, G.4X, G.8X]
+  NumberOfWorkers:
+    Type: Number
+    Default: 10
+  Timeout:
+    Type: Number
+    Default: 2880
+  MaxRetries:
+    Type: Number
+    Default: 2
+
+Conditions:
+  ShouldCreateDatabase:
+    !Equals [!Ref CreateDatabase, 'true']
+
+Resources:
+
+  DataHarmonizationGlueRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${AWS::StackName}-glue-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: glue.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole
+      Policies:
+        - PolicyName: DataHarmonizationEtlDataAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Sid: S3SourceRead
+                Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:ListBucket
+                Resource:
+                  - !Sub 'arn:aws:s3:::${SourceBucket}'
+                  - !Sub 'arn:aws:s3:::${SourceBucket}/*'
+              - Sid: S3TargetReadWrite
+                Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:DeleteObject
+                  - s3:ListBucket
+                Resource:
+                  - !Sub 'arn:aws:s3:::${TargetBucket}'
+                  - !Sub 'arn:aws:s3:::${TargetBucket}/*'
+              - Sid: S3ArtifactsRead
+                Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:ListBucket
+                Resource:
+                  - !Sub 'arn:aws:s3:::${ArtifactsBucket}'
+                  - !Sub 'arn:aws:s3:::${ArtifactsBucket}/${ArtifactsPrefix}*'
+              - Sid: GlueCatalogFull
+                Effect: Allow
+                Action:
+                  - glue:GetDatabase
+                  - glue:GetDatabases
+                  - glue:GetTable
+                  - glue:GetTables
+                  - glue:CreateTable
+                  - glue:UpdateTable
+                  - glue:DeleteTable
+                  - glue:GetPartition
+                  - glue:GetPartitions
+                  - glue:BatchGetPartition
+                  - glue:CreatePartition
+                  - glue:BatchCreatePartition
+                  - glue:UpdatePartition
+                Resource: '*'
+              - Sid: GlueJobOrchestration
+                Effect: Allow
+                Action:
+                  - glue:StartJobRun
+                  - glue:GetJobRun
+                  - glue:GetJobRuns
+                  - glue:BatchStopJobRun
+                Resource: '*'
+              - Sid: CloudWatchLogs
+                Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
+
+  DataHarmonizationTargetDatabase:
+    Type: AWS::Glue::Database
+    Condition: ShouldCreateDatabase
+    Properties:
+      CatalogId: !Ref AWS::AccountId
+      DatabaseInput:
+        Name: !Ref TargetDatabase
+        Description: >-
+          Data Harmonization — OMOP CDM v5.4 target database
+          (auto-created by ETL CodeGen stack)
+
+  DataHarmonizationEtlCareSiteJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub '${AWS::StackName}-etl-care-site'
+      Role: !GetAtt DataHarmonizationGlueRole.Arn
+      GlueVersion: !Ref GlueVersion
+      WorkerType: !Ref WorkerType
+      NumberOfWorkers: !Ref NumberOfWorkers
+      Timeout: !Ref Timeout
+      MaxRetries: !Ref MaxRetries
+      Command:
+        Name: glueetl
+        PythonVersion: '3'
+        ScriptLocation: !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}jobs/etl_care_site.py'
+      DefaultArguments:
+        '--job-language': 'python'
+        '--enable-metrics': 'true'
+        '--enable-continuous-cloudwatch-log': 'true'
+        '--enable-spark-ui': 'true'
+        '--spark-event-logs-path': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}sparkHistory/'
+        '--TempDir': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}tmp/'
+        '--source_s3_path': !Ref SourceS3Path
+        '--target_s3_path': !Ref TargetS3Path
+        '--processing_mode': !Ref ProcessingMode
+        '--extra-py-files': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}common.zip'
+        '--conf': 'spark.sql.adaptive.enabled=true'
+
+  DataHarmonizationEtlConditionOccurrenceJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub '${AWS::StackName}-etl-condition-occurrence'
+      Role: !GetAtt DataHarmonizationGlueRole.Arn
+      GlueVersion: !Ref GlueVersion
+      WorkerType: !Ref WorkerType
+      NumberOfWorkers: !Ref NumberOfWorkers
+      Timeout: !Ref Timeout
+      MaxRetries: !Ref MaxRetries
+      Command:
+        Name: glueetl
+        PythonVersion: '3'
+        ScriptLocation: !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}jobs/etl_condition_occurrence.py'
+      DefaultArguments:
+        '--job-language': 'python'
+        '--enable-metrics': 'true'
+        '--enable-continuous-cloudwatch-log': 'true'
+        '--enable-spark-ui': 'true'
+        '--spark-event-logs-path': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}sparkHistory/'
+        '--TempDir': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}tmp/'
+        '--source_s3_path': !Ref SourceS3Path
+        '--target_s3_path': !Ref TargetS3Path
+        '--processing_mode': !Ref ProcessingMode
+        '--extra-py-files': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}common.zip'
+        '--conf': 'spark.sql.adaptive.enabled=true'
+
+  DataHarmonizationEtlDeathJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub '${AWS::StackName}-etl-death'
+      Role: !GetAtt DataHarmonizationGlueRole.Arn
+      GlueVersion: !Ref GlueVersion
+      WorkerType: !Ref WorkerType
+      NumberOfWorkers: !Ref NumberOfWorkers
+      Timeout: !Ref Timeout
+      MaxRetries: !Ref MaxRetries
+      Command:
+        Name: glueetl
+        PythonVersion: '3'
+        ScriptLocation: !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}jobs/etl_death.py'
+      DefaultArguments:
+        '--job-language': 'python'
+        '--enable-metrics': 'true'
+        '--enable-continuous-cloudwatch-log': 'true'
+        '--enable-spark-ui': 'true'
+        '--spark-event-logs-path': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}sparkHistory/'
+        '--TempDir': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}tmp/'
+        '--source_s3_path': !Ref SourceS3Path
+        '--target_s3_path': !Ref TargetS3Path
+        '--processing_mode': !Ref ProcessingMode
+        '--extra-py-files': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}common.zip'
+        '--conf': 'spark.sql.adaptive.enabled=true'
+
+  DataHarmonizationEtlDeviceExposureJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub '${AWS::StackName}-etl-device-exposure'
+      Role: !GetAtt DataHarmonizationGlueRole.Arn
+      GlueVersion: !Ref GlueVersion
+      WorkerType: !Ref WorkerType
+      NumberOfWorkers: !Ref NumberOfWorkers
+      Timeout: !Ref Timeout
+      MaxRetries: !Ref MaxRetries
+      Command:
+        Name: glueetl
+        PythonVersion: '3'
+        ScriptLocation: !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}jobs/etl_device_exposure.py'
+      DefaultArguments:
+        '--job-language': 'python'
+        '--enable-metrics': 'true'
+        '--enable-continuous-cloudwatch-log': 'true'
+        '--enable-spark-ui': 'true'
+        '--spark-event-logs-path': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}sparkHistory/'
+        '--TempDir': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}tmp/'
+        '--source_s3_path': !Ref SourceS3Path
+        '--target_s3_path': !Ref TargetS3Path
+        '--processing_mode': !Ref ProcessingMode
+        '--extra-py-files': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}common.zip'
+        '--conf': 'spark.sql.adaptive.enabled=true'
+
+  DataHarmonizationEtlDrugExposureJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub '${AWS::StackName}-etl-drug-exposure'
+      Role: !GetAtt DataHarmonizationGlueRole.Arn
+      GlueVersion: !Ref GlueVersion
+      WorkerType: !Ref WorkerType
+      NumberOfWorkers: !Ref NumberOfWorkers
+      Timeout: !Ref Timeout
+      MaxRetries: !Ref MaxRetries
+      Command:
+        Name: glueetl
+        PythonVersion: '3'
+        ScriptLocation: !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}jobs/etl_drug_exposure.py'
+      DefaultArguments:
+        '--job-language': 'python'
+        '--enable-metrics': 'true'
+        '--enable-continuous-cloudwatch-log': 'true'
+        '--enable-spark-ui': 'true'
+        '--spark-event-logs-path': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}sparkHistory/'
+        '--TempDir': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}tmp/'
+        '--source_s3_path': !Ref SourceS3Path
+        '--target_s3_path': !Ref TargetS3Path
+        '--processing_mode': !Ref ProcessingMode
+        '--extra-py-files': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}common.zip'
+        '--conf': 'spark.sql.adaptive.enabled=true'
+
+  DataHarmonizationEtlLocationJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub '${AWS::StackName}-etl-location'
+      Role: !GetAtt DataHarmonizationGlueRole.Arn
+      GlueVersion: !Ref GlueVersion
+      WorkerType: !Ref WorkerType
+      NumberOfWorkers: !Ref NumberOfWorkers
+      Timeout: !Ref Timeout
+      MaxRetries: !Ref MaxRetries
+      Command:
+        Name: glueetl
+        PythonVersion: '3'
+        ScriptLocation: !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}jobs/etl_location.py'
+      DefaultArguments:
+        '--job-language': 'python'
+        '--enable-metrics': 'true'
+        '--enable-continuous-cloudwatch-log': 'true'
+        '--enable-spark-ui': 'true'
+        '--spark-event-logs-path': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}sparkHistory/'
+        '--TempDir': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}tmp/'
+        '--source_s3_path': !Ref SourceS3Path
+        '--target_s3_path': !Ref TargetS3Path
+        '--processing_mode': !Ref ProcessingMode
+        '--extra-py-files': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}common.zip'
+        '--conf': 'spark.sql.adaptive.enabled=true'
+
+  DataHarmonizationEtlMeasurementJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub '${AWS::StackName}-etl-measurement'
+      Role: !GetAtt DataHarmonizationGlueRole.Arn
+      GlueVersion: !Ref GlueVersion
+      WorkerType: !Ref WorkerType
+      NumberOfWorkers: !Ref NumberOfWorkers
+      Timeout: !Ref Timeout
+      MaxRetries: !Ref MaxRetries
+      Command:
+        Name: glueetl
+        PythonVersion: '3'
+        ScriptLocation: !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}jobs/etl_measurement.py'
+      DefaultArguments:
+        '--job-language': 'python'
+        '--enable-metrics': 'true'
+        '--enable-continuous-cloudwatch-log': 'true'
+        '--enable-spark-ui': 'true'
+        '--spark-event-logs-path': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}sparkHistory/'
+        '--TempDir': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}tmp/'
+        '--source_s3_path': !Ref SourceS3Path
+        '--target_s3_path': !Ref TargetS3Path
+        '--processing_mode': !Ref ProcessingMode
+        '--extra-py-files': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}common.zip'
+        '--conf': 'spark.sql.adaptive.enabled=true'
+
+  DataHarmonizationEtlObservationJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub '${AWS::StackName}-etl-observation'
+      Role: !GetAtt DataHarmonizationGlueRole.Arn
+      GlueVersion: !Ref GlueVersion
+      WorkerType: !Ref WorkerType
+      NumberOfWorkers: !Ref NumberOfWorkers
+      Timeout: !Ref Timeout
+      MaxRetries: !Ref MaxRetries
+      Command:
+        Name: glueetl
+        PythonVersion: '3'
+        ScriptLocation: !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}jobs/etl_observation.py'
+      DefaultArguments:
+        '--job-language': 'python'
+        '--enable-metrics': 'true'
+        '--enable-continuous-cloudwatch-log': 'true'
+        '--enable-spark-ui': 'true'
+        '--spark-event-logs-path': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}sparkHistory/'
+        '--TempDir': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}tmp/'
+        '--source_s3_path': !Ref SourceS3Path
+        '--target_s3_path': !Ref TargetS3Path
+        '--processing_mode': !Ref ProcessingMode
+        '--extra-py-files': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}common.zip'
+        '--conf': 'spark.sql.adaptive.enabled=true'
+
+  DataHarmonizationEtlObservationPeriodJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub '${AWS::StackName}-etl-observation-period'
+      Role: !GetAtt DataHarmonizationGlueRole.Arn
+      GlueVersion: !Ref GlueVersion
+      WorkerType: !Ref WorkerType
+      NumberOfWorkers: !Ref NumberOfWorkers
+      Timeout: !Ref Timeout
+      MaxRetries: !Ref MaxRetries
+      Command:
+        Name: glueetl
+        PythonVersion: '3'
+        ScriptLocation: !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}jobs/etl_observation_period.py'
+      DefaultArguments:
+        '--job-language': 'python'
+        '--enable-metrics': 'true'
+        '--enable-continuous-cloudwatch-log': 'true'
+        '--enable-spark-ui': 'true'
+        '--spark-event-logs-path': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}sparkHistory/'
+        '--TempDir': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}tmp/'
+        '--source_s3_path': !Ref SourceS3Path
+        '--target_s3_path': !Ref TargetS3Path
+        '--processing_mode': !Ref ProcessingMode
+        '--extra-py-files': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}common.zip'
+        '--conf': 'spark.sql.adaptive.enabled=true'
+
+  DataHarmonizationEtlPayerPlanPeriodJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub '${AWS::StackName}-etl-payer-plan-period'
+      Role: !GetAtt DataHarmonizationGlueRole.Arn
+      GlueVersion: !Ref GlueVersion
+      WorkerType: !Ref WorkerType
+      NumberOfWorkers: !Ref NumberOfWorkers
+      Timeout: !Ref Timeout
+      MaxRetries: !Ref MaxRetries
+      Command:
+        Name: glueetl
+        PythonVersion: '3'
+        ScriptLocation: !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}jobs/etl_payer_plan_period.py'
+      DefaultArguments:
+        '--job-language': 'python'
+        '--enable-metrics': 'true'
+        '--enable-continuous-cloudwatch-log': 'true'
+        '--enable-spark-ui': 'true'
+        '--spark-event-logs-path': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}sparkHistory/'
+        '--TempDir': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}tmp/'
+        '--source_s3_path': !Ref SourceS3Path
+        '--target_s3_path': !Ref TargetS3Path
+        '--processing_mode': !Ref ProcessingMode
+        '--extra-py-files': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}common.zip'
+        '--conf': 'spark.sql.adaptive.enabled=true'
+
+  DataHarmonizationEtlPersonJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub '${AWS::StackName}-etl-person'
+      Role: !GetAtt DataHarmonizationGlueRole.Arn
+      GlueVersion: !Ref GlueVersion
+      WorkerType: !Ref WorkerType
+      NumberOfWorkers: !Ref NumberOfWorkers
+      Timeout: !Ref Timeout
+      MaxRetries: !Ref MaxRetries
+      Command:
+        Name: glueetl
+        PythonVersion: '3'
+        ScriptLocation: !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}jobs/etl_person.py'
+      DefaultArguments:
+        '--job-language': 'python'
+        '--enable-metrics': 'true'
+        '--enable-continuous-cloudwatch-log': 'true'
+        '--enable-spark-ui': 'true'
+        '--spark-event-logs-path': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}sparkHistory/'
+        '--TempDir': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}tmp/'
+        '--source_s3_path': !Ref SourceS3Path
+        '--target_s3_path': !Ref TargetS3Path
+        '--processing_mode': !Ref ProcessingMode
+        '--extra-py-files': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}common.zip'
+        '--conf': 'spark.sql.adaptive.enabled=true'
+
+  DataHarmonizationEtlProcedureOccurrenceJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub '${AWS::StackName}-etl-procedure-occurrence'
+      Role: !GetAtt DataHarmonizationGlueRole.Arn
+      GlueVersion: !Ref GlueVersion
+      WorkerType: !Ref WorkerType
+      NumberOfWorkers: !Ref NumberOfWorkers
+      Timeout: !Ref Timeout
+      MaxRetries: !Ref MaxRetries
+      Command:
+        Name: glueetl
+        PythonVersion: '3'
+        ScriptLocation: !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}jobs/etl_procedure_occurrence.py'
+      DefaultArguments:
+        '--job-language': 'python'
+        '--enable-metrics': 'true'
+        '--enable-continuous-cloudwatch-log': 'true'
+        '--enable-spark-ui': 'true'
+        '--spark-event-logs-path': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}sparkHistory/'
+        '--TempDir': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}tmp/'
+        '--source_s3_path': !Ref SourceS3Path
+        '--target_s3_path': !Ref TargetS3Path
+        '--processing_mode': !Ref ProcessingMode
+        '--extra-py-files': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}common.zip'
+        '--conf': 'spark.sql.adaptive.enabled=true'
+
+  DataHarmonizationEtlProviderJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub '${AWS::StackName}-etl-provider'
+      Role: !GetAtt DataHarmonizationGlueRole.Arn
+      GlueVersion: !Ref GlueVersion
+      WorkerType: !Ref WorkerType
+      NumberOfWorkers: !Ref NumberOfWorkers
+      Timeout: !Ref Timeout
+      MaxRetries: !Ref MaxRetries
+      Command:
+        Name: glueetl
+        PythonVersion: '3'
+        ScriptLocation: !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}jobs/etl_provider.py'
+      DefaultArguments:
+        '--job-language': 'python'
+        '--enable-metrics': 'true'
+        '--enable-continuous-cloudwatch-log': 'true'
+        '--enable-spark-ui': 'true'
+        '--spark-event-logs-path': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}sparkHistory/'
+        '--TempDir': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}tmp/'
+        '--source_s3_path': !Ref SourceS3Path
+        '--target_s3_path': !Ref TargetS3Path
+        '--processing_mode': !Ref ProcessingMode
+        '--extra-py-files': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}common.zip'
+        '--conf': 'spark.sql.adaptive.enabled=true'
+
+  DataHarmonizationEtlVisitDetailJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub '${AWS::StackName}-etl-visit-detail'
+      Role: !GetAtt DataHarmonizationGlueRole.Arn
+      GlueVersion: !Ref GlueVersion
+      WorkerType: !Ref WorkerType
+      NumberOfWorkers: !Ref NumberOfWorkers
+      Timeout: !Ref Timeout
+      MaxRetries: !Ref MaxRetries
+      Command:
+        Name: glueetl
+        PythonVersion: '3'
+        ScriptLocation: !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}jobs/etl_visit_detail.py'
+      DefaultArguments:
+        '--job-language': 'python'
+        '--enable-metrics': 'true'
+        '--enable-continuous-cloudwatch-log': 'true'
+        '--enable-spark-ui': 'true'
+        '--spark-event-logs-path': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}sparkHistory/'
+        '--TempDir': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}tmp/'
+        '--source_s3_path': !Ref SourceS3Path
+        '--target_s3_path': !Ref TargetS3Path
+        '--processing_mode': !Ref ProcessingMode
+        '--extra-py-files': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}common.zip'
+        '--conf': 'spark.sql.adaptive.enabled=true'
+
+  DataHarmonizationEtlVisitOccurrenceJob:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub '${AWS::StackName}-etl-visit-occurrence'
+      Role: !GetAtt DataHarmonizationGlueRole.Arn
+      GlueVersion: !Ref GlueVersion
+      WorkerType: !Ref WorkerType
+      NumberOfWorkers: !Ref NumberOfWorkers
+      Timeout: !Ref Timeout
+      MaxRetries: !Ref MaxRetries
+      Command:
+        Name: glueetl
+        PythonVersion: '3'
+        ScriptLocation: !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}jobs/etl_visit_occurrence.py'
+      DefaultArguments:
+        '--job-language': 'python'
+        '--enable-metrics': 'true'
+        '--enable-continuous-cloudwatch-log': 'true'
+        '--enable-spark-ui': 'true'
+        '--spark-event-logs-path': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}sparkHistory/'
+        '--TempDir': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}tmp/'
+        '--source_s3_path': !Ref SourceS3Path
+        '--target_s3_path': !Ref TargetS3Path
+        '--processing_mode': !Ref ProcessingMode
+        '--extra-py-files': !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}common.zip'
+        '--conf': 'spark.sql.adaptive.enabled=true'
+
+  DataHarmonizationEtlOrchestrator:
+    Type: AWS::Glue::Job
+    Properties:
+      Name: !Sub '${AWS::StackName}-orchestrator'
+      Role: !GetAtt DataHarmonizationGlueRole.Arn
+      GlueVersion: '3.0'
+      Command:
+        Name: pythonshell
+        PythonVersion: '3.9'
+        ScriptLocation: !Sub 's3://${ArtifactsBucket}/${ArtifactsPrefix}orchestrator.py'
+      MaxCapacity: 0.0625
+      Timeout: !Ref Timeout
+      MaxRetries: 0
+      DefaultArguments:
+        '--source_s3_path': !Ref SourceS3Path
+        '--target_database': !Ref TargetDatabase
+        '--target_s3_path': !Ref TargetS3Path
+        '--processing_mode': !Ref ProcessingMode
+        '--additional-python-modules': 'boto3'
+
+Outputs:
+  DataHarmonizationGlueRoleArn:
+    Value: !GetAtt DataHarmonizationGlueRole.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-GlueRoleArn'
+  DataHarmonizationOrchestratorName:
+    Value: !Ref DataHarmonizationEtlOrchestrator
+  DataHarmonizationTargetDatabaseName:
+    Condition: ShouldCreateDatabase
+    Value: !Ref DataHarmonizationTargetDatabase
+  PostDeployInstructions:
+    Value: >-
+      After stack creation: (1) Ensure source data is available at SourceS3Path
+      in Parquet or CSV format. (2) Start ETL jobs via orchestrator or individually.
+      Jobs read directly from S3 - no crawlers needed.
+      CLI: aws glue start-job-run --job-name <OrchestratorName>
+  DataHarmonizationEtlCareSiteJobName:
+    Value: !Ref DataHarmonizationEtlCareSiteJob
+  DataHarmonizationEtlConditionOccurrenceJobName:
+    Value: !Ref DataHarmonizationEtlConditionOccurrenceJob
+  DataHarmonizationEtlDeathJobName:
+    Value: !Ref DataHarmonizationEtlDeathJob
+  DataHarmonizationEtlDeviceExposureJobName:
+    Value: !Ref DataHarmonizationEtlDeviceExposureJob
+  DataHarmonizationEtlDrugExposureJobName:
+    Value: !Ref DataHarmonizationEtlDrugExposureJob
+  DataHarmonizationEtlLocationJobName:
+    Value: !Ref DataHarmonizationEtlLocationJob
+  DataHarmonizationEtlMeasurementJobName:
+    Value: !Ref DataHarmonizationEtlMeasurementJob
+  DataHarmonizationEtlObservationJobName:
+    Value: !Ref DataHarmonizationEtlObservationJob
+  DataHarmonizationEtlObservationPeriodJobName:
+    Value: !Ref DataHarmonizationEtlObservationPeriodJob
+  DataHarmonizationEtlPayerPlanPeriodJobName:
+    Value: !Ref DataHarmonizationEtlPayerPlanPeriodJob
+  DataHarmonizationEtlPersonJobName:
+    Value: !Ref DataHarmonizationEtlPersonJob
+  DataHarmonizationEtlProcedureOccurrenceJobName:
+    Value: !Ref DataHarmonizationEtlProcedureOccurrenceJob
+  DataHarmonizationEtlProviderJobName:
+    Value: !Ref DataHarmonizationEtlProviderJob
+  DataHarmonizationEtlVisitDetailJobName:
+    Value: !Ref DataHarmonizationEtlVisitDetailJob
+  DataHarmonizationEtlVisitOccurrenceJobName:
+    Value: !Ref DataHarmonizationEtlVisitOccurrenceJob

@@ -1,0 +1,95 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: DynamoDB table for data harmonization workflow configs
+
+Parameters:
+
+  UseCaseName:
+    Type: String
+    Default: data-harmonization
+    Description: Name of the Use Case being developed
+
+Resources:
+
+############################################
+# DynamoDB Table: workflow-configs
+############################################
+
+  WorkflowConfigsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub ${UseCaseName}-workflow-configs
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: workflow_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: workflow_id
+          KeyType: HASH
+      TimeToLiveSpecification:
+        AttributeName: expires_at
+        Enabled: true
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+
+############################################
+# IAM Managed Policy: DynamoDB + SSM + Lambda
+############################################
+
+  WorkflowConfigsManagedPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      ManagedPolicyName: !Sub ${UseCaseName}-workflow-configs-policy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: DynamoDBAccess
+            Effect: Allow
+            Action:
+              - dynamodb:GetItem
+              - dynamodb:PutItem
+              - dynamodb:UpdateItem
+              - dynamodb:Query
+              - dynamodb:Scan
+              - dynamodb:DescribeTable
+            Resource:
+                    - !GetAtt WorkflowConfigsTable.Arn
+                    - !Sub "${WorkflowConfigsTable.Arn}/index/*"
+
+          - Sid: SSMAccess
+            Effect: Allow
+            Action:
+              - ssm:GetParameter
+              - ssm:GetParameters
+              - ssm:GetParametersByPath
+            Resource: !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${UseCaseName}/*
+          - Sid: LambdaAccess
+            Effect: Allow
+            Action:
+              - lambda:InvokeFunction
+              - lambda:GetFunction
+              - lambda:ListFunctions
+            Resource: !Sub arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${UseCaseName}-*
+
+############################################
+# Outputs
+############################################
+
+Outputs:
+
+  WorkflowConfigsTableName:
+    Description: Workflow Configs Table Name
+    Value: !Ref WorkflowConfigsTable
+    Export:
+      Name: !Sub ${UseCaseName}-WorkflowConfigsTableName
+
+  WorkflowConfigsTableArn:
+    Description: Workflow Configs Table ARN
+    Value: !GetAtt WorkflowConfigsTable.Arn
+    Export:
+      Name: !Sub ${UseCaseName}-WorkflowConfigsTableArn
+
+  WorkflowConfigsManagedPolicyArn:
+    Description: Managed Policy ARN for DynamoDB, SSM and Lambda access
+    Value: !Ref WorkflowConfigsManagedPolicy
+    Export:
+      Name: !Sub ${UseCaseName}-WorkflowConfigsManagedPolicyArn

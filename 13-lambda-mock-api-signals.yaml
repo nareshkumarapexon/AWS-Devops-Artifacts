@@ -1,0 +1,74 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Lambda — shsc-mock-api-signals
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Default: shsc
+  
+
+Resources:
+  RoleMockApiSignals:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${UseCaseName}-role-mock-api-signals
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: mock-api-policy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: ssm:GetParameter
+                Resource: !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${UseCaseName}/*
+              - Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:Scan
+                Resource: !Sub arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${UseCaseName}-mock-signals-state
+
+  MockApiSignals:
+    Type: AWS::Lambda::Function
+    DependsOn: RoleMockApiSignals
+    Properties:
+      FunctionName: !Sub ${UseCaseName}-mock-api-signals
+      Runtime: python3.12
+      Handler: external_signals.handler
+      Role: !GetAtt RoleMockApiSignals.Arn
+      Timeout: 30
+      MemorySize: 256
+      Environment:
+        Variables:
+          SSM_MOCK_SIGNALS_PARAM: !Sub /${UseCaseName}/tables/mock-signals
+          AWS_REGION_NAME: !Ref AWS::Region
+      Code:
+        ZipFile: |
+          import json
+
+          def handler(event, context):
+              print("Hello from Lambda")
+
+              return {
+                  "statusCode": 200,
+                  "body": json.dumps({
+                      "message": "Hello World",
+                      "function": context.function_name
+                  })
+              }
+
+      
+
+Outputs:
+  FunctionArn:
+    Value: !GetAtt MockApiSignals.Arn
+  FunctionName:
+    Value: !Ref MockApiSignals

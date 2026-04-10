@@ -1,0 +1,80 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: HTTP API Gateway for callback endpoint
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Default: data-harmonization
+    Description: "Name of the Use Case being developed"
+
+  StageName:
+    Type: String
+    Default: v1
+    Description: Deployment stage name
+
+  LambdaFunctionName:
+    Type: String
+    Default: data-harmonization-callback
+    Description: Name of the callback Lambda function
+
+Resources:
+  CallbackHttpApi:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: !Sub ${UseCaseName}-callback-api
+      ProtocolType: HTTP
+      CorsConfiguration:
+        AllowOrigins:
+          - '*'
+        AllowMethods:
+          - POST
+          - OPTIONS
+        AllowHeaders:
+          - '*'
+
+  CallbackIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref CallbackHttpApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !Sub arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${LambdaFunctionName}
+      PayloadFormatVersion: '2.0'
+
+  CallbackRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref CallbackHttpApi
+      RouteKey: "POST /run/{upload_id}/submit-review"
+      Target: !Sub integrations/${CallbackIntegration}
+
+  WorkflowCallbackRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref CallbackHttpApi
+      RouteKey: "POST /workflow/{workflow_id}/submit-review"
+      Target: !Sub integrations/${CallbackIntegration}
+
+  CallbackStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref CallbackHttpApi
+      StageName: !Ref StageName
+      AutoDeploy: true
+
+  LambdaInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref LambdaFunctionName
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${CallbackHttpApi}/*/*
+
+Outputs:
+  ApiId:
+    Value: !Ref CallbackHttpApi
+  ApiEndpoint:
+    Value: !GetAtt CallbackHttpApi.ApiEndpoint
+  CallbackInvokeURL:
+    Value: !Sub ${CallbackHttpApi.ApiEndpoint}/${StageName}/run/{upload_id}/submit-review
+  WorkflowCallbackInvokeURL:
+    Value: !Sub ${CallbackHttpApi.ApiEndpoint}/${StageName}/workflow/{workflow_id}/submit-review

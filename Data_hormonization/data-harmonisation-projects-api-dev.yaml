@@ -1,0 +1,247 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Parameterized single API Gateway /projects (POST, GET) + 2 Lambdas (code from S3) with DynamoDB RWU
+
+Parameters:
+  UseCaseName:
+    Type: String
+    Default: data-harmonisation
+    Description: Prefix for naming resources
+
+  Environment:
+    Type: String
+    Default: dev
+    Description: Environment (used in naming)
+
+  StageName:
+    Type: String
+    Default: v1
+    Description: API Gateway stage name (e.g., v1)
+
+  ProjectsTableName:
+    Type: String
+    Default: data-harmonization-projects
+    Description: DynamoDB Projects table name
+
+  ArtifactBucketName:
+    Type: String
+    Default: data-harmonisation-lambda-bucket
+    Description: S3 bucket that contains Lambda zip artifacts
+
+  CreateProjectLambdaS3Key:
+    Type: String
+    Default: lambda/projects/project_create.zip
+    Description: S3 key for create project lambda zip (e.g., lambda/projects/create.zip)
+
+  ListProjectsLambdaS3Key:
+    Type: String
+    Default: lambda/projects/projects_list.zip
+    Description: S3 key for list projects lambda zip (e.g., lambda/projects/list.zip)
+
+  LambdaRuntime:
+    Type: String
+    Default: python3.12
+    AllowedValues:
+      - python3.12
+      - python3.11
+      - python3.10
+
+Resources:
+  ############################################
+  # IAM Role for Lambdas (DynamoDB read/write/update only)
+  ############################################
+  ProjectsLambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "${UseCaseName}-${Environment}-projects-lambda-role"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: !Sub "${UseCaseName}-${Environment}-projects-lambda-policy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Sid: AllowLogs
+                Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: "*"
+
+              - Sid: DynamoDBProjectsTableRWU
+                Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                  - dynamodb:DescribeTable
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                Resource:
+                  - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${ProjectsTableName}"
+
+  ############################################
+  # Lambda: Create Project (POST /projects)
+  ############################################
+  CreateProjectLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "${UseCaseName}_create_project_lambda"
+      Runtime: !Ref LambdaRuntime
+      Handler: index.handler
+      Role: !GetAtt ProjectsLambdaExecutionRole.Arn
+      Timeout: 15
+      MemorySize: 256
+      Environment:
+        Variables:
+          PROJECTS_TABLE_NAME: !Ref ProjectsTableName
+      Code:
+        S3Bucket: !Ref ArtifactBucketName
+        S3Key: !Ref CreateProjectLambdaS3Key
+
+  ############################################
+  # Lambda: List Projects (GET /projects)
+  ############################################
+  ListProjectsLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "${UseCaseName}_projects_list_lambda"
+      Runtime: !Ref LambdaRuntime
+      Handler: index.handler
+      Role: !GetAtt ProjectsLambdaExecutionRole.Arn
+      Timeout: 20
+      MemorySize: 256
+      Environment:
+        Variables:
+          PROJECTS_TABLE_NAME: !Ref ProjectsTableName
+      Code:
+        S3Bucket: !Ref ArtifactBucketName
+        S3Key: !Ref ListProjectsLambdaS3Key
+
+  ############################################
+  # API Gateway (Single REST API)
+  ############################################
+  ProjectsApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: !Sub "${UseCaseName}-${Environment}-projects-api"
+      EndpointConfiguration:
+        Types: [REGIONAL]
+
+  ProjectsResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref ProjectsApi
+      ParentId: !GetAtt ProjectsApi.RootResourceId
+      PathPart: projects
+
+  # POST /projects -> CreateProjectLambda
+  ProjectsPostMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref ProjectsApi
+      ResourceId: !Ref ProjectsResource
+      HttpMethod: POST
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub
+          - arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${FnArn}/invocations
+          - FnArn: !GetAtt CreateProjectLambda.Arn
+
+  # GET /projects -> ListProjectsLambda
+  ProjectsGetMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref ProjectsApi
+      ResourceId: !Ref ProjectsResource
+      HttpMethod: GET
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub
+          - arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${FnArn}/invocations
+          - FnArn: !GetAtt ListProjectsLambda.Arn
+
+  # Lambda invoke permissions for API Gateway
+  CreateProjectLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref CreateProjectLambda
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ProjectsApi}/*/POST/projects"
+
+  ListProjectsLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref ListProjectsLambda
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ProjectsApi}/*/GET/projects"
+
+  # Deploy + Stage
+  ProjectsApiDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn:
+      - ProjectsPostMethod
+      - ProjectsGetMethod
+    Properties:
+      RestApiId: !Ref ProjectsApi
+
+  ProjectsApiStage:
+    Type: AWS::ApiGateway::Stage
+    Properties:
+      RestApiId: !Ref ProjectsApi
+      DeploymentId: !Ref ProjectsApiDeployment
+      StageName: !Ref StageName
+
+Outputs:
+
+  ############################################
+  # API Outputs
+  ############################################
+  ApiBaseUrl:
+    Description: Base URL of the API
+    Value: !Sub "https://${ProjectsApi}.execute-api.${AWS::Region}.amazonaws.com/${StageName}"
+
+  ProjectsEndpoint:
+    Description: /projects endpoint
+    Value: !Sub "https://${ProjectsApi}.execute-api.${AWS::Region}.amazonaws.com/${StageName}/projects"
+
+  ############################################
+  # Lambda Names
+  ############################################
+  CreateProjectLambdaName:
+    Description: Create Project Lambda Function Name
+    Value: !Ref CreateProjectLambda
+    Export:
+      Name: !Sub "${AWS::StackName}-CreateProjectLambdaName"
+
+  ListProjectsLambdaName:
+    Description: List Projects Lambda Function Name
+    Value: !Ref ListProjectsLambda
+    Export:
+      Name: !Sub "${AWS::StackName}-ListProjectsLambdaName"
+
+  ############################################
+  # Lambda ARNs (VERY useful for integrations)
+  ############################################
+  CreateProjectLambdaArn:
+    Description: Create Project Lambda ARN
+    Value: !GetAtt CreateProjectLambda.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-CreateProjectLambdaArn"
+
+  ListProjectsLambdaArn:
+    Description: List Projects Lambda ARN
+    Value: !GetAtt ListProjectsLambda.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-ListProjectsLambdaArn"
